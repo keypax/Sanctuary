@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
+#[ORM\Table(name: 'animals')]
 class Animal
 {
     #[ORM\Id]
@@ -64,7 +65,7 @@ class Animal
 
     public function getAnimalId(): ?int
     {
-        return $this->id;
+        return $this->animal_id;
     }
 
     public function setAnimalId(string $animal_id): static
