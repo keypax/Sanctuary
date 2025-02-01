@@ -1,0 +1,36 @@
+{# templates/admin/animal/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.animal.list.title'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>Lista zwierząt</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Rasa</th>
+            <th>Waga</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for animal in animals %} {# Pętla po liście zwierząt przekazanej z kontrolera #}
+            <tr>
+                <td>{{ animal.getAnimalId() }}</td> {# Wyświetl ID zwierzęcia #}
+                <td>{{ animal.getSpecies() }}</td> {# Wyświetl rasę zwierzęcia #}
+                <td>{{ animal.getWeight() }}</td> {# Wyświetl wagę zwierzęcia #}
+                <td>
+                    <a href="#">Edytuj</a> | <a href="#">Usuń</a> {# Linki akcji (na razie puste) #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Brak zwierząt w bazie danych.</td> {# Wyświetl komunikat, jeśli nie ma zwierząt #}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

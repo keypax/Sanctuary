@@ -1,3 +1,5 @@
 admin.animal.add:
     title: Add new animal
     button: Add animal
+admin.animal.list:
+    title: Animals list

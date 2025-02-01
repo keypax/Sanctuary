@@ -63,7 +63,7 @@ class Animal
     #[ORM\Column(nullable: true)]
     private ?float $weight = null;
 
-    public function getAnimalId(): ?int
+    public function getAnimalId(): ?string
     {
         return $this->animal_id;
     }
