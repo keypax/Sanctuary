@@ -2,14 +2,21 @@
 
 namespace App\Controller\Admin;
 
+use App\Form\AnimalType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class AnimalController
+#[Route('/admin/animal', name: 'admin_animal')]
+class AnimalController extends AbstractController
 {
-    #[Route('/admin/animal')]
-    public function helloworld(): Response
+    #[Route('/add', name: 'admin_animal_add')]
+    public function add(): Response
     {
-        return new Response('Hello World!');
+        $form = $this->createForm(AnimalType::class);
+
+        return $this->render('admin/animal/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
