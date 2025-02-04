@@ -22,7 +22,7 @@
                 <td>{{ animal.getSpecies() }}</td> {# Wyświetl rasę zwierzęcia #}
                 <td>{{ animal.getWeight() }}</td> {# Wyświetl wagę zwierzęcia #}
                 <td>
-                    <a href="#">Edytuj</a> | <a href="#">Usuń</a> {# Linki akcji (na razie puste) #}
+                    <a href="{{ path('admin_animal_edit', {animal_id: animal.getAnimalId()}) }}">Edytuj</a> | <a href="#">Usuń</a> {# Linki akcji (na razie puste) #}
                 </td>
             </tr>
         {% else %}
