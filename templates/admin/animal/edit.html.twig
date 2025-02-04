@@ -1,0 +1,28 @@
+{# templates/admin/animal/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+    {% block title %}
+        {% if edit_mode %}
+            {{ 'admin.animal.edit.title'|trans }}
+        {% else %}
+            {{ 'admin.animal.add.title'|trans }}
+        {% endif %}
+    {% endblock %}
+
+{% block body %}
+    {% if edit_mode %}
+        <h1>{{ 'admin.animal.edit.title'|trans }}</h1>
+    {% else %}
+        <h1>{{ 'admin.animal.add.title'|trans }}</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {% if edit_mode %}
+        <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
+    {% else %}
+        <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
+    {% endif %}
+
+    {{ form_end(form) }}
+{% endblock %}

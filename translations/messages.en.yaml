@@ -1,0 +1,13 @@
+admin.animal:
+    add:
+        title: Add new animal
+        button: Add animal
+    edit:
+        title: Edit animal
+        button: Save changes
+
+admin.animal.list:
+    empty: No animals found
+    title: Animals list
+    button_edit: Edit
+    button_add_new: Add new animal

@@ -1,0 +1,38 @@
+{# templates/admin/animal/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.animal.list.title'|trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'admin.animal.list.title'|trans }}</h1>
+
+    <a href="{{ path('admin_animal_edit')}}" class="button">{{ 'admin.animal.list.button_add_new'|trans }}</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Rasa</th>
+            <th>Waga</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for animal in animals %}
+            <tr>
+                <td>{{ animal.getAnimalId() }}</td>
+                <td>{{ animal.getSpecies() }}</td>
+                <td>{{ animal.getWeight() }}</td>
+                <td>
+                    <a href="{{ path('admin_animal_edit', {animal_id: animal.getAnimalId()|url_encode}) }}">{{ 'admin.animal.list.button_edit'|trans}}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'admin.animal.list.empty'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
