@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Animal;
+use App\Form\AnimalPhotoType;
 use App\Form\AnimalType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,7 @@ class AnimalController extends AbstractController
         }
 
         $form = $this->createForm(AnimalType::class, $animal);
+        $formPhoto = $this->createForm(AnimalPhotoType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,6 +43,12 @@ class AnimalController extends AbstractController
             if ($currentAnimalId) {
                 $newAnimalId = str_replace('/', '-', $currentAnimalId);
                 $animal->setAnimalId($newAnimalId);
+            }
+
+            $photo = $formPhoto->get('photo')->getData();
+            if ($photo)
+            {
+                echo "There is photo";
             }
 
             $entityManager->persist($animal);
@@ -53,6 +61,7 @@ class AnimalController extends AbstractController
 
         return $this->render('admin/animal/edit.html.twig', [
             'form' => $form->createView(),
+            'form_photo' => $formPhoto->createView(),
             'animal' => $animal ?? null,
             'edit_mode' => $editMode,
         ]);

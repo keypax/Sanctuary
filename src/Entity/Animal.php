@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -62,6 +64,14 @@ class Animal
 
     #[ORM\Column(nullable: true)]
     private ?float $weight = null;
+
+    #[ORM\OneToMany(targetEntity: AnimalPhoto::class, mappedBy: 'animal', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $animalPhotos;
+
+    public function __construct()
+    {
+        $this->animalPhotos = new ArrayCollection();
+    }
 
     public function getAnimalId(): ?string
     {
@@ -251,6 +261,36 @@ class Animal
     public function setWeight(?float $weight): static
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalPhoto>
+     */
+    public function getAnimalPhotos(): Collection
+    {
+        return $this->animalPhotos;
+    }
+
+    public function addAnimalPhoto(AnimalPhoto $animalPhoto): static
+    {
+        if (!$this->animalPhotos->contains($animalPhoto)) {
+            $this->animalPhotos->add($animalPhoto);
+            $animalPhoto->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalPhoto(AnimalPhoto $animalPhoto): static
+    {
+        if ($this->animalPhotos->removeElement($animalPhoto)) {
+            // set the owning side to null (unless already changed)
+            if ($animalPhoto->getAnimal() === $this) {
+                $animalPhoto->setAnimal(null);
+            }
+        }
 
         return $this;
     }

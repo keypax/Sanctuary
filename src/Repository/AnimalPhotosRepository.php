@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\AnimalImage;
+use App\Entity\AnimalPhoto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<AnimalImage>
+ * @extends ServiceEntityRepository<AnimalPhoto>
  */
-class AnimalImageRepository extends ServiceEntityRepository
+class AnimalPhotosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AnimalImage::class);
+        parent::__construct($registry, AnimalPhoto::class);
     }
 
     //    /**
-    //     * @return AnimalImage[] Returns an array of AnimalImage objects
+    //     * @return AnimalPhoto[] Returns an array of AnimalPhoto objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class AnimalImageRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?AnimalImage
+    //    public function findOneBySomeField($value): ?AnimalPhoto
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')
