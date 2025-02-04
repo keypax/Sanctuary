@@ -4,7 +4,9 @@
 {% block title %}{{ 'admin.animal.list.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Lista zwierząt</h1>
+    <h1>{{ 'admin.animal.list.title'|trans }}</h1>
+
+    <a href="{{ path('admin_animal_edit')}}" class="button">{{ 'admin.animal.list.button_add_new'|trans }}</a>
 
     <table class="table">
         <thead>
@@ -16,18 +18,18 @@
         </tr>
         </thead>
         <tbody>
-        {% for animal in animals %} {# Pętla po liście zwierząt przekazanej z kontrolera #}
+        {% for animal in animals %}
             <tr>
-                <td>{{ animal.getAnimalId() }}</td> {# Wyświetl ID zwierzęcia #}
-                <td>{{ animal.getSpecies() }}</td> {# Wyświetl rasę zwierzęcia #}
-                <td>{{ animal.getWeight() }}</td> {# Wyświetl wagę zwierzęcia #}
+                <td>{{ animal.getAnimalId() }}</td>
+                <td>{{ animal.getSpecies() }}</td>
+                <td>{{ animal.getWeight() }}</td>
                 <td>
-                    <a href="{{ path('admin_animal_edit', {animal_id: animal.getAnimalId()}) }}">Edytuj</a> | <a href="#">Usuń</a> {# Linki akcji (na razie puste) #}
+                    <a href="{{ path('admin_animal_edit', {animal_id: animal.getAnimalId()|url_encode}) }}">{{ 'admin.animal.list.button_edit'|trans}}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">Brak zwierząt w bazie danych.</td> {# Wyświetl komunikat, jeśli nie ma zwierząt #}
+                <td colspan="4">{{ 'admin.animal.list.empty'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

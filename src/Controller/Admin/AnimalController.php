@@ -16,8 +16,10 @@ class AnimalController extends AbstractController
     #[Route('/edit/{animal_id}', name: 'edit', defaults: ['animal_id' => null])]
     public function manageAnimal(Request $request, EntityManagerInterface $entityManager, string $animal_id = null): Response
     {
+        $editMode = false;
         if ($animal_id) {
             $animal = $entityManager->getRepository(Animal::class)->findOneBy(["animal_id" => $animal_id]);
+            $editMode = true;
 
             if (!$animal) {
                 throw $this->createNotFoundException('Animal not found');
@@ -33,6 +35,14 @@ class AnimalController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //change "/" to "-"
+            $currentAnimalId = $animal->getAnimalId();
+
+            if ($currentAnimalId) {
+                $newAnimalId = str_replace('/', '-', $currentAnimalId);
+                $animal->setAnimalId($newAnimalId);
+            }
+
             $entityManager->persist($animal);
             $entityManager->flush();
 
@@ -44,6 +54,7 @@ class AnimalController extends AbstractController
         return $this->render('admin/animal/edit.html.twig', [
             'form' => $form->createView(),
             'animal' => $animal ?? null,
+            'edit_mode' => $editMode,
         ]);
     }
 
