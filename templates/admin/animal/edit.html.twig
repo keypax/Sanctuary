@@ -17,13 +17,27 @@
     {% endif %}
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {% if edit_mode %}
-        <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
-    {% else %}
-        <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
-    {% endif %}
-    {{ form_row(form_photo.photo) }}
+        {{ form_widget(form) }}
+        {% if edit_mode %}
+            <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
+        {% else %}
+            <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
+        {% endif %}
+        {{ form_row(form_photo.photo) }}
 
     {{ form_end(form) }}
+
+    <h2>{{ 'admin.animal.photos.title'|trans }}</h2>
+
+    {% if animal.animalPhotos is not empty %}
+        <div class="row">
+            {% for photo in animal.animalPhotos %}
+                <div class="col-md-3">
+                    <img src="{{ asset(photo.filename) }}" alt="{{ animal.animalName }}" class="img-thumbnail">
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>{{ 'admin.animal.photos.empty'|trans }}</p>
+    {% endif %}
 {% endblock %}
