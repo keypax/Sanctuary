@@ -11,3 +11,5 @@ admin.animal.list:
     title: Animals list
     button_edit: Edit
     button_add_new: Add new animal
+
+error_creating_directory: An error occurred while creating the directory
