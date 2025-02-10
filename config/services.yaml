@@ -6,8 +6,9 @@
 parameters:
     animal_photos_base_path_server: '%kernel.project_dir%/public/photos/animals/'
     animal_photos_base_path_web: '/photos/animals/'
-    animal_photos_thumbnail_max_size_medium: 800
-    animal_photos_thumbnail_max_size_small: 400
+    animal_photos_thumbnail_sizes:
+        - 800
+        - 400
     animal_photos_change_extension: true
     animal_photos_target_extension: 'jpg'
 
@@ -30,9 +31,20 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\AnimalPhotoService:
         arguments:
+            $fileUploader: '@App\Service\FileUploader\LocalFileSystemUploader'
+            $thumbnailGenerator: '@App\Service\ThumbnailGenerator\ImagineThumbnailGenerator'
             $basePathServer: '%animal_photos_base_path_server%'
             $basePathWeb: '%animal_photos_base_path_web%'
-            $thumbnailMaxSizeMedium: '%animal_photos_thumbnail_max_size_medium%'
-            $thumbnailMaxSizeSmall: '%animal_photos_thumbnail_max_size_small%'
+            $thumbnailSizes: '%animal_photos_thumbnail_sizes%'
             $changeExtension: '%animal_photos_change_extension%'
             $targetExtension: '%animal_photos_target_extension%'
+
+    App\Service\FileUploader\LocalFileSystemUploader: ~
+
+    App\Service\ThumbnailGenerator\ImagineThumbnailGenerator:
+        arguments:
+            $changeExtension: '%animal_photos_change_extension%'
+            $targetExtension: '%animal_photos_target_extension%'
+            $imagine: '@Imagine\Gd\Imagine'
+
+    Imagine\Gd\Imagine: ~
