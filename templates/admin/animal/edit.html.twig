@@ -1,43 +1,85 @@
-{# templates/admin/animal/edit.html.twig #}
 {% extends 'base.html.twig' %}
 
-    {% block title %}
-        {% if edit_mode %}
-            {{ 'admin.animal.edit.title'|trans }}
-        {% else %}
-            {{ 'admin.animal.add.title'|trans }}
-        {% endif %}
-    {% endblock %}
+{% block title %}
+    {% if edit_mode %}
+        {{ 'admin.animal.edit.title'|trans }}
+    {% else %}
+        {{ 'admin.animal.add.title'|trans }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    {% if edit_mode %}
-        <h1>{{ 'admin.animal.edit.title'|trans }}</h1>
-    {% else %}
-        <h1>{{ 'admin.animal.add.title'|trans }}</h1>
-    {% endif %}
+    <div class="main-content">
+        <div>
+            {% if edit_mode %}
+                <h1>{{ 'admin.animal.edit.title'|trans }}</h1>
+            {% else %}
+                <h1>{{ 'admin.animal.add.title'|trans }}</h1>
+            {% endif %}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {% if edit_mode %}
-            <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
-        {% else %}
-            <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
-        {% endif %}
-        {{ form_row(form_photo.photo) }}
+            {{ form_start(form) }}
 
-    {{ form_end(form) }}
+            <fieldset>
+                <legend>{{ 'admin.animal.form.group.basic_info'|trans }}</legend>
+                {{ form_row(form.animal_id) }}
+                {{ form_row(form.species) }}
+            </fieldset>
 
-    <h2>{{ 'admin.animal.photos.title'|trans }}</h2>
+            <fieldset>
+                <legend>{{ 'admin.animal.form.group.animal_details'|trans }}</legend>
+                {{ form_row(form.animal_name) }}
+                {{ form_row(form.breed) }}
+                {{ form_row(form.gender) }}
+                {{ form_row(form.birth_date) }}
+                {{ form_row(form.approximate_age) }}
+                {{ form_row(form.color) }}
+                {{ form_row(form.distinctive_marks) }}
+                {{ form_row(form.size) }}
+                {{ form_row(form.weight) }}
+            </fieldset>
 
-    {% if animal.animalPhotos is not empty %}
-        <div class="row">
-            {% for photo in animal.animalPhotos %}
-                <div class="col-md-3">
-                    <img src="{{ asset(photo.filename) }}" alt="{{ animal.animalName }}" class="img-thumbnail">
-                </div>
-            {% endfor %}
+            <fieldset>
+                <legend>{{ 'admin.animal.form.group.status_info'|trans }}</legend>
+                {{ form_row(form.admission_date) }}
+                {{ form_row(form.adoption_status) }}
+                {{ form_row(form.adoption_date) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ 'admin.animal.form.group.identification'|trans }}</legend>
+                {{ form_row(form.chip_number) }}
+                {{ form_row(form.description) }}
+            </fieldset>
+
+            {% if edit_mode %}
+                <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
+            {% else %}
+                <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
+            {% endif %}
+
+            {{ form_end(form) }}
         </div>
-    {% else %}
-        <p>{{ 'admin.animal.photos.empty'|trans }}</p>
-    {% endif %}
+
+        <div>
+            <h2>{{ 'admin.animal.photos.title'|trans }}</h2>
+
+            <div id="animal-photos">
+                {% if animal.animalPhotos is not empty %}
+                    {% for photo in animal.animalPhotos %}
+                        <div class="animal-photo">
+                            <img src="{{ asset(photo.filename) }}" alt="{{ animal.animalName }}" class="img-thumbnail">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>{{ 'admin.animal.photos.empty'|trans }}</p>
+                {% endif %}
+            </div>
+
+            <h3>{{ 'admin.animal.photos.add'|trans }}</h3>
+            {{ form_start(form_photo) }}
+            {{ form_row(form_photo.photo) }}
+            <button class="btn btn-secondary">{{ 'admin.animal.photos.upload'|trans }}</button>
+            {{ form_end(form_photo) }}
+        </div>
+    </div>
 {% endblock %}

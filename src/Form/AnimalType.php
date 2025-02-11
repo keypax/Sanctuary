@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,12 +13,17 @@ use Symfony\Component\Validator\Constraints\File;
 
 class AnimalType extends AbstractType
 {
+    public function __construct(private ParameterBagInterface $params) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('animal_id')
             ->add('animal_name')
-            ->add('species')
+            ->add('species', ChoiceType::class, [
+                'choices' => array_combine($this->params->get('animal_species'), $this->params->get('animal_species')),
+                'choice_translation_domain' => 'messages'
+            ])
             ->add('breed')
             ->add('gender')
             ->add('birth_date', null, [

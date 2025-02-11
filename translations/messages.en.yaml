@@ -13,3 +13,25 @@ admin.animal.list:
     button_add_new: Add new animal
 
 error_creating_directory: An error occurred while creating the directory
+
+'Other': 'Other'
+'Cat': 'Cat'
+'Dog': 'Dog'
+'Rabbit': 'Rabbit'
+'Guinea Pig': 'Guinea Pig'
+'Rat': 'Rat'
+'Mouse': 'Mouse'
+'Rodent (other)': 'Rodent (other)'
+'Parrot': 'Parrot'
+'Pigeon': 'Pigeon'
+'Bird (other)': 'Bird (other)'
+'Amphibian (other)': 'Amphibian (other)'
+'Fish (other)': 'Fish (other)'
+'Pig (other)': 'Pig (other)'
+'Goat (other)': 'Goat (other)'
+'Sheep (other)': 'Sheep (other)'
+'Chicken (other)': 'Chicken (other)'
+'Turtle (other)': 'Turtle (other)'
+'Tortoise (other)': 'Tortoise (other)'
+'Snake (other)': 'Snake (other)'
+'Lizard (other)': 'Lizard (other)'

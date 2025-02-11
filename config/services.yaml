@@ -11,6 +11,28 @@ parameters:
         - 400
     animal_photos_change_extension: true
     animal_photos_target_extension: 'jpg'
+    animal_species:
+        - 'Other'
+        - 'Cat'
+        - 'Dog'
+        - 'Rabbit'
+        - 'Guinea Pig'
+        - 'Rat'
+        - 'Mouse'
+        - 'Rodent (other)'
+        - 'Parrot'
+        - 'Pigeon'
+        - 'Bird (other)'
+        - 'Amphibian (other)'
+        - 'Fish (other)'
+        - 'Pig (other)'
+        - 'Goat (other)'
+        - 'Sheep (other)'
+        - 'Chicken (other)'
+        - 'Turtle (other)'
+        - 'Tortoise (other)'
+        - 'Snake (other)'
+        - 'Lizard (other)'
 
 services:
     # default configuration for services in *this* file
