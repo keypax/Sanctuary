@@ -2,9 +2,9 @@
 
 {% block title %}
     {% if edit_mode %}
-        {{ 'admin.animal.edit.title'|trans }}
+        {{ 'animal.edit.title'|trans }}
     {% else %}
-        {{ 'admin.animal.add.title'|trans }}
+        {{ 'animal.add.title'|trans }}
     {% endif %}
 {% endblock %}
 
@@ -12,30 +12,30 @@
     <div class="main-content">
         <div>
             {% if edit_mode %}
-                <h1>{{ 'admin.animal.edit.title'|trans }}</h1>
+                <h1>{{ 'animal.edit.title'|trans }}</h1>
             {% else %}
-                <h1>{{ 'admin.animal.add.title'|trans }}</h1>
+                <h1>{{ 'animal.add.title'|trans }}</h1>
             {% endif %}
 
             {{ form_start(form) }}
 
             <fieldset>
-                <legend>{{ 'admin.animal.form.group.required_info'|trans }}</legend>
-                <div class="admin_form_group">
-                    <div class="admin_form_group_item">
+                <legend>{{ 'animal.form.group.required_info'|trans }}</legend>
+                <div class="form_group">
+                    <div class="form_group_item">
                         {{ form_row(form.animal_id) }}
                     </div>
-                    <div class="admin_form_group_item">
+                    <div class="form_group_item">
                         {{ form_row(form.species) }}
                     </div>
-                    <div class="admin_form_group_item">
+                    <div class="form_group_item">
                         {{ form_row(form.admission_date) }}
                     </div>
                 </div>
             </fieldset>
 
             <fieldset>
-                <legend>{{ 'admin.animal.form.group.animal_details'|trans }}</legend>
+                <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
                 {{ form_row(form.animal_name) }}
                 {{ form_row(form.breed) }}
                 {{ form_row(form.gender) }}
@@ -48,28 +48,28 @@
             </fieldset>
 
             <fieldset>
-                <legend>{{ 'admin.animal.form.group.status_info'|trans }}</legend>
+                <legend>{{ 'animal.form.group.status_info'|trans }}</legend>
                 {{ form_row(form.adoption_status) }}
                 {{ form_row(form.adoption_date) }}
             </fieldset>
 
             <fieldset>
-                <legend>{{ 'admin.animal.form.group.identification'|trans }}</legend>
+                <legend>{{ 'animal.form.group.identification'|trans }}</legend>
                 {{ form_row(form.chip_number) }}
                 {{ form_row(form.description) }}
             </fieldset>
 
             {% if edit_mode %}
-                <button class="btn btn-primary">{{ 'admin.animal.edit.button'|trans }}</button>
+                <button class="btn btn-primary">{{ 'animal.edit.button'|trans }}</button>
             {% else %}
-                <button class="btn btn-primary">{{ 'admin.animal.add.button'|trans }}</button>
+                <button class="btn btn-primary">{{ 'animal.add.button'|trans }}</button>
             {% endif %}
 
             {{ form_end(form) }}
         </div>
 
         <div>
-            <h2>{{ 'admin.animal.photos.title'|trans }}</h2>
+            <h2>{{ 'animal.photos.title'|trans }}</h2>
 
             <div id="animal-photos">
                 {% if animal.animalPhotos is not empty %}
@@ -79,14 +79,14 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p>{{ 'admin.animal.photos.empty'|trans }}</p>
+                    <p>{{ 'animal.photos.empty'|trans }}</p>
                 {% endif %}
             </div>
 
-            <h3>{{ 'admin.animal.photos.add'|trans }}</h3>
+            <h3>{{ 'animal.photos.add'|trans }}</h3>
             {{ form_start(form_photo) }}
             {{ form_row(form_photo.photo) }}
-            <button class="btn btn-secondary">{{ 'admin.animal.photos.upload'|trans }}</button>
+            <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
             {{ form_end(form_photo) }}
         </div>
     </div>

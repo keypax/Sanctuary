@@ -2,12 +2,12 @@ body {
 
 }
 
-.admin_form_group {
+.form_group {
     display: flex;
     width: 100%;
 }
 
-.admin_form_group .admin_form_group_item {
+.form_group .form_group_item {
     width: 50%;
     padding: 10px;
 }

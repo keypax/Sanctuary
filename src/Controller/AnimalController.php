@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Form\AnimalPhotoType;
@@ -12,9 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/admin/animal', name: 'admin_animal_')]
+#[Route('/animal', name: 'animal_')]
 class AnimalController extends AbstractController
 {
     function __construct(private AnimalPhotoService $animalPhotoService) {}
@@ -60,7 +59,7 @@ class AnimalController extends AbstractController
 
                 if (!$animalPhoto) {
                     $this->addFlash('error', 'Nie udało się zapisać zdjęcia.');
-                    return $this->redirectToRoute('admin_animal_index');
+                    return $this->redirectToRoute('animal_index');
                 }
             }
 
@@ -74,10 +73,10 @@ class AnimalController extends AbstractController
 
             //$this->addFlash('success', $flashMessage);
 
-            return $this->redirectToRoute('admin_animal_index');
+            return $this->redirectToRoute('animal_index');
         }
 
-        return $this->render('admin/animal/edit.html.twig', [
+        return $this->render('animal/edit.html.twig', [
             'form' => $form->createView(),
             'form_photo' => $formPhoto->createView(),
             'animal' => $animal ?? null,
@@ -90,7 +89,7 @@ class AnimalController extends AbstractController
     {
         $animals = $entityManager->getRepository(Animal::class)->findAll();
 
-        return $this->render('admin/animal/index.html.twig', [
+        return $this->render('animal/index.html.twig', [
             'animals' => $animals,
         ]);
     }

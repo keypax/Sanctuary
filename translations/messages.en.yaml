@@ -1,4 +1,4 @@
-admin.animal:
+animal:
     add:
         title: Add new animal
         button: Add animal
@@ -9,7 +9,7 @@ admin.animal:
         group:
             required_info: Required information
 
-admin.animal.list:
+animal.list:
     empty: No animals found
     title: Animals list
     button_edit: Edit
