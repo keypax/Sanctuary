@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Animal;
 use App\Form\AnimalPhotoType;
 use App\Form\AnimalType;
+use App\Service\AnimalIdProvider\NextAnimalIdProviderInterface;
 use App\Service\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/animal', name: 'admin_animal_')]
 class AnimalController extends AbstractController
 {
-    function __construct(private AnimalPhotoService $animalPhotoService)
-    {
-
-    }
+    function __construct(private AnimalPhotoService $animalPhotoService) {}
 
     #[Route('/edit/{animal_id}', name: 'edit', defaults: ['animal_id' => null])]
-    public function manageAnimal(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, string $animal_id = null): Response
+    public function manageAnimal(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        NextAnimalIdProviderInterface $nextAnimalIdProvider,
+        string $animal_id = null
+    ): Response
     {
         $editMode = false;
         if ($animal_id) {
@@ -32,11 +35,9 @@ class AnimalController extends AbstractController
             if (!$animal) {
                 throw $this->createNotFoundException('Animal not found');
             }
-
-            $flashMessage = 'Animal updated successfully!';
         } else {
             $animal = new Animal();
-            $flashMessage = 'Animal created successfully!';
+            $animal->setAnimalId($nextAnimalIdProvider->GetNextId());
         }
 
         $form = $this->createForm(AnimalType::class, $animal);
@@ -45,9 +46,9 @@ class AnimalController extends AbstractController
         $form->handleRequest($request);
         $formPhoto->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //change "/" to "-"
             $currentAnimalId = $animal->getAnimalId();
 
+            //change "/" to "-"
             if ($currentAnimalId) {
                 $newAnimalId = str_replace('/', '-', $currentAnimalId);
                 $animal->setAnimalId($newAnimalId);
@@ -63,10 +64,15 @@ class AnimalController extends AbstractController
                 }
             }
 
+            if (!$editMode)
+            {
+                $nextAnimalIdProvider->incrementId();
+            }
+
             $entityManager->persist($animal);
             $entityManager->flush();
 
-            $this->addFlash('success', $flashMessage);
+            //$this->addFlash('success', $flashMessage);
 
             return $this->redirectToRoute('admin_animal_index');
         }

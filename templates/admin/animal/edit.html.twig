@@ -20,9 +20,18 @@
             {{ form_start(form) }}
 
             <fieldset>
-                <legend>{{ 'admin.animal.form.group.basic_info'|trans }}</legend>
-                {{ form_row(form.animal_id) }}
-                {{ form_row(form.species) }}
+                <legend>{{ 'admin.animal.form.group.required_info'|trans }}</legend>
+                <div class="admin_form_group">
+                    <div class="admin_form_group_item">
+                        {{ form_row(form.animal_id) }}
+                    </div>
+                    <div class="admin_form_group_item">
+                        {{ form_row(form.species) }}
+                    </div>
+                    <div class="admin_form_group_item">
+                        {{ form_row(form.admission_date) }}
+                    </div>
+                </div>
             </fieldset>
 
             <fieldset>
@@ -40,7 +49,6 @@
 
             <fieldset>
                 <legend>{{ 'admin.animal.form.group.status_info'|trans }}</legend>
-                {{ form_row(form.admission_date) }}
                 {{ form_row(form.adoption_status) }}
                 {{ form_row(form.adoption_date) }}
             </fieldset>

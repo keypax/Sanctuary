@@ -5,6 +5,9 @@ admin.animal:
     edit:
         title: Edit animal
         button: Save changes
+    form:
+        group:
+            required_info: Required information
 
 admin.animal.list:
     empty: No animals found
@@ -25,13 +28,13 @@ error_creating_directory: An error occurred while creating the directory
 'Parrot': 'Parrot'
 'Pigeon': 'Pigeon'
 'Bird (other)': 'Bird (other)'
-'Amphibian (other)': 'Amphibian (other)'
-'Fish (other)': 'Fish (other)'
-'Pig (other)': 'Pig (other)'
-'Goat (other)': 'Goat (other)'
-'Sheep (other)': 'Sheep (other)'
-'Chicken (other)': 'Chicken (other)'
-'Turtle (other)': 'Turtle (other)'
-'Tortoise (other)': 'Tortoise (other)'
-'Snake (other)': 'Snake (other)'
-'Lizard (other)': 'Lizard (other)'
+'Amphibian': 'Amphibian'
+'Fish': 'Fish'
+'Pig': 'Pig'
+'Goat': 'Goat'
+'Sheep': 'Sheep'
+'Chicken': 'Chicken'
+'Turtle': 'Turtle'
+'Tortoise': 'Tortoise'
+'Snake': 'Snake'
+'Lizard': 'Lizard'
