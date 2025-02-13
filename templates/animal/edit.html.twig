@@ -17,34 +17,33 @@
 
             {{ form_errors(form) }}
 
+
             <fieldset>
-                <legend>{{ 'animal.form.group.required_info'|trans }}</legend>
+                <legend>Required information</legend>
                 <div class="form_group">
                     <div class="form_group_item">
-                        {{ form_row(form.animal_id) }}
+                        <div>{{ form_row(form.animal_id) }}</div>
+                        <div>{{ form_row(form.admission_date) }}</div>
                     </div>
                     <div class="form_group_item">
-                        {{ form_row(form.species) }}
-                    </div>
-                    <div class="form_group_item">
-                        {{ form_row(form.admission_date) }}
+                        <div>{{ form_row(form.species) }}</div>
+                        <div id="breed-field-wrapper">{{ form_row(form.breed, {'attr': {'id': 'animal_breed'}}) }}</div>
                     </div>
                 </div>
             </fieldset>
 
             <fieldset>
                 <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
-                {{ form_row(form.animal_name) }}
-                <div id="breed-field-wrapper">
-                    {{ form_row(form.breed, {'attr': {'id': 'animal_breed'}}) }}
+                <div class="form_group">
+                    {{ form_row(form.animal_name) }}
+                    {{ form_row(form.gender) }}
+                    {{ form_row(form.birth_date) }}
+                    {{ form_row(form.approximate_age) }}
+                    {{ form_row(form.color) }}
+                    {{ form_row(form.distinctive_marks) }}
+                    {{ form_row(form.size) }}
+                    {{ form_row(form.weight) }}
                 </div>
-                {{ form_row(form.gender) }}
-                {{ form_row(form.birth_date) }}
-                {{ form_row(form.approximate_age) }}
-                {{ form_row(form.color) }}
-                {{ form_row(form.distinctive_marks) }}
-                {{ form_row(form.size) }}
-                {{ form_row(form.weight) }}
             </fieldset>
 
             <fieldset>

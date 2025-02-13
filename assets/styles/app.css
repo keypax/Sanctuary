@@ -3,11 +3,24 @@ body {
 }
 
 .form_group {
-    display: flex;
     width: 100%;
+    margin: 0 auto;
 }
 
-.form_group .form_group_item {
-    width: 50%;
+.form_group_item {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
     padding: 10px;
+    margin-bottom: 10px;
+}
+
+.form_group_item > div {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+}
+
+.form_group_item input, select {
+    width:90%;
 }
