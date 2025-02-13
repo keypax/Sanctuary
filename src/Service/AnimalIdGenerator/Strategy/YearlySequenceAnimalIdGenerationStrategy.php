@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Service\AnimalIdProvider;
+namespace App\Service\AnimalIdGenerator\Strategy;
 
 use App\Entity\AnimalIdByYear;
+use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class YearlySeqAnimalProvider implements NextAnimalIdProviderInterface
+class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGenerationStrategyInterface
 {
     public function __construct(private EntityManagerInterface $entityManager) {}
 
     /**
      * @return string The next animal id in the format {id}/{year}. Example: 1/2025, 53/2024
      */
-    public function getNextId(): string
+    public function proposeNextId(): string
     {
         $animalIdByYear = $this->getAnimalIdByYear();
         if ($animalIdByYear == null) {

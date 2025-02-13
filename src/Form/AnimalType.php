@@ -24,7 +24,9 @@ class AnimalType extends AbstractType
                 'choices' => array_combine($this->params->get('animal_species'), $this->params->get('animal_species')),
                 'choice_translation_domain' => 'messages'
             ])
-            ->add('breed')
+            ->add('breed', ChoiceType::class, [
+
+            ])
             ->add('gender')
             ->add('birth_date', null, [
                 'widget' => 'single_text',

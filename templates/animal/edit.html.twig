@@ -11,13 +11,11 @@
 {% block body %}
     <div class="main-content">
         <div>
-            {% if edit_mode %}
-                <h1>{{ 'animal.edit.title'|trans }}</h1>
-            {% else %}
-                <h1>{{ 'animal.add.title'|trans }}</h1>
-            {% endif %}
+            <h1>{{ edit_mode ? 'animal.edit.title'|trans : 'animal.add.title'|trans }}</h1>
 
             {{ form_start(form) }}
+
+            {{ form_errors(form) }}
 
             <fieldset>
                 <legend>{{ 'animal.form.group.required_info'|trans }}</legend>
@@ -37,7 +35,9 @@
             <fieldset>
                 <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
                 {{ form_row(form.animal_name) }}
-                {{ form_row(form.breed) }}
+                <div id="breed-field-wrapper">
+                    {{ form_row(form.breed, {'attr': {'id': 'animal_breed'}}) }}
+                </div>
                 {{ form_row(form.gender) }}
                 {{ form_row(form.birth_date) }}
                 {{ form_row(form.approximate_age) }}
@@ -90,4 +90,63 @@
             {{ form_end(form_photo) }}
         </div>
     </div>
+
+
+    <script>
+        $(document).ready(function() {
+            function updateBreeds(species) {
+                $.ajax({
+                    url: '/breed/list_by_species/' + species,
+                    dataType: 'json',
+                    success: function(data) {
+                        var breedSelect = $('#animal_breed');
+                        var breedFieldWrapper = $('#breed-field-wrapper');
+                        breedSelect.empty();
+
+                        if (data.length === 0) {
+                            breedFieldWrapper.hide();
+                        } else {
+                            breedFieldWrapper.show();
+                            breedSelect.append($('<option>', {
+                                value: '',
+                                text: ''
+                            }));
+                            $.each(data, function(index, breed) {
+                                breedSelect.append($('<option>', {
+                                    value: breed,
+                                    text: breed
+                                }));
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error while requesting breeds.', textStatus, errorThrown);
+                    }
+                });
+            }
+
+            var speciesSelect = $('#animal_species');
+            var initialSpecies = speciesSelect.val();
+            if (initialSpecies) {
+                updateBreeds(initialSpecies);
+            }
+
+            speciesSelect.change(function() {
+                var selectedSpecies = $(this).val();
+                if (selectedSpecies) {
+                    updateBreeds(selectedSpecies);
+                } else {
+                    $('#breed-field-wrapper').hide();
+                    var breedSelect = $('#animal_breed');
+                    breedSelect.empty();
+                    breedSelect.append($('<option>', {
+                        value: '',
+                        text: ''
+                    }));
+                }
+            });
+        });
+    </script>
+
+
 {% endblock %}

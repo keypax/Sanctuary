@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Form\AnimalPhotoType;
 use App\Form\AnimalType;
-use App\Service\AnimalIdProvider\NextAnimalIdProviderInterface;
+use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use App\Service\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +20,10 @@ class AnimalController extends AbstractController
 
     #[Route('/edit/{animal_id}', name: 'edit', defaults: ['animal_id' => null])]
     public function manageAnimal(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        NextAnimalIdProviderInterface $nextAnimalIdProvider,
-        string $animal_id = null
+        Request                             $request,
+        EntityManagerInterface              $entityManager,
+        AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,
+        string                              $animal_id = null
     ): Response
     {
         $editMode = false;
@@ -36,7 +36,7 @@ class AnimalController extends AbstractController
             }
         } else {
             $animal = new Animal();
-            $animal->setAnimalId($nextAnimalIdProvider->GetNextId());
+            $animal->setAnimalId($nextAnimalIdProvider->proposeNextId());
         }
 
         $form = $this->createForm(AnimalType::class, $animal);
