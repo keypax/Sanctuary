@@ -14,9 +14,7 @@
             <h1>{{ edit_mode ? 'animal.edit.title'|trans : 'animal.add.title'|trans }}</h1>
 
             {{ form_start(form) }}
-
             {{ form_errors(form) }}
-
 
             <fieldset>
                 <legend>Required information</legend>
@@ -27,7 +25,11 @@
                     </div>
                     <div class="form_group_item">
                         <div>{{ form_row(form.species) }}</div>
-                        <div id="breed-field-wrapper">{{ form_row(form.breed, {'attr': {'id': 'animal_breed'}}) }}</div>
+                        <div id="breed-field-wrapper">
+                            <label for="{{ form.breed.vars.id }}">Breed</label>
+                            {{ form_widget(form.breed) }}
+                            <datalist id="breed-list"></datalist>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -69,7 +71,6 @@
 
         <div>
             <h2>{{ 'animal.photos.title'|trans }}</h2>
-
             <div id="animal-photos">
                 {% if animal.animalPhotos is not empty %}
                     {% for photo in animal.animalPhotos %}
@@ -90,7 +91,6 @@
         </div>
     </div>
 
-
     <script>
         $(document).ready(function() {
             function updateBreeds(species) {
@@ -98,23 +98,11 @@
                     url: '/breed/list_by_species/' + species,
                     dataType: 'json',
                     success: function(data) {
-                        var breedSelect = $('#animal_breed');
-                        var breedFieldWrapper = $('#breed-field-wrapper');
-                        breedSelect.empty();
-
-                        if (data.length === 0) {
-                            breedFieldWrapper.hide();
-                        } else {
-                            breedFieldWrapper.show();
-                            breedSelect.append($('<option>', {
-                                value: '',
-                                text: ''
-                            }));
+                        var datalist = $('#breed-list');
+                        datalist.empty();
+                        if(data.length > 0) {
                             $.each(data, function(index, breed) {
-                                breedSelect.append($('<option>', {
-                                    value: breed,
-                                    text: breed
-                                }));
+                                datalist.append($('<option>', { value: breed }));
                             });
                         }
                     },
@@ -123,29 +111,19 @@
                     }
                 });
             }
-
             var speciesSelect = $('#animal_species');
             var initialSpecies = speciesSelect.val();
             if (initialSpecies) {
                 updateBreeds(initialSpecies);
             }
-
             speciesSelect.change(function() {
                 var selectedSpecies = $(this).val();
                 if (selectedSpecies) {
                     updateBreeds(selectedSpecies);
                 } else {
-                    $('#breed-field-wrapper').hide();
-                    var breedSelect = $('#animal_breed');
-                    breedSelect.empty();
-                    breedSelect.append($('<option>', {
-                        value: '',
-                        text: ''
-                    }));
+                    $('#breed-list').empty();
                 }
             });
         });
     </script>
-
-
 {% endblock %}
