@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit_mode %}
+        {{ 'animal.edit.title'|trans }}
+    {% else %}
+        {{ 'animal.add.title'|trans }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+        <div>
+            <h1>{{ edit_mode ? 'animal.edit.title'|trans : 'animal.add.title'|trans }}</h1>
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <fieldset>
+                <legend>Required information</legend>
+                <div class="form_group">
+                    <div class="form_group_item">
+                        <div>{{ form_row(form.animal_id) }}</div>
+                        <div>{{ form_row(form.admission_date) }}</div>
+                    </div>
+                    <div class="form_group_item">
+                        <div>{{ form_row(form.species) }}</div>
+                        <div id="breed-field-wrapper">
+                            <label for="{{ form.breed.vars.id }}">Breed</label>
+                            {{ form_widget(form.breed) }}
+                            <datalist id="breed-list"></datalist>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
+                <div class="form_group">
+                    {{ form_row(form.animal_name) }}
+                    {{ form_row(form.gender) }}
+                    {{ form_row(form.birth_date) }}
+                    {{ form_row(form.approximate_age) }}
+                    {{ form_row(form.color) }}
+                    {{ form_row(form.distinctive_marks) }}
+                    {{ form_row(form.size) }}
+                    {{ form_row(form.weight) }}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ 'animal.form.group.status_info'|trans }}</legend>
+                {{ form_row(form.adoption_status) }}
+                {{ form_row(form.adoption_date) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ 'animal.form.group.identification'|trans }}</legend>
+                {{ form_row(form.chip_number) }}
+                {{ form_row(form.description) }}
+            </fieldset>
+
+            {% if edit_mode %}
+                <button class="btn btn-primary">{{ 'animal.edit.button'|trans }}</button>
+            {% else %}
+                <button class="btn btn-primary">{{ 'animal.add.button'|trans }}</button>
+            {% endif %}
+
+            {{ form_end(form) }}
+        </div>
+
+        <div>
+            <h2>{{ 'animal.photos.title'|trans }}</h2>
+            <div id="animal-photos">
+                {% if animal.animalPhotos is not empty %}
+                    {% for photo in animal.animalPhotos %}
+                        <div class="animal-photo">
+                            <img src="{{ asset(photo.filename) }}" alt="{{ animal.animalName }}" class="img-thumbnail">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>{{ 'animal.photos.empty'|trans }}</p>
+                {% endif %}
+            </div>
+
+            <h3>{{ 'animal.photos.add'|trans }}</h3>
+            {{ form_start(form_photo) }}
+            {{ form_row(form_photo.photo) }}
+            <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
+            {{ form_end(form_photo) }}
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            function updateBreeds(species) {
+                $.ajax({
+                    url: '/breed/list_by_species/' + species,
+                    dataType: 'json',
+                    success: function(data) {
+                        var datalist = $('#breed-list');
+                        datalist.empty();
+                        if(data.length > 0) {
+                            $.each(data, function(index, breed) {
+                                datalist.append($('<option>', { value: breed }));
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error while requesting breeds.', textStatus, errorThrown);
+                    }
+                });
+            }
+            var speciesSelect = $('#animal_species');
+            var initialSpecies = speciesSelect.val();
+            if (initialSpecies) {
+                updateBreeds(initialSpecies);
+            }
+            speciesSelect.change(function() {
+                var selectedSpecies = $(this).val();
+                if (selectedSpecies) {
+                    updateBreeds(selectedSpecies);
+                } else {
+                    $('#breed-list').empty();
+                }
+            });
+        });
+    </script>
+{% endblock %}

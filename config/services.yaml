@@ -4,6 +4,79 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    animal_photos_base_path_server: '%kernel.project_dir%/public/photos/animals/'
+    animal_photos_base_path_web: '/photos/animals/'
+    animal_photos_thumbnail_sizes:
+        - 800
+        - 400
+    animal_photos_change_extension: true
+    animal_photos_target_extension: 'jpg'
+    animal_species:
+        - 'Other'
+        - 'Cat'
+        - 'Dog'
+        - 'Rabbit'
+        - 'Guinea Pig'
+        - 'Rat'
+        - 'Mouse'
+        - 'Rodent (other)'
+        - 'Parrot'
+        - 'Pigeon'
+        - 'Bird (other)'
+        - 'Amphibian'
+        - 'Fish'
+        - 'Pig'
+        - 'Goat'
+        - 'Sheep'
+        - 'Chicken'
+        - 'Turtle'
+        - 'Tortoise'
+        - 'Snake'
+        - 'Lizard'
+
+    breeds:
+        'Cat':
+            - 'Maine Coon'
+            - 'Ragdoll'
+            - 'British Shorthair'
+            - 'Persian'
+            - 'Siamese'
+            - 'American Shorthair'
+            - 'Bengal'
+            - 'Sphynx'
+            - 'Abyssinian'
+            - 'Russian Blue'
+        'Dog':
+            - 'French Bulldog'
+            - 'Labrador Retriever'
+            - 'Golden Retriever'
+            - 'German Shepherd'
+            - 'Poodle'
+            - 'Bulldog'
+            - 'Rottweiler'
+            - 'Beagle'
+            - 'Dachshund'
+            - 'German Shorthaired Pointer'
+            - 'Yorkshire Terrier'
+            - 'Boxer'
+            - 'Doberman Pinscher'
+            - 'Siberian Husky'
+            - 'Australian Shepherd'
+            - 'Shih Tzu'
+            - 'Miniature Schnauzer'
+            - 'Cavalier King Charles Spaniel'
+            - 'Bernese Mountain Dog'
+            - 'Great Dane'
+            - 'Pomeranian'
+            - 'Pembroke Welsh Corgi'
+            - 'Boston Terrier'
+            - 'Havanese'
+            - 'Maltese'
+            - 'Shetland Sheepdog'
+            - 'Brittany'
+            - 'English Springer Spaniel'
+            - 'Vizsla'
+            - 'Weimaraner'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +95,26 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\AnimalPhotoService:
+        arguments:
+            $fileUploader: '@App\Service\FileUploader\LocalFileSystemUploader'
+            $thumbnailGenerator: '@App\Service\ThumbnailGenerator\ImagineThumbnailGenerator'
+            $basePathServer: '%animal_photos_base_path_server%'
+            $basePathWeb: '%animal_photos_base_path_web%'
+            $thumbnailSizes: '%animal_photos_thumbnail_sizes%'
+            $changeExtension: '%animal_photos_change_extension%'
+            $targetExtension: '%animal_photos_target_extension%'
+
+    App\Service\BreedsProvider\BreedsProvider:
+        arguments:
+            $allBreeds: '%breeds%'
+
+    App\Service\FileUploader\LocalFileSystemUploader: ~
+
+    App\Service\ThumbnailGenerator\ImagineThumbnailGenerator:
+        arguments:
+            $changeExtension: '%animal_photos_change_extension%'
+            $targetExtension: '%animal_photos_target_extension%'
+            $imagine: '@Imagine\Gd\Imagine'
+
+    Imagine\Gd\Imagine: ~

@@ -1,13 +1,40 @@
-admin.animal:
+animal:
     add:
         title: Add new animal
         button: Add animal
     edit:
         title: Edit animal
         button: Save changes
+    form:
+        group:
+            required_info: Required information
 
-admin.animal.list:
+animal.list:
     empty: No animals found
     title: Animals list
     button_edit: Edit
     button_add_new: Add new animal
+
+error_creating_directory: An error occurred while creating the directory
+
+'Other': 'Other'
+'Cat': 'Cat'
+'Dog': 'Dog'
+'Rabbit': 'Rabbit'
+'Guinea Pig': 'Guinea Pig'
+'Rat': 'Rat'
+'Mouse': 'Mouse'
+'Rodent (other)': 'Rodent (other)'
+'Parrot': 'Parrot'
+'Pigeon': 'Pigeon'
+'Bird (other)': 'Bird (other)'
+'Amphibian': 'Amphibian'
+'Fish': 'Fish'
+'Pig': 'Pig'
+'Goat': 'Goat'
+'Sheep': 'Sheep'
+'Chicken': 'Chicken'
+'Turtle': 'Turtle'
+'Tortoise': 'Tortoise'
+'Snake': 'Snake'
+'Lizard': 'Lizard'
