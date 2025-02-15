@@ -8,17 +8,25 @@ animal:
     form:
         group:
             required_info: Required information
-
-animal.list:
-    empty: No animals found
-    title: Animals list
-    button_edit: Edit
-    button_add_new: Add new animal
+            physical_attributes: Physical attributes
+    list:
+        empty: No animals found
+        title: Animals list
+        button_edit: Edit
+        button_add_new: Add new animal
+    size:
+        very_small : Very small
+        small: Small
+        medium: Medium
+        large: Large
+        very_large: Very large
 
 gender:
     unknown: Unknown
     male: Male
     female: Female
+
+weight_in_grams: Weight (in grams)
 
 error_creating_directory: An error occurred while creating the directory
 

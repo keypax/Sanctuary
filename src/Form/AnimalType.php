@@ -8,16 +8,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Type;
 
 class AnimalType extends AbstractType
 {
     public function __construct(
         private ParameterBagInterface $params,
-        private BreedsProviderInterface $breedsProvider
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -52,7 +53,17 @@ class AnimalType extends AbstractType
             ->add('description')
             ->add('color')
             ->add('distinctive_marks')
-            ->add('size')
+            ->add('size', ChoiceType::class, [
+                'choices' => [
+                    'animal.size.very_small' => 0,
+                    'animal.size.small' => 1,
+                    'animal.size.medium' => 2,
+                    'animal.size.large' => 3,
+                    'animal.size.very_large' => 4,
+                ],
+                'choice_translation_domain' => 'messages',
+                'required' => true,
+            ])
             ->add('admission_date', null, [
                 'widget' => 'single_text',
             ])
@@ -61,7 +72,15 @@ class AnimalType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('chip_number')
-            ->add('weight')
+            ->add('weight', NumberType::class, [
+                'label' => 'weight_in_grams',
+                'html5' => true,
+                'attr' => [
+                    'min' => '0',
+                    'step' => '1000',
+                    'inputmode' => 'numeric', 'pattern' => '\d+(\.\d+)?'
+                ],
+            ])
             ->add('animal_photos', CollectionType::class, [
                 'entry_type' => AnimalPhotoType::class,
                 'label' => 'Zdjęcia',

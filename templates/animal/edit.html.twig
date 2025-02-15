@@ -35,21 +35,22 @@
             </fieldset>
 
             <fieldset>
-                <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
+                <legend>{{ 'animal.form.group.physical_attributes'|trans }}</legend>
                 <div class="form_group">
-                    {{ form_row(form.animal_name) }}
                     {{ form_row(form.gender) }}
-                    {{ form_row(form.birth_date) }}
                     {{ form_row(form.approximate_age) }}
                     {{ form_row(form.color) }}
                     {{ form_row(form.distinctive_marks) }}
                     {{ form_row(form.size) }}
                     {{ form_row(form.weight) }}
+                    <label id="weight-in-kg"></label>
                 </div>
             </fieldset>
 
             <fieldset>
                 <legend>{{ 'animal.form.group.status_info'|trans }}</legend>
+                {{ form_row(form.animal_name) }}
+                {{ form_row(form.birth_date) }}
                 {{ form_row(form.adoption_status) }}
                 {{ form_row(form.adoption_date) }}
             </fieldset>
@@ -123,6 +124,24 @@
                 } else {
                     $('#breed-list').empty();
                 }
+            });
+        });
+
+        function updateWeightLabel() {
+            var grams = parseFloat($('#animal_weight').val());
+            if (!isNaN(grams)) {
+                var kilograms = grams / 1000;
+                $('#weight-in-kg').text(kilograms + ' kg');
+            } else {
+                $('#weight-in-kg').text('0 kg');
+            }
+        }
+
+        $(document).ready(function() {
+            updateWeightLabel();
+
+            $('#animal_weight').on('input change', function() {
+                updateWeightLabel();
             });
         });
     </script>
