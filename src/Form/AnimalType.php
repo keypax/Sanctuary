@@ -36,7 +36,15 @@ class AnimalType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('gender')
+            ->add('gender', ChoiceType::class, [
+                'choices' => [
+                    'gender.unknown' => 0,
+                    'gender.male' => 1,
+                    'gender.female' => 2,
+                ],
+                'choice_translation_domain' => 'messages',
+                'required' => true,
+            ])
             ->add('birth_date', null, [
                 'widget' => 'single_text',
             ])
@@ -57,10 +65,10 @@ class AnimalType extends AbstractType
             ->add('animal_photos', CollectionType::class, [
                 'entry_type' => AnimalPhotoType::class,
                 'label' => 'Zdjęcia',
-                'allow_add' => true, // Pozwala na dodawanie nowych elementów do kolekcji
-                'allow_delete' => true, // Pozwala na usuwanie elementów z kolekcji
-                'prototype' => true, // Włącza prototyp dla JavaScript (jeśli chcesz dynamicznie dodawać pola)
-                'by_reference' => false, // Ważne, aby kolekcja była poprawnie aktualizowana
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false,
                 'required' => false,
                 'entry_options' => ['label' => false],
             ])

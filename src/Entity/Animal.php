@@ -29,7 +29,7 @@ class Animal
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $breed = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0])]
     private ?int $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
