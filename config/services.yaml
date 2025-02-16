@@ -76,6 +76,13 @@ parameters:
             - 'English Springer Spaniel'
             - 'Vizsla'
             - 'Weimaraner'
+    adoption_status:
+        available: 0
+        pending_adoption: 1
+        adopted: 2
+        on_hold: 3
+        unavailable: 4
+        deceased: 5
 
 services:
     # default configuration for services in *this* file

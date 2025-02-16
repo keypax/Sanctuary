@@ -9,6 +9,8 @@ animal:
         group:
             required_info: Required information
             physical_attributes: Physical attributes
+            info_for_adoption: Information for adoption
+            identification: Identification
     list:
         empty: No animals found
         title: Animals list
@@ -27,6 +29,40 @@ gender:
     female: Female
 
 weight_in_grams: Weight (in grams)
+approximate_age:
+    label: Approximate age at moment of last update
+    less_than_week: less than a week
+    1_2_weeks: 1-2 weeks
+    2_4_weeks: 2-4 weeks
+    1_month: 1 month
+    2_months: 2 months
+    3_months: 3 months
+    4_months: 4 months
+    5_months: 5 months
+    6_months: 6 months
+    7_months: 7 months
+    8_months: 8 months
+    9_months: 9 months
+    10_months: 10 months
+    11_months: 11 months
+    1_year: 1 year
+    1_2_years: 1-2 years
+    2_3_years: 2-3 years
+    3_4_years: 3-4 years
+    4_5_years: 4-5 years
+    5_7_years: 5-7 years
+    7_10_years: 7-10 years
+    senior: Senior (10+ years)
+size.label: Expected adult size
+adoption_status.label: Adoption status
+
+available: Available
+pending_adoption: Pending adoption
+adopted: Adopted
+on_hold: On hold
+unavailable: Unavailable
+deceased: Deceased
+
 
 error_creating_directory: An error occurred while creating the directory
 

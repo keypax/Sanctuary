@@ -34,7 +34,7 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="resize_children">
                 <legend>{{ 'animal.form.group.physical_attributes'|trans }}</legend>
                 <div class="form_group">
                     {{ form_row(form.gender) }}
@@ -42,20 +42,22 @@
                     {{ form_row(form.color) }}
                     {{ form_row(form.distinctive_marks) }}
                     {{ form_row(form.size) }}
-                    {{ form_row(form.weight) }}
-                    <label id="weight-in-kg"></label>
+                    <div>
+                        {{ form_row(form.weight) }}
+                        <label id="weight-in-kg"></label>
+                    </div>
                 </div>
             </fieldset>
 
-            <fieldset>
-                <legend>{{ 'animal.form.group.status_info'|trans }}</legend>
+            <fieldset class="resize_children">
+                <legend>{{ 'animal.form.group.info_for_adoption'|trans }}</legend>
                 {{ form_row(form.animal_name) }}
                 {{ form_row(form.birth_date) }}
                 {{ form_row(form.adoption_status) }}
                 {{ form_row(form.adoption_date) }}
             </fieldset>
 
-            <fieldset>
+            <fieldset class="resize_children">
                 <legend>{{ 'animal.form.group.identification'|trans }}</legend>
                 {{ form_row(form.chip_number) }}
                 {{ form_row(form.description) }}

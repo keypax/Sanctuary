@@ -21,6 +21,10 @@ body {
     flex-basis: 0;
 }
 
-.form_group_item input, select {
+.form_group_item :is(select, input) {
     width:90%;
+}
+
+fieldset.resize_children :is(select, input) {
+    width: 100%;
 }
