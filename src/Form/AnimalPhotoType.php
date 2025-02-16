@@ -15,17 +15,17 @@ class AnimalPhotoType extends AbstractType
     {
         $builder
             ->add('photo', FileType::class, [
-                'label' => 'Zdjęcie zwierzęcia',
-                'mapped' => false, // Nie mapuj bezpośrednio na pole encji
-                'required' => false, // Zdjęcie nie jest wymagane
+                'label' => 'animal.photos.add',
+                'mapped' => false,
+                'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '2M', // Maksymalny rozmiar pliku
+                        'maxSize' => '20M',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
                         ],
-                        'mimeTypesMessage' => 'Proszę przesłać prawidłowy plik graficzny (JPEG lub PNG)',
+                        'mimeTypesMessage' => 'animal.photos.incorrect_file_type',
                     ])
                 ],
             ])

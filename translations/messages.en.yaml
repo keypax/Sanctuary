@@ -11,6 +11,12 @@ animal:
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification
+    photos:
+        title: Photos
+        empty: No photos found
+        add: Add photo
+        upload: Upload photo
+        incorrect_file_type: Please upload a valid image file (jpg, jpeg, png)
     list:
         empty: No animals found
         title: Animals list
