@@ -73,6 +73,7 @@
         </div>
 
         <div>
+            {{ form_start(form_photo) }}
             <h2>{{ 'animal.photos.title'|trans }}</h2>
             <fieldset class="resize_children">
             <div id="animal-photos">
@@ -90,11 +91,11 @@
 
             <h3>{{ 'animal.photos.add'|trans }}</h3>
             <fieldset class="resize_children">
-                {{ form_start(form_photo) }}
+                {{ form_errors(form_photo) }}
                 {{ form_row(form_photo.photo) }}
                 <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
-                {{ form_end(form_photo) }}
             </fieldset>
+            {{ form_end(form_photo) }}
         </div>
     </div>
 

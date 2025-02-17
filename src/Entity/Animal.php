@@ -36,7 +36,7 @@ class Animal
     private ?\DateTimeInterface $birth_date = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?string $approximate_age = null;
+    private ?int $approximate_age = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;

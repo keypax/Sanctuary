@@ -20,7 +20,7 @@ class AnimalPhotoType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '20M',
+                        'maxSize' => '2M',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
