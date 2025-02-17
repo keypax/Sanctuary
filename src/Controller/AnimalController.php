@@ -44,7 +44,6 @@ class AnimalController extends AbstractController
 
         $form->handleRequest($request);
         $formPhoto->handleRequest($request);
-        dd($formPhoto->getErrors(true));
         if ($formPhoto->isSubmitted() && $formPhoto->isValid()) {
             $photo = $formPhoto->get('photo')->getData();
             if ($photo) {
