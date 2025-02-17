@@ -44,15 +44,7 @@ class AnimalController extends AbstractController
 
         $form->handleRequest($request);
         $formPhoto->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentAnimalId = $animal->getAnimalId();
-
-            //change "/" to "-"
-            if ($currentAnimalId) {
-                $newAnimalId = str_replace('/', '-', $currentAnimalId);
-                $animal->setAnimalId($newAnimalId);
-            }
-
+        if ($formPhoto->isSubmitted() && $formPhoto->isValid()) {
             $photo = $formPhoto->get('photo')->getData();
             if ($photo) {
                 $animalPhoto = $this->animalPhotoService->uploadAnimalPhoto($photo, $animal);
@@ -61,6 +53,16 @@ class AnimalController extends AbstractController
                     $this->addFlash('error', 'Nie udało się zapisać zdjęcia.');
                     return $this->redirectToRoute('animal_index');
                 }
+            }
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $currentAnimalId = $animal->getAnimalId();
+
+            //change "/" to "-"
+            if ($currentAnimalId) {
+                $newAnimalId = str_replace('/', '-', $currentAnimalId);
+                $animal->setAnimalId($newAnimalId);
             }
 
             if (!$editMode)

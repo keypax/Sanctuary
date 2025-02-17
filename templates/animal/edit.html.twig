@@ -34,27 +34,30 @@
                 </div>
             </fieldset>
 
-            <fieldset>
-                <legend>{{ 'animal.form.group.animal_details'|trans }}</legend>
+            <fieldset class="resize_children">
+                <legend>{{ 'animal.form.group.physical_attributes'|trans }}</legend>
                 <div class="form_group">
-                    {{ form_row(form.animal_name) }}
                     {{ form_row(form.gender) }}
-                    {{ form_row(form.birth_date) }}
                     {{ form_row(form.approximate_age) }}
                     {{ form_row(form.color) }}
                     {{ form_row(form.distinctive_marks) }}
                     {{ form_row(form.size) }}
-                    {{ form_row(form.weight) }}
+                    <div>
+                        {{ form_row(form.weight) }}
+                        <label id="weight-in-kg"></label>
+                    </div>
                 </div>
             </fieldset>
 
-            <fieldset>
-                <legend>{{ 'animal.form.group.status_info'|trans }}</legend>
+            <fieldset class="resize_children">
+                <legend>{{ 'animal.form.group.info_for_adoption'|trans }}</legend>
+                {{ form_row(form.animal_name) }}
+                {{ form_row(form.birth_date) }}
                 {{ form_row(form.adoption_status) }}
                 {{ form_row(form.adoption_date) }}
             </fieldset>
 
-            <fieldset>
+            <fieldset class="resize_children">
                 <legend>{{ 'animal.form.group.identification'|trans }}</legend>
                 {{ form_row(form.chip_number) }}
                 {{ form_row(form.description) }}
@@ -70,7 +73,9 @@
         </div>
 
         <div>
+            {{ form_start(form_photo) }}
             <h2>{{ 'animal.photos.title'|trans }}</h2>
+            <fieldset class="resize_children">
             <div id="animal-photos">
                 {% if animal.animalPhotos is not empty %}
                     {% for photo in animal.animalPhotos %}
@@ -82,11 +87,14 @@
                     <p>{{ 'animal.photos.empty'|trans }}</p>
                 {% endif %}
             </div>
+            </fieldset>
 
             <h3>{{ 'animal.photos.add'|trans }}</h3>
-            {{ form_start(form_photo) }}
-            {{ form_row(form_photo.photo) }}
-            <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
+            <fieldset class="resize_children">
+                {{ form_errors(form_photo) }}
+                {{ form_row(form_photo.photo) }}
+                <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
+            </fieldset>
             {{ form_end(form_photo) }}
         </div>
     </div>
@@ -123,6 +131,24 @@
                 } else {
                     $('#breed-list').empty();
                 }
+            });
+        });
+
+        function updateWeightLabel() {
+            var grams = parseFloat($('#animal_weight').val());
+            if (!isNaN(grams)) {
+                var kilograms = grams / 1000;
+                $('#weight-in-kg').text(kilograms + ' kg');
+            } else {
+                $('#weight-in-kg').text('0 kg');
+            }
+        }
+
+        $(document).ready(function() {
+            updateWeightLabel();
+
+            $('#animal_weight').on('input change', function() {
+                updateWeightLabel();
             });
         });
     </script>

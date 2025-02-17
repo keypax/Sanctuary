@@ -29,14 +29,14 @@ class Animal
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $breed = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0])]
     private ?int $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birth_date = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $approximate_age = null;
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $approximate_age = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -145,12 +145,12 @@ class Animal
         return $this;
     }
 
-    public function getApproximateAge(): ?string
+    public function getApproximateAge(): ?int
     {
         return $this->approximate_age;
     }
 
-    public function setApproximateAge(?string $approximate_age): static
+    public function setApproximateAge(?int $approximate_age): static
     {
         $this->approximate_age = $approximate_age;
 

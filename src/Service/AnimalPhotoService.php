@@ -54,8 +54,6 @@ class AnimalPhotoService
         $originalServerPath = $this->fileUploader->upload($photo, $targetServerDirectory, $newFilename);
 
         try {
-            $photo->move($targetServerDirectory, $newFilename);
-
             $imageSize = getimagesize($originalPath);
             $width = $imageSize[0];
             $height = $imageSize[1];
@@ -91,9 +89,9 @@ class AnimalPhotoService
     private function getNewFilename(AbstractUnicodeString $safeFilename, UploadedFile $photo): string
     {
         if ($this->changeExtension) {
-            $newFilename = $safeFilename . '-' . uniqid() . $this->targetExtension;
+            $newFilename = $safeFilename . '-' . uniqid() . "." . $this->targetExtension;
         } else {
-            $newFilename = $safeFilename . '-' . uniqid() . $photo->guessExtension();
+            $newFilename = $safeFilename . '-' . uniqid() . "." . $photo->guessExtension();
         }
 
         return $newFilename;
