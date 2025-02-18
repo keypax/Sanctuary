@@ -14,7 +14,6 @@ class BreedController extends AbstractController
 {
     function __construct(
         private readonly BreedsProviderInterface $breedsProvider,
-        private readonly LoggerInterface $logger
     ) {}
 
     /**
@@ -27,8 +26,7 @@ class BreedController extends AbstractController
         try {
             $breeds = $this->breedsProvider->getBreeds($species);
         }
-        catch (InvalidArgumentException $e) {
-            $this->logger->info($e->getMessage());
+        catch (InvalidArgumentException) {
             return $this->json([]);
         }
 
