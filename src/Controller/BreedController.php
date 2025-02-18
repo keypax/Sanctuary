@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\BreedsProvider\BreedsProviderInterface;
+use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

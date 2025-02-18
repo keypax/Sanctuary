@@ -3,31 +3,32 @@
 namespace App\Form;
 
 use App\Entity\Animal;
-use App\Service\BreedsProvider\BreedsProviderInterface;
+use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
+use App\Service\Animal\Provider\Species\SpeciesProviderInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\Type;
 
 class AnimalType extends AbstractType
 {
     public function __construct(
         private ParameterBagInterface $params,
+        private SpeciesProviderInterface $speciesProvider,
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $species = $this->speciesProvider->getSpecies();
+
         $builder
             ->add('animal_id')
             ->add('animal_name')
             ->add('species', ChoiceType::class, [
-                'choices' => array_combine($this->params->get('animal_species'), $this->params->get('animal_species')),
+                'choices' => array_combine($species, $species),
                 'choice_translation_domain' => 'messages'
             ])
             ->add('breed', TextType::class, [

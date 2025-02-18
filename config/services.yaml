@@ -11,71 +11,6 @@ parameters:
         - 400
     animal_photos_change_extension: true
     animal_photos_target_extension: 'jpg'
-    animal_species:
-        - 'Other'
-        - 'Cat'
-        - 'Dog'
-        - 'Rabbit'
-        - 'Guinea Pig'
-        - 'Rat'
-        - 'Mouse'
-        - 'Rodent (other)'
-        - 'Parrot'
-        - 'Pigeon'
-        - 'Bird (other)'
-        - 'Amphibian'
-        - 'Fish'
-        - 'Pig'
-        - 'Goat'
-        - 'Sheep'
-        - 'Chicken'
-        - 'Turtle'
-        - 'Tortoise'
-        - 'Snake'
-        - 'Lizard'
-    breeds:
-        'Cat':
-            - 'Maine Coon'
-            - 'Ragdoll'
-            - 'British Shorthair'
-            - 'Persian'
-            - 'Siamese'
-            - 'American Shorthair'
-            - 'Bengal'
-            - 'Sphynx'
-            - 'Abyssinian'
-            - 'Russian Blue'
-        'Dog':
-            - 'French Bulldog'
-            - 'Labrador Retriever'
-            - 'Golden Retriever'
-            - 'German Shepherd'
-            - 'Poodle'
-            - 'Bulldog'
-            - 'Rottweiler'
-            - 'Beagle'
-            - 'Dachshund'
-            - 'German Shorthaired Pointer'
-            - 'Yorkshire Terrier'
-            - 'Boxer'
-            - 'Doberman Pinscher'
-            - 'Siberian Husky'
-            - 'Australian Shepherd'
-            - 'Shih Tzu'
-            - 'Miniature Schnauzer'
-            - 'Cavalier King Charles Spaniel'
-            - 'Bernese Mountain Dog'
-            - 'Great Dane'
-            - 'Pomeranian'
-            - 'Pembroke Welsh Corgi'
-            - 'Boston Terrier'
-            - 'Havanese'
-            - 'Maltese'
-            - 'Shetland Sheepdog'
-            - 'Brittany'
-            - 'English Springer Spaniel'
-            - 'Vizsla'
-            - 'Weimaraner'
     adoption_status:
         available: 0
         pending_adoption: 1
@@ -111,9 +46,7 @@ services:
             $changeExtension: '%animal_photos_change_extension%'
             $targetExtension: '%animal_photos_target_extension%'
 
-    App\Service\BreedsProvider\BreedsProvider:
-        arguments:
-            $allBreeds: '%breeds%'
+    App\Service\BreedsProvider\BreedsProvider: ~
 
     App\Service\FileUploader\LocalFileSystemUploader: ~
 
