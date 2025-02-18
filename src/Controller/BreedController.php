@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\BreedsProvider\BreedsProviderInterface;
+use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +14,6 @@ class BreedController extends AbstractController
 {
     function __construct(
         private readonly BreedsProviderInterface $breedsProvider,
-        private readonly LoggerInterface $logger
     ) {}
 
     /**
@@ -27,8 +26,7 @@ class BreedController extends AbstractController
         try {
             $breeds = $this->breedsProvider->getBreeds($species);
         }
-        catch (InvalidArgumentException $e) {
-            $this->logger->info($e->getMessage());
+        catch (InvalidArgumentException) {
             return $this->json([]);
         }
 

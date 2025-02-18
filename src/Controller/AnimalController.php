@@ -18,12 +18,27 @@ class AnimalController extends AbstractController
 {
     function __construct(private AnimalPhotoService $animalPhotoService) {}
 
+    #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
+    public function new(
+        AnimalIdGenerationStrategyInterface $nextAnimalIdProvider
+    ): Response {
+        $animal = new Animal();
+        $animal->setAnimalId($nextAnimalIdProvider->proposeNextId());
+
+        $form = $this->createForm(AnimalType::class, $animal);
+
+        return $this->render('animal/add.html.twig', [
+            'form' => $form->createView(),
+            'animal' => $animal,
+        ]);
+    }
+
     #[Route('/edit/{animal_id}', name: 'edit', defaults: ['animal_id' => null])]
     public function manageAnimal(
-        Request                             $request,
-        EntityManagerInterface              $entityManager,
+        Request $request,
+        EntityManagerInterface $entityManager,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,
-        string                              $animal_id = null
+        string $animal_id = null
     ): Response
     {
         $editMode = false;
