@@ -63,7 +63,7 @@ class AnimalController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', defaults: ['id' => null], methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,

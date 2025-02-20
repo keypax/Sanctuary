@@ -11,6 +11,7 @@ animal:
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification
+        not_found: Animal not found
         success: Animal has been added successfully
         duplication_error: Animal with this ID already exists
     photos:
@@ -23,6 +24,7 @@ animal:
         empty: No animals found
         title: Animals list
         button_edit: Edit
+        button_photos: Photos
         button_add_new: Add new animal
     size:
         very_small : Very small
