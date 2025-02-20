@@ -6,7 +6,7 @@
 {% block body %}
     <h1>{{ 'animal.list.title'|trans }}</h1>
 
-    <a href="{{ path('animal_edit')}}" class="button">{{ 'animal.list.button_add_new'|trans }}</a>
+    <a href="{{ path('animal_add')}}" class="button">{{ 'animal.list.button_add_new'|trans }}</a>
 
     <table class="table">
         <thead>
@@ -24,7 +24,7 @@
                 <td>{{ animal.getSpecies() }}</td>
                 <td>{{ animal.getWeight() }}</td>
                 <td>
-                    <a href="{{ path('animal_edit', {animal_id: animal.getAnimalId()|url_encode}) }}">{{ 'animal.list.button_edit'|trans}}</a>
+                    <a href="{{ path('animal_edit', {id: animal.getId()}) }}">{{ 'animal.list.button_edit'|trans}}</a>
                 </td>
             </tr>
         {% else %}

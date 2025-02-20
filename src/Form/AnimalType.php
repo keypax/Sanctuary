@@ -115,6 +115,7 @@ class AnimalType extends AbstractType
                     'step' => '1000',
                     'inputmode' => 'numeric', 'pattern' => '\d+(\.\d+)?'
                 ],
+                'required' => false,
             ])
             /*->add('animal_photos', CollectionType::class, [
                 'entry_type' => AnimalPhotoType::class,

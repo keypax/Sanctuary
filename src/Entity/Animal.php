@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[ORM\Table(name: 'animals')]
+#[ORM\UniqueConstraint(name: 'unique_animal_id', columns: ['animal_id'])]
 class Animal
 {
     #[ORM\Id]
@@ -71,6 +72,11 @@ class Animal
     public function __construct()
     {
         $this->animalPhotos = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getAnimalId(): ?string

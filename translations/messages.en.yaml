@@ -11,16 +11,30 @@ animal:
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification
+        not_found: Animal not found
+        success: Animal has been added successfully
+        duplication_error: Animal with this ID already exists
     photos:
         title: Photos
         empty: No photos found
         add: Add photo
-        upload: Upload photo
+        upload:
+            label: Upload photo
+            success: Photo has been uploaded successfully
+            error: An error occurred while uploading the photo
+        delete:
+            label: Delete photo
+            success: Photo has been deleted successfully
+            error: An error occurred while deleting the photo
+        no_file: No file selected
+        not_found: Photo not found
         incorrect_file_type: Please upload a valid image file (jpg, jpeg, png)
+
     list:
         empty: No animals found
         title: Animals list
         button_edit: Edit
+        button_photos: Photos
         button_add_new: Add new animal
     size:
         very_small : Very small

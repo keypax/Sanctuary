@@ -1,155 +1,32 @@
-{% extends 'base.html.twig' %}
+{# templates/animal/edit.html.twig #}
+{% extends 'animal/_form_base.html.twig' %}
 
-{% block title %}
-    {% if edit_mode %}
-        {{ 'animal.edit.title'|trans }}
-    {% else %}
-        {{ 'animal.add.title'|trans }}
-    {% endif %}
+{% block title_content %}
+    {{ 'animal.edit.title'|trans }}
 {% endblock %}
 
-{% block body %}
-    <div class="main-content">
-        <div>
-            <h1>{{ edit_mode ? 'animal.edit.title'|trans : 'animal.add.title'|trans }}</h1>
+{% block heading_content %}
+    {{ 'animal.edit.title'|trans }}
+{% endblock %}
 
-            {{ form_start(form) }}
-            {{ form_errors(form) }}
+{% block right_block %}
+    <h2>{{ 'animal.photos.add'|trans }}</h2>
 
-            <fieldset>
-                <legend>Required information</legend>
-                <div class="form_group">
-                    <div class="form_group_item">
-                        <div>{{ form_row(form.animal_id) }}</div>
-                        <div>{{ form_row(form.admission_date) }}</div>
-                    </div>
-                    <div class="form_group_item">
-                        <div>{{ form_row(form.species) }}</div>
-                        <div id="breed-field-wrapper">
-                            <label for="{{ form.breed.vars.id }}">Breed</label>
-                            {{ form_widget(form.breed) }}
-                            <datalist id="breed-list"></datalist>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
+    {% for photo in animal.animalPhotos %}
+        <img src="{{ asset(photo.getFilename()) }}">
+        <form action="{{ path('animal_photo_delete', {'photoId': photo.getId()}) }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">{{ 'animal.photos.delete.label'|trans }}</button>
+        </form>
+    {% else %}
+        {{ 'animal.photos.empty'|trans }}
+    {% endfor %}
 
-            <fieldset class="resize_children">
-                <legend>{{ 'animal.form.group.physical_attributes'|trans }}</legend>
-                <div class="form_group">
-                    {{ form_row(form.gender) }}
-                    {{ form_row(form.approximate_age) }}
-                    {{ form_row(form.color) }}
-                    {{ form_row(form.distinctive_marks) }}
-                    {{ form_row(form.size) }}
-                    <div>
-                        {{ form_row(form.weight) }}
-                        <label id="weight-in-kg"></label>
-                    </div>
-                </div>
-            </fieldset>
+    <form action="{{ path('animal_photo_add', {'animalRepositoryId': animal.getId()}) }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo" required>
+        <button type="submit" class="btn btn-primary">{{ 'animal.photos.add'|trans }}</button>
+    </form>
+{% endblock %}
 
-            <fieldset class="resize_children">
-                <legend>{{ 'animal.form.group.info_for_adoption'|trans }}</legend>
-                {{ form_row(form.animal_name) }}
-                {{ form_row(form.birth_date) }}
-                {{ form_row(form.adoption_status) }}
-                {{ form_row(form.adoption_date) }}
-            </fieldset>
-
-            <fieldset class="resize_children">
-                <legend>{{ 'animal.form.group.identification'|trans }}</legend>
-                {{ form_row(form.chip_number) }}
-                {{ form_row(form.description) }}
-            </fieldset>
-
-            {% if edit_mode %}
-                <button class="btn btn-primary">{{ 'animal.edit.button'|trans }}</button>
-            {% else %}
-                <button class="btn btn-primary">{{ 'animal.add.button'|trans }}</button>
-            {% endif %}
-
-            {{ form_end(form) }}
-        </div>
-
-        <div>
-            {{ form_start(form_photo) }}
-            <h2>{{ 'animal.photos.title'|trans }}</h2>
-            <fieldset class="resize_children">
-            <div id="animal-photos">
-                {% if animal.animalPhotos is not empty %}
-                    {% for photo in animal.animalPhotos %}
-                        <div class="animal-photo">
-                            <img src="{{ asset(photo.filename) }}" alt="{{ animal.animalName }}" class="img-thumbnail">
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>{{ 'animal.photos.empty'|trans }}</p>
-                {% endif %}
-            </div>
-            </fieldset>
-
-            <h3>{{ 'animal.photos.add'|trans }}</h3>
-            <fieldset class="resize_children">
-                {{ form_errors(form_photo) }}
-                {{ form_row(form_photo.photo) }}
-                <button class="btn btn-secondary">{{ 'animal.photos.upload'|trans }}</button>
-            </fieldset>
-            {{ form_end(form_photo) }}
-        </div>
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            function updateBreeds(species) {
-                $.ajax({
-                    url: '/breed/list_by_species/' + species,
-                    dataType: 'json',
-                    success: function(data) {
-                        var datalist = $('#breed-list');
-                        datalist.empty();
-                        if(data.length > 0) {
-                            $.each(data, function(index, breed) {
-                                datalist.append($('<option>', { value: breed }));
-                            });
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Error while requesting breeds.', textStatus, errorThrown);
-                    }
-                });
-            }
-            var speciesSelect = $('#animal_species');
-            var initialSpecies = speciesSelect.val();
-            if (initialSpecies) {
-                updateBreeds(initialSpecies);
-            }
-            speciesSelect.change(function() {
-                var selectedSpecies = $(this).val();
-                if (selectedSpecies) {
-                    updateBreeds(selectedSpecies);
-                } else {
-                    $('#breed-list').empty();
-                }
-            });
-        });
-
-        function updateWeightLabel() {
-            var grams = parseFloat($('#animal_weight').val());
-            if (!isNaN(grams)) {
-                var kilograms = grams / 1000;
-                $('#weight-in-kg').text(kilograms + ' kg');
-            } else {
-                $('#weight-in-kg').text('0 kg');
-            }
-        }
-
-        $(document).ready(function() {
-            updateWeightLabel();
-
-            $('#animal_weight').on('input change', function() {
-                updateWeightLabel();
-            });
-        });
-    </script>
+{% block form_buttons %}
+    <button class="btn btn-primary">{{ 'animal.edit.button'|trans }}</button>
 {% endblock %}
