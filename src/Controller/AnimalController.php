@@ -5,36 +5,79 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Form\AnimalPhotoType;
 use App\Form\AnimalType;
+use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use App\Service\AnimalPhotoService;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/animal', name: 'animal_')]
 class AnimalController extends AbstractController
 {
-    function __construct(private AnimalPhotoService $animalPhotoService) {}
+    function __construct(
+        private AnimalPhotoService $animalPhotoService,
+        private AnimalRepositoryInterface $animalRepository,
+        private EntityManagerInterface $entityManager,
+        private TranslatorInterface $translator
+    ) {}
 
     #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
     public function new(
+        Request $request,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider
     ): Response {
         $animal = new Animal();
         $animal->setAnimalId($nextAnimalIdProvider->proposeNextId());
+        $animal->setAdmissionDate(new \DateTimeImmutable('now'));
+
+        $form = $this->createForm(AnimalType::class, $animal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->entityManager->persist($animal);
+                $this->entityManager->flush();
+
+                $nextAnimalIdProvider->incrementId();
+
+                $this->addFlash('success', $this->translator->trans('animal.form.success'));
+
+                return $this->redirectToRoute('animal_index');
+            }
+            catch (UniqueConstraintViolationException) {
+                $this->addFlash('error', $this->translator->trans('animal.form.duplication_error'));
+
+                $form->get('animal_id')->addError(new FormError($this->translator->trans('animal.form.duplication_error')));
+            }
+        }
+
+        return $this->render('animal/add.html.twig', [
+            'form' => $form,
+            'animal' => $animal,
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'edit', defaults: ['id' => null])]
+    public function edit(
+        string $id
+    ): Response {
+        $animal = $this->animalRepository->getById($id);
 
         $form = $this->createForm(AnimalType::class, $animal);
 
-        return $this->render('animal/add.html.twig', [
+        return $this->render('animal/edit.html.twig', [
             'form' => $form->createView(),
             'animal' => $animal,
         ]);
     }
 
-    #[Route('/edit/{animal_id}', name: 'edit', defaults: ['animal_id' => null])]
-    public function manageAnimal(
+    /*public function manageAnimal(
         Request $request,
         EntityManagerInterface $entityManager,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,
@@ -99,7 +142,7 @@ class AnimalController extends AbstractController
             'animal' => $animal ?? null,
             'edit_mode' => $editMode,
         ]);
-    }
+    }*/
 
     #[Route('/', name: 'index')]
     public function index(EntityManagerInterface $entityManager): Response

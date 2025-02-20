@@ -11,6 +11,8 @@ animal:
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification
+        success: Animal has been added successfully
+        duplication_error: Animal with this ID already exists
     photos:
         title: Photos
         empty: No photos found
