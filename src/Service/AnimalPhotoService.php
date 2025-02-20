@@ -85,6 +85,11 @@ class AnimalPhotoService
         }
     }
 
+    public function deleteAnimalPhoto(AnimalPhoto $photo): void
+    {
+        //todo
+    }
+
 
     private function getNewFilename(AbstractUnicodeString $safeFilename, UploadedFile $photo): string
     {

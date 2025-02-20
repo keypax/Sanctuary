@@ -62,6 +62,10 @@
 
             {{ form_end(form) }}
         </div>
+        <div>
+            {% block right_block %}
+            {% endblock %}
+        </div>
 
         {% block additional_content %}
         {% endblock %}

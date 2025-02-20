@@ -18,8 +18,18 @@ animal:
         title: Photos
         empty: No photos found
         add: Add photo
-        upload: Upload photo
+        upload:
+            label: Upload photo
+            success: Photo has been uploaded successfully
+            error: An error occurred while uploading the photo
+        delete:
+            label: Delete photo
+            success: Photo has been deleted successfully
+            error: An error occurred while deleting the photo
+        no_file: No file selected
+        not_found: Photo not found
         incorrect_file_type: Please upload a valid image file (jpg, jpeg, png)
+
     list:
         empty: No animals found
         title: Animals list

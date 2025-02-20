@@ -21,7 +21,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AnimalController extends AbstractController
 {
     function __construct(
-        private AnimalPhotoService $animalPhotoService,
         private AnimalRepositoryInterface $animalRepository,
         private EntityManagerInterface $entityManager,
         private TranslatorInterface $translator

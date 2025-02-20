@@ -24,8 +24,7 @@
                 <td>{{ animal.getSpecies() }}</td>
                 <td>{{ animal.getWeight() }}</td>
                 <td>
-                    <a href="{{ path('animal_edit', {id: animal.getId()}) }}">{{ 'animal.list.button_edit'|trans}}</a> |
-                    <a href="{{ path('animal_photo_add', {id: animal.getId()}) }}">{{ 'animal.list.button_photos'|trans}}</a>
+                    <a href="{{ path('animal_edit', {id: animal.getId()}) }}">{{ 'animal.list.button_edit'|trans}}</a>
                 </td>
             </tr>
         {% else %}

@@ -7,24 +7,24 @@
 
 {% block heading_content %}
     {{ 'animal.edit.title'|trans }}
+{% endblock %}
 
-    <div>
-        <h2>{{ 'animal.photos.add'|trans }}</h2>
+{% block right_block %}
+    <h2>{{ 'animal.photos.add'|trans }}</h2>
 
-        {% for photo in animal.animalPhotos %}
-            <img src="{{ asset(photo.getFilename()) }}">
-            {#  <form action="{{ path('animal_photo_delete', {'photoId': photo.getId()}) }}" method="post" style="display:inline;">
-                 <button type="submit" class="btn btn-danger">Usuń</button>
-            </form> #}
-        {% else %}
-            {{ 'animal.photos.empty'|trans }}
-        {% endfor %}
-
-        <form action="{{ path('animal_photo_add', {'id': animal.getId()}) }}" method="post" enctype="multipart/form-data">
-            <input type="file" name="photo" required>
-            <button type="submit" class="btn btn-primary">{{ 'animal.photos.add'|trans }}</button>
+    {% for photo in animal.animalPhotos %}
+        <img src="{{ asset(photo.getFilename()) }}">
+        <form action="{{ path('animal_photo_delete', {'photoId': photo.getId()}) }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">{{ 'animal.photos.delete.label'|trans }}</button>
         </form>
-    </div>
+    {% else %}
+        {{ 'animal.photos.empty'|trans }}
+    {% endfor %}
+
+    <form action="{{ path('animal_photo_add', {'animalRepositoryId': animal.getId()}) }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo" required>
+        <button type="submit" class="btn btn-primary">{{ 'animal.photos.add'|trans }}</button>
+    </form>
 {% endblock %}
 
 {% block form_buttons %}
