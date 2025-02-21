@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AnimalPhoto;
-use App\Repository\AnimalPhotosRepositoryInterface;
+use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,14 +22,14 @@ class AnimalPhotoController extends AbstractController
         private TranslatorInterface $translator
     ) {}
 
-    #[Route('/add/{animalRepositoryId}', name: 'add', methods: ['GET', 'POST'])]
+    #[Route('/add/{animalId}', name: 'add', methods: ['GET', 'POST'])]
     public function add(
         Request $request,
         AnimalRepositoryInterface $animalRepository,
-        string $animalRepositoryId
+        string $animalId
     )
     {
-        $animal = $animalRepository->getById($animalRepositoryId);
+        $animal = $animalRepository->getById($animalId);
         if (!$animal)
         {
             throw $this->createNotFoundException($this->translator->trans('animal.photos.not_found'));
@@ -51,23 +51,22 @@ class AnimalPhotoController extends AbstractController
             $this->addFlash('error', $this->translator->trans('animal.photos.upload.error'));
         }
 
-        return $this->redirectToRoute('animal_photo_add', ['animalRepositoryId' => $animal->getId()]);
+        return $this->redirectToRoute('animal_photo_add', ['animalId' => $animal->getId()]);
     }
 
     #[Route('/delete/{photoId}', name: 'delete', methods: ['POST'])]
     public function delete(
-        AnimalPhotosRepositoryInterface $animalPhotosRepository,
+        AnimalPhotoRepositoryInterface $animalPhotoRepository,
         string $photoId
     ): Response
     {
-        $photo = $animalPhotosRepository->getById($photoId);
-        $animalRepositoryId = $photo->getAnimal()->getId();
-
+        $photo = $animalPhotoRepository->findById($photoId);
         if (!$photo) {
             $this->addFlash('error', $this->translator->trans('animal.photos.not_found'));
             return $this->redirectToRoute('animal_index');
         }
 
+        $animalId = $photo->getAnimal()->getId();
         try {
             $this->animalPhotoService->deleteAnimalPhoto($photo);
             $this->entityManager->remove($photo);
@@ -78,6 +77,6 @@ class AnimalPhotoController extends AbstractController
             $this->addFlash('error', $this->translator->trans('animal.photos.delete.error'));
         }
 
-        return $this->redirectToRoute('animal_edit', ['id' => $animalRepositoryId]);
+        return $this->redirectToRoute('animal_edit', ['id' => $animalId]);
     }
 }

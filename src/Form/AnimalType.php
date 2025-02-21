@@ -25,7 +25,7 @@ class AnimalType extends AbstractType
         $species = $this->speciesProvider->getSpecies();
 
         $builder
-            ->add('animal_id')
+            ->add('animal_internal_id')
             ->add('animal_name')
             ->add('species', ChoiceType::class, [
                 'choices' => array_combine($species, $species),

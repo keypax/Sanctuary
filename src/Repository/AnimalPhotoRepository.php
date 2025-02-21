@@ -9,14 +9,14 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<AnimalPhoto>
  */
-class AnimalPhotosRepository extends ServiceEntityRepository implements AnimalPhotosRepositoryInterface
+class AnimalPhotoRepository extends ServiceEntityRepository implements AnimalPhotoRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AnimalPhoto::class);
     }
 
-    public function getById(string $id): ?AnimalPhoto
+    public function findById(string $id): ?AnimalPhoto
     {
         return $this->find($id);
     }
