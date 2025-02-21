@@ -12,7 +12,7 @@
 {% block right_block %}
     <h2>{{ 'animal.photos.add'|trans }}</h2>
 
-    {% for photo in animal.animalPhotos %}
+    {% for photo in animal.animalPhoto %}
         <img src="{{ asset(photo.getFilename()) }}">
         <form action="{{ path('animal_photo_delete', {'photoId': photo.getId()}) }}" method="post" style="display:inline;">
             <button type="submit" class="btn btn-danger">{{ 'animal.photos.delete.label'|trans }}</button>
@@ -21,7 +21,7 @@
         {{ 'animal.photos.empty'|trans }}
     {% endfor %}
 
-    <form action="{{ path('animal_photo_add', {'animalRepositoryId': animal.getId()}) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ path('animal_photo_add', {'animalId': animal.getId()}) }}" method="post" enctype="multipart/form-data">
         <input type="file" name="photo" required>
         <button type="submit" class="btn btn-primary">{{ 'animal.photos.add'|trans }}</button>
     </form>

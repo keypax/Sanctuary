@@ -32,7 +32,7 @@ class AnimalController extends AbstractController
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider
     ): Response {
         $animal = new Animal();
-        $animal->setAnimalId($nextAnimalIdProvider->proposeNextId());
+        $animal->setAnimalInternalId($nextAnimalIdProvider->proposeNextId());
         $animal->setAdmissionDate(new \DateTimeImmutable('now'));
 
         $form = $this->createForm(AnimalType::class, $animal);
@@ -52,7 +52,7 @@ class AnimalController extends AbstractController
             catch (UniqueConstraintViolationException) {
                 $this->addFlash('error', $this->translator->trans('animal.form.duplication_error'));
 
-                $form->get('animal_id')->addError(new FormError($this->translator->trans('animal.form.duplication_error')));
+                $form->get('animal_internal_id')->addError(new FormError($this->translator->trans('animal.form.duplication_error')));
             }
         }
 
@@ -87,7 +87,7 @@ class AnimalController extends AbstractController
             catch (UniqueConstraintViolationException) {
                 $this->addFlash('error', $this->translator->trans('animal.form.duplication_error'));
 
-                $form->get('animal_id')->addError(new FormError($this->translator->trans('animal.form.duplication_error')));
+                $form->get('animal_internal_id')->addError(new FormError($this->translator->trans('animal.form.duplication_error')));
             }
         }
 

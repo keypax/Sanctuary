@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AnimalPhotosRepository;
+use App\Repository\AnimalPhotoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AnimalPhotosRepository::class)]
-#[ORM\Table(name: 'animals_photos')]
+#[ORM\Entity(repositoryClass: AnimalPhotoRepository::class)]
 class AnimalPhoto
 {
     #[ORM\Id]
@@ -24,7 +23,7 @@ class AnimalPhoto
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $height = null;
 
-    #[ORM\ManyToOne(inversedBy: 'animalPhotos')]
+    #[ORM\ManyToOne(inversedBy: 'animalPhoto')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 

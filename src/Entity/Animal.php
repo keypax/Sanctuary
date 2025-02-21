@@ -9,8 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
-#[ORM\Table(name: 'animals')]
-#[ORM\UniqueConstraint(name: 'unique_animal_id', columns: ['animal_id'])]
+#[ORM\UniqueConstraint(name: 'unique_animal_internal_id', columns: ['animal_internal_id'])]
 class Animal
 {
     #[ORM\Id]
@@ -19,7 +18,7 @@ class Animal
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $animal_id = null;
+    private ?string $animal_internal_id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $animal_name = null;
@@ -67,11 +66,11 @@ class Animal
     private ?float $weight = null;
 
     #[ORM\OneToMany(targetEntity: AnimalPhoto::class, mappedBy: 'animal', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $animalPhotos;
+    private Collection $animalPhoto;
 
     public function __construct()
     {
-        $this->animalPhotos = new ArrayCollection();
+        $this->animalPhoto = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,14 +78,14 @@ class Animal
         return $this->id;
     }
 
-    public function getAnimalId(): ?string
+    public function getAnimalInternalId(): ?string
     {
-        return $this->animal_id;
+        return $this->animal_internal_id;
     }
 
-    public function setAnimalId(string $animal_id): static
+    public function setAnimalInternalId(string $animal_internal_id): static
     {
-        $this->animal_id = $animal_id;
+        $this->animal_internal_id = $animal_internal_id;
 
         return $this;
     }
@@ -274,15 +273,15 @@ class Animal
     /**
      * @return Collection<int, AnimalPhoto>
      */
-    public function getAnimalPhotos(): Collection
+    public function getAnimalPhoto(): Collection
     {
-        return $this->animalPhotos;
+        return $this->animalPhoto;
     }
 
     public function addAnimalPhoto(AnimalPhoto $animalPhoto): static
     {
-        if (!$this->animalPhotos->contains($animalPhoto)) {
-            $this->animalPhotos->add($animalPhoto);
+        if (!$this->animalPhoto->contains($animalPhoto)) {
+            $this->animalPhoto->add($animalPhoto);
             $animalPhoto->setAnimal($this);
         }
 
@@ -291,7 +290,7 @@ class Animal
 
     public function removeAnimalPhoto(AnimalPhoto $animalPhoto): static
     {
-        if ($this->animalPhotos->removeElement($animalPhoto)) {
+        if ($this->animalPhoto->removeElement($animalPhoto)) {
             // set the owning side to null (unless already changed)
             if ($animalPhoto->getAnimal() === $this) {
                 $animalPhoto->setAnimal(null);

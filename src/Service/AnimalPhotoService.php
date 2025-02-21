@@ -41,8 +41,8 @@ class AnimalPhotoService
         $year = date('Y');
         $month = date('m');
 
-        $targetServerDirectory = $this->basePathServer . $year . '/' . $month . '/' . $animal->getAnimalId();
-        $targetWebDirectory = $this->basePathWeb . $year . '/' . $month . '/' . $animal->getAnimalId();
+        $targetServerDirectory = $this->basePathServer . $year . '/' . $month . '/' . $animal->getAnimalInternalId();
+        $targetWebDirectory = $this->basePathWeb . $year . '/' . $month . '/' . $animal->getAnimalInternalId();
 
         $this->fileUploader->createDirectory($targetServerDirectory);
 
