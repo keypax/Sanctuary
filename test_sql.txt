@@ -1,0 +1,15 @@
+-- Doctrine Migration File Generated on 2025-02-21 12:13:15
+
+-- Version DoctrineMigrations\Version20250221110451
+DROP SEQUENCE animals_id_seq CASCADE;
+DROP SEQUENCE animals_photos_id_seq CASCADE;
+CREATE TABLE animal (id SERIAL NOT NULL, animal_id VARCHAR(255) NOT NULL, animal_name VARCHAR(255) DEFAULT NULL, species VARCHAR(50) NOT NULL, breed VARCHAR(100) DEFAULT NULL, gender SMALLINT DEFAULT 0 NOT NULL, birth_date DATE DEFAULT NULL, approximate_age SMALLINT DEFAULT NULL, description TEXT DEFAULT NULL, color VARCHAR(100) DEFAULT NULL, distinctive_marks VARCHAR(255) DEFAULT NULL, size SMALLINT DEFAULT NULL, admission_date DATE NOT NULL, adoption_status SMALLINT DEFAULT NULL, adoption_date DATE DEFAULT NULL, chip_number VARCHAR(30) DEFAULT NULL, weight DOUBLE PRECISION DEFAULT NULL, PRIMARY KEY(id));
+CREATE UNIQUE INDEX unique_animal_id ON animal (animal_id);
+CREATE TABLE animal_photo (id SERIAL NOT NULL, animal_id INT NOT NULL, filename VARCHAR(255) NOT NULL, width SMALLINT NOT NULL, height SMALLINT NOT NULL, size INT NOT NULL, PRIMARY KEY(id));
+CREATE INDEX IDX_35445DEC8E962C16 ON animal_photo (animal_id);
+ALTER TABLE animal_photo ADD CONSTRAINT FK_35445DEC8E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE animals_photos DROP CONSTRAINT fk_d0431f798e962c16;
+DROP TABLE animals;
+DROP TABLE animals_photos;
+-- Version DoctrineMigrations\Version20250221110451 update table metadata;
+INSERT INTO doctrine_migration_versions (version, executed_at, execution_time) VALUES ('DoctrineMigrations\Version20250221110451', '2025-02-21 12:13:15', 0);

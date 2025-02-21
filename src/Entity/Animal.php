@@ -9,7 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
-#[ORM\Table(name: 'animals')]
 #[ORM\UniqueConstraint(name: 'unique_animal_id', columns: ['animal_id'])]
 class Animal
 {
