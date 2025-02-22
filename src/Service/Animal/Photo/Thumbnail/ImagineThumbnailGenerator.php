@@ -26,7 +26,7 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         $thumbnailTargetFilename = $targetDirectory . '/' . $thumbnailFilename;
         $this->resize($originalWidth, $originalHeight, $thumbnailSize->value, $originalImage, $thumbnailTargetFilename);
 
-        return $thumbnailTargetFilename;
+        return $thumbnailFilename;
     }
 
     private function resize(
@@ -35,7 +35,7 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         int $maxSize,
         ImageInterface $originalImage,
         string $thumbnailTargetFilename,
-    ): string
+    )
     {
         if ($originalWidth > $originalHeight) {
             $thumbnailWidth = $maxSize;

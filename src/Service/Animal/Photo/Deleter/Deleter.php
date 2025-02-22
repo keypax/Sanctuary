@@ -4,11 +4,28 @@ declare(strict_types=1);
 
 namespace App\Service\Animal\Photo\Deleter;
 
+use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
-use App\Service\Animal\Photo\Deleter\DeleterInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 
 class Deleter implements DeleterInterface
 {
+    public function __construct(
+        private LoggerInterface $logger,
+        private EntityManagerInterface $entityManager,
+        private string $basePathServer,
+        private string $basePathWeb
+    ) { }
+
+    public function deleteAllAnimalPhotos(Animal $animal): void
+    {
+        $photos = $animal->getAnimalPhoto();
+
+        foreach ($photos as $photo) {
+            $this->deleteAnimalPhoto($photo);
+        }
+    }
 
     public function deleteAnimalPhoto(AnimalPhoto $photo): void
     {

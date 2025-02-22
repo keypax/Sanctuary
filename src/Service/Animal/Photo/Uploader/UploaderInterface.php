@@ -10,5 +10,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface UploaderInterface
 {
-    public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): ?AnimalPhoto;
+    /**
+     * @param string $originalServerPath
+     * @param string $targetServerDirectory
+     * @param string $newFilename
+     * @return string thumbnail filename
+     */
+    public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto;
 }

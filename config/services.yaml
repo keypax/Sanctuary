@@ -42,4 +42,16 @@ services:
             $targetExtension: '%animal_photos_target_extension%'
             $imagine: '@Imagine\Gd\Imagine'
 
+    App\Service\Animal\Photo\Uploader\Uploader:
+        arguments:
+            $basePathServer: '%animal_photos_base_path_server%'
+            $basePathWeb: '%animal_photos_base_path_web%'
+            $changeExtension: '%animal_photos_change_extension%'
+            $targetExtension: '%animal_photos_target_extension%'
+
+    App\Service\Animal\Photo\Deleter\Deleter:
+        arguments:
+            $basePathServer: '%animal_photos_base_path_server%'
+            $basePathWeb: '%animal_photos_base_path_web%'
+
     Imagine\Gd\Imagine: ~

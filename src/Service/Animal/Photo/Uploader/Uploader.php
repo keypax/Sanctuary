@@ -29,7 +29,7 @@ class Uploader implements UploaderInterface
         private string $targetExtension
     ) {}
 
-    public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): ?AnimalPhoto
+    public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto
     {
         $year = date('Y');
         $month = date('m');
@@ -55,9 +55,9 @@ class Uploader implements UploaderInterface
             $animalPhoto->setFilenameOriginal($targetWebDirectory . '/' . $newFilename);
 
             foreach (ThumbnailSize::cases() as $thumbnailSize) {
-                $thumbnailPath = $this->generateThumbnail($originalServerPath, $targetServerDirectory, $newFilename, $thumbnailSize);
+                $thumbnailFilename = $this->generateThumbnail($originalServerPath, $targetServerDirectory, $newFilename, $thumbnailSize);
                 $setter = $animalPhoto->getSetterForThumbnail($thumbnailSize->name);
-                $animalPhoto->$setter($thumbnailPath);
+                $animalPhoto->$setter($targetWebDirectory . "/" . $thumbnailFilename);
             }
 
             $animalPhoto->setWidth($width);
@@ -77,12 +77,12 @@ class Uploader implements UploaderInterface
 
     private function getTargetServerDirectory(string $year, string $month, Animal $animal): string
     {
-        return $this->basePathServer . $year . '/' . $month . '/' . $animal->getAnimalInternalId();
+        return $this->basePathServer . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
     }
 
     private function getTargetWebDirectory(string $year, string $month, Animal $animal): string
     {
-        return $this->basePathWeb . $year . '/' . $month . '/' . $animal->getAnimalInternalId();
+        return $this->basePathWeb . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
     }
 
     private function saveToRepository(AnimalPhoto $animalPhoto): void
@@ -109,12 +109,6 @@ class Uploader implements UploaderInterface
         return $newFilename;
     }
 
-    /**
-     * @param string $originalServerPath
-     * @param string $targetServerDirectory
-     * @param string $newFilename
-     * @return string
-     */
     private function generateThumbnail(string $originalServerPath, string $targetServerDirectory, string $newFilename, ThumbnailSize $thumbnailSize): string
     {
         return $this->thumbnailGenerator->generateThumbnails(
