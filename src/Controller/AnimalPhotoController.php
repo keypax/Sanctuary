@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\AnimalPhoto;
 use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
-use App\Service\AnimalPhotoService;
+use App\Service\Animal\Photo\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

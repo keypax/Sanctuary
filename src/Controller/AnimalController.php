@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Form\AnimalPhotoType;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
-use App\Service\AnimalPhotoService;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

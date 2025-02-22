@@ -13,7 +13,7 @@
     <h2>{{ 'animal.photos.add'|trans }}</h2>
 
     {% for photo in animal.animalPhoto %}
-        <img src="{{ asset(photo.getFilename()) }}">
+        <img src="{{ asset(photo.getFilenameBig()) }}">
         <form action="{{ path('animal_photo_delete', {'photoId': photo.getId()}) }}" method="post" style="display:inline;">
             <button type="submit" class="btn btn-danger">{{ 'animal.photos.delete.label'|trans }}</button>
         </form>

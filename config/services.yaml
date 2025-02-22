@@ -6,9 +6,6 @@
 parameters:
     animal_photos_base_path_server: '%kernel.project_dir%/public/photos/animals/'
     animal_photos_base_path_web: '/photos/animals/'
-    animal_photos_thumbnail_sizes:
-        - 800
-        - 400
     animal_photos_change_extension: true
     animal_photos_target_extension: 'jpg'
     adoption_status:
@@ -36,24 +33,25 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\AnimalPhotoService:
-        arguments:
-            $fileUploader: '@App\Service\FileUploader\LocalFileSystemUploader'
-            $thumbnailGenerator: '@App\Service\ThumbnailGenerator\ImagineThumbnailGenerator'
-            $basePathServer: '%animal_photos_base_path_server%'
-            $basePathWeb: '%animal_photos_base_path_web%'
-            $thumbnailSizes: '%animal_photos_thumbnail_sizes%'
-            $changeExtension: '%animal_photos_change_extension%'
-            $targetExtension: '%animal_photos_target_extension%'
-
-    App\Service\BreedsProvider\BreedsProvider: ~
 
     App\Service\FileUploader\LocalFileSystemUploader: ~
 
-    App\Service\ThumbnailGenerator\ImagineThumbnailGenerator:
+    App\Service\Animal\Photo\Thumbnail\ImagineThumbnailGenerator:
         arguments:
             $changeExtension: '%animal_photos_change_extension%'
             $targetExtension: '%animal_photos_target_extension%'
             $imagine: '@Imagine\Gd\Imagine'
+
+    App\Service\Animal\Photo\Uploader\Uploader:
+        arguments:
+            $basePathServer: '%animal_photos_base_path_server%'
+            $basePathWeb: '%animal_photos_base_path_web%'
+            $changeExtension: '%animal_photos_change_extension%'
+            $targetExtension: '%animal_photos_target_extension%'
+
+    App\Service\Animal\Photo\Deleter\Deleter:
+        arguments:
+            $basePathServer: '%animal_photos_base_path_server%'
+            $basePathWeb: '%animal_photos_base_path_web%'
 
     Imagine\Gd\Imagine: ~
