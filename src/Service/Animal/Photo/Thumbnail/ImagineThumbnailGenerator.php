@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Service\ThumbnailGenerator;
+declare(strict_types=1);
 
-use App\Service\ThumbnailGenerator\ThumbnailGeneratorInterface;
+namespace App\Service\Animal\Photo\Thumbnail;
+
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -15,17 +16,17 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         private Imagine $imagine
     ) {}
 
-    public function generateThumbnails(string $originalPath, string $targetDirectory, string $filename, array $sizes): void
+    public function generateThumbnails(string $originalFilepath, string $targetDirectory, string $targetFilename, ThumbnailSize $thumbnailSize): string
     {
-        $originalImage = $this->imagine->open($originalPath);
+        $originalImage = $this->imagine->open($originalFilepath);
         $originalWidth = $originalImage->getSize()->getWidth();
         $originalHeight = $originalImage->getSize()->getHeight();
 
-        foreach ($sizes as $sizeName => $maxSize) {
-            $thumbnailFilename = pathinfo($filename, PATHINFO_FILENAME) . '_' . $sizeName . '.jpg'; // Fixed extension for thumbnails
-            $thumbnailTargetFilename = $targetDirectory . '/' . $thumbnailFilename;
-            $this->resize($originalWidth, $originalHeight, $maxSize, $originalImage, $thumbnailTargetFilename);
-        }
+        $thumbnailFilename = $this->getThumbnailFilename($targetFilename, $thumbnailSize);
+        $thumbnailTargetFilename = $targetDirectory . '/' . $thumbnailFilename;
+        $this->resize($originalWidth, $originalHeight, $thumbnailSize->value, $originalImage, $thumbnailTargetFilename);
+
+        return $thumbnailTargetFilename;
     }
 
     private function resize(
@@ -34,7 +35,7 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         int $maxSize,
         ImageInterface $originalImage,
         string $thumbnailTargetFilename,
-    ): void
+    ): string
     {
         if ($originalWidth > $originalHeight) {
             $thumbnailWidth = $maxSize;
@@ -53,5 +54,15 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         else {
             $thumbnailImage->save($thumbnailTargetFilename);
         }
+    }
+
+    /**
+     * @param string $targetFilename
+     * @param ThumbnailSize $thumbnailSize
+     * @return string
+     */
+    private function getThumbnailFilename(string $targetFilename, ThumbnailSize $thumbnailSize): string
+    {
+        return pathinfo($targetFilename, PATHINFO_FILENAME) . '_' . strtolower($thumbnailSize->name) . '.' . $this->targetExtension;
     }
 }

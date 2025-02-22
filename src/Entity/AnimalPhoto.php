@@ -15,7 +15,14 @@ class AnimalPhoto
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $filename = null;
+    private ?string $filenameOriginal = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $filenameBig = null;
+    #[ORM\Column(length: 255)]
+    private ?string $filenameMedium = null;
+    #[ORM\Column(length: 255)]
+    private ?string $filenameSmall = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $width = null;
@@ -35,14 +42,50 @@ class AnimalPhoto
         return $this->id;
     }
 
-    public function getFilename(): ?string
+    public function getFilenameOriginal(): ?string
     {
-        return $this->filename;
+        return $this->filenameOriginal;
     }
 
-    public function setFilename(string $filename): static
+    public function setFilenameOriginal(string $filenameOriginal): static
     {
-        $this->filename = $filename;
+        $this->filenameOriginal = $filenameOriginal;
+
+        return $this;
+    }
+
+    public function getFilenameBig(): ?string
+    {
+        return $this->filenameBig;
+    }
+
+    public function setFilenameBig(string $filenameBig): static
+    {
+        $this->filenameBig = $filenameBig;
+
+        return $this;
+    }
+
+    public function getFilenameMedium(): ?string
+    {
+        return $this->filenameMedium;
+    }
+
+    public function setFilenameMedium(string $filenameMedium): static
+    {
+        $this->filenameMedium = $filenameMedium;
+
+        return $this;
+    }
+
+    public function getFilenameSmall(): ?string
+    {
+        return $this->filenameSmall;
+    }
+
+    public function setFilenameSmall(string $filenameSmall): static
+    {
+        $this->filenameSmall = $filenameSmall;
 
         return $this;
     }
@@ -93,5 +136,15 @@ class AnimalPhoto
         $this->animal = $animal;
 
         return $this;
+    }
+
+    public function getSetterForThumbnail(string $thumbnailSize): string
+    {
+        $setter = 'setFilename' . $thumbnailSize;
+        if (!method_exists($this, $setter)) {
+            throw new \LogicException('Method ' . $setter . ' does not exist in AnimalPhoto entity');
+        }
+
+        return $setter;
     }
 }
