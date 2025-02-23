@@ -8,6 +8,7 @@ use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
