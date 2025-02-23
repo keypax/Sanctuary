@@ -83,6 +83,23 @@ on_hold: On hold
 unavailable: Unavailable
 deceased: Deceased
 
+animal_internal_id: Animal internal id
+animal_name: Animal name
+species: Species
+breed: Breed
+#gender: Gender
+birth_date: Birth date
+#approximate_age: Approximate age
+description: Description
+color: Color
+distinctive_marks: Distinctive marks
+size: Size
+admission_date: Admission date
+adoption_status: Adoption status
+adoption_date: Adoption date
+chip_number: Chip number
+#weight_in_grams: Weight (in grams)
+
 
 error_creating_directory: An error occurred while creating the directory
 

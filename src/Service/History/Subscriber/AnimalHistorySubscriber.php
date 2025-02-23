@@ -1,46 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\History\Subscriber;
 
 use App\Entity\Animal;
+use App\Entity\AnimalHistory;
+use App\Repository\AnimalHistoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Animal::class)]
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: Animal::class)]
 #[AsEntityListener(event: Events::preRemove, method: 'preRemove', entity: Animal::class)]
 class AnimalHistorySubscriber
 {
-    private int $count = 0;
-
     function __construct(
-        private LoggerInterface $logger
+        private TranslatorInterface $translator
     ) {
 
     }
 
     public function prePersist(Animal $animal, PrePersistEventArgs $args): void
     {
-        $changes = $this->getChanges($animal, $args);
+        $this->saveChanges($animal, $args);
     }
 
     public function preUpdate(Animal $animal, PreUpdateEventArgs $args): void
     {
-        $changes = $this->getChanges($animal, $args);
+        $this->saveChanges($animal, $args);
     }
 
     public function preRemove(Animal $animal, PreRemoveEventArgs $args): void
     {
-        $changes = $this->getChanges($animal, $args);
+        $this->saveChanges($animal, $args);
     }
 
-    private function getChanges(Animal $animal, LifecycleEventArgs $args): ?array {
-        dd($args->getObjectManager()->getUnitOfWork()->getEntityChangeSet($animal));
+    private function saveChanges(Animal $animal, LifecycleEventArgs $args): void {
+        $changes = $args->getObjectManager()->getUnitOfWork()->getEntityChangeSet($animal);
+        foreach ($changes as $name => $value) {
+            $translatedName = $this->translator->trans($name);
+
+            $animalHistory = new AnimalHistory();
+            $animalHistory->setAnimal($animal);
+            $animalHistory->setBefore(sprintf('%s: %s', $translatedName, $value[0]));
+            $animalHistory->setAfter(sprintf('%s: %s', $translatedName, $value[1]));
+
+            $animal->addAnimalHistory($animalHistory);
+        }
     }
 }

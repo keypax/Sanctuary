@@ -68,9 +68,16 @@ class Animal
     #[ORM\OneToMany(targetEntity: AnimalPhoto::class, mappedBy: 'animal', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $animalPhoto;
 
+    /**
+     * @var Collection<int, AnimalHistory>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalHistory::class, mappedBy: 'animal', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $animalHistory;
+
     public function __construct()
     {
         $this->animalPhoto = new ArrayCollection();
+        $this->animalHistory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,6 +301,36 @@ class Animal
             // set the owning side to null (unless already changed)
             if ($animalPhoto->getAnimal() === $this) {
                 $animalPhoto->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalHistory>
+     */
+    public function getAnimalHistory(): Collection
+    {
+        return $this->animalHistory;
+    }
+
+    public function addAnimalHistory(AnimalHistory $animalHistory): static
+    {
+        if (!$this->animalHistory->contains($animalHistory)) {
+            $this->animalHistory->add($animalHistory);
+            $animalHistory->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalHistory(AnimalHistory $animalHistory): static
+    {
+        if ($this->animalHistory->removeElement($animalHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($animalHistory->getAnimal() === $this) {
+                $animalHistory->setAnimal(null);
             }
         }
 
