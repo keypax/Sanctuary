@@ -28,12 +28,16 @@
 
     <h2>{{ 'animal_history.last_changes'|trans }}</h2>
     {% for animalHistory in animal_histories %}
-        {{animalHistory.getBefore()|diff(animalHistory.getAfter())}}<br />
+        <div style="display:block; float:left; width:100%">
+            <div style="display:block; float:left; width:20%">2025-12-15</div>
+            <div style="display:block; float:left; width:30%">Jan Kowalski</div>
+            <div style="display:block; float:left; width:50%">{{ animalHistory.getBefore()|diff(animalHistory.getAfter()) }}</div>
+        </div>
     {% else %}
         {{ 'animal_history.no_last_changes'|trans }}
     {% endfor %}
 
-    animal_histories
+    <a href="{{ path('animal_history_show', {'animalId': animal.getId()}) }}">{{ 'animal_history.show_all'|trans }}</a>
 {% endblock %}
 
 {% block form_buttons %}

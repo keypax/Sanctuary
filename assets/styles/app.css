@@ -42,7 +42,7 @@ fieldset.resize_children :is(select, input) {
 del {
     color: red;
     background: #fdd;
-    text-decoration: none;
+    text-decoration: line-through;
 }
 
 ins {

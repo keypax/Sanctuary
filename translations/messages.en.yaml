@@ -43,8 +43,12 @@ animal:
         very_large: Very large
 
 animal_history:
+    label: History of Animal
     last_changes: Last changes
     no_last_changes: No changes found
+    show_all: Show all changes
+    changes_label: Changes
+    edit_animal_button: Edit animal
 
 gender:
     unknown: Unknown

@@ -27,4 +27,14 @@ class AnimalHistoryRepository extends ServiceEntityRepository implements AnimalH
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllForAnimal(Animal $animal): array
+    {
+        return $this->createQueryBuilder('ah')
+            ->andWhere('ah.animal = :animal')
+            ->setParameter('animal', $animal)
+            ->orderBy('ah.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
