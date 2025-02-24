@@ -25,6 +25,15 @@
         <input type="file" name="photo" required>
         <button type="submit" class="btn btn-primary">{{ 'animal.photos.add'|trans }}</button>
     </form>
+
+    <h2>{{ 'animal_history.last_changes'|trans }}</h2>
+    {% for animalHistory in animal_histories %}
+        {{animalHistory.getBefore()}} -> {{animalHistory.getAfter()}}<br />
+    {% else %}
+        {{ 'animal_history.no_last_changes'|trans }}
+    {% endfor %}
+
+    animal_histories
 {% endblock %}
 
 {% block form_buttons %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Form\AnimalType;
+use App\Repository\AnimalHistoryRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -65,9 +66,11 @@ class AnimalController extends AbstractController
     public function edit(
         Request $request,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,
+        AnimalHistoryRepositoryInterface $animalHistoryRepository,
         string $id
     ): Response {
         $animal = $this->animalRepository->getById($id);
+        $animalHistories = $animalHistoryRepository->findLatestForAnimal($animal, 10);
 
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
@@ -93,6 +96,7 @@ class AnimalController extends AbstractController
         return $this->render('animal/edit.html.twig', [
             'form' => $form,
             'animal' => $animal,
+            'animal_histories' => $animalHistories
         ]);
     }
 
