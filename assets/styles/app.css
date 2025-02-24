@@ -38,3 +38,15 @@ body {
 fieldset.resize_children :is(select, input) {
     width: 100%;
 }
+
+del {
+    color: red;
+    background: #fdd;
+    text-decoration: none;
+}
+
+ins {
+    color: green;
+    background: #dfd;
+    text-decoration: none;
+}

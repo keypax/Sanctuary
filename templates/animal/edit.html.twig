@@ -28,7 +28,7 @@
 
     <h2>{{ 'animal_history.last_changes'|trans }}</h2>
     {% for animalHistory in animal_histories %}
-        {{animalHistory.getBefore()}} -> {{animalHistory.getAfter()}}<br />
+        {{animalHistory.getBefore()|diff(animalHistory.getAfter())}}<br />
     {% else %}
         {{ 'animal_history.no_last_changes'|trans }}
     {% endfor %}
