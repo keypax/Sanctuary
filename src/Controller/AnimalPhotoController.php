@@ -67,7 +67,7 @@ class AnimalPhotoController extends AbstractController
 
         $animalId = $photo->getAnimal()->getId();
         try {
-            $this->animalPhotoService->deleteAnimalPhoto($photo);
+            $this->animalPhotoService->deleteAnimalPhotos($photo);
             $this->entityManager->remove($photo);
             $this->entityManager->flush();
 

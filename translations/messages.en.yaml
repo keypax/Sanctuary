@@ -29,7 +29,6 @@ animal:
         no_file: No file selected
         not_found: Photo not found
         incorrect_file_type: Please upload a valid image file (jpg, jpeg, png)
-
     list:
         empty: No animals found
         title: Animals list
@@ -42,6 +41,16 @@ animal:
         medium: Medium
         large: Large
         very_large: Very large
+
+animal_history:
+    label: History of Animal
+    last_changes: Last changes
+    no_last_changes: No changes found
+    show_all: Show all changes
+    changes_label: Changes
+    user_label: User
+    date_label: Change date
+    edit_animal_button: Edit animal
 
 gender:
     unknown: Unknown
@@ -74,14 +83,33 @@ approximate_age:
     7_10_years: 7-10 years
     senior: Senior (10+ years)
 size.label: Expected adult size
-adoption_status.label: Adoption status
 
-available: Available
-pending_adoption: Pending adoption
-adopted: Adopted
-on_hold: On hold
-unavailable: Unavailable
-deceased: Deceased
+adoption_status:
+    label: Adoption status
+    available: Available
+    pending_adoption: Pending adoption
+    adopted: Adopted
+    on_hold: On hold
+    unavailable: Unavailable
+    deceased: Deceased
+
+animal_internal_id: Animal internal id
+animal_name: Animal name
+species: Species
+breed: Breed
+#gender: Gender
+birth_date: Birth date
+#approximate_age: Approximate age
+description: Description
+color: Color
+distinctive_marks: Distinctive marks
+size: Size
+admission_date: Admission date
+#adoption_status: Adoption status
+adoption_date: Adoption date
+chip_number: Chip number
+weight: Weight
+#weight_in_grams: Weight (in grams)
 
 
 error_creating_directory: An error occurred while creating the directory
