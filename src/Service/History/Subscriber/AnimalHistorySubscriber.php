@@ -6,15 +6,15 @@ namespace App\Service\History\Subscriber;
 
 use App\Entity\Animal;
 use App\Entity\AnimalHistory;
-use App\Repository\AnimalHistoryRepositoryInterface;
+use App\Service\Animal\Choice\ChoicesServiceInterface;
+use App\Service\Animal\Choice\Exception\ChoicesProviderException;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Animal::class)]
@@ -23,6 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AnimalHistorySubscriber
 {
     function __construct(
+        private ChoicesServiceInterface $choicesService,
         private TranslatorInterface $translator
     ) {
 
@@ -50,10 +51,29 @@ class AnimalHistorySubscriber
 
             $animalHistory = new AnimalHistory();
             $animalHistory->setAnimal($animal);
-            $animalHistory->setBefore(sprintf('%s: %s', $translatedName, $value[0]));
-            $animalHistory->setAfter(sprintf('%s: %s', $translatedName, $value[1]));
+            $animalHistory->setDatetime(new \DateTimeImmutable());
+
+            $beforeVal = $this->processValue($name, $value[0]);
+            $animalHistory->setBefore(sprintf('%s: %s', $translatedName, $beforeVal));
+
+            $afterVal = $this->processValue($name, $value[1]);
+            $animalHistory->setAfter(sprintf('%s: %s', $translatedName, $afterVal));
 
             $animal->addAnimalHistory($animalHistory);
         }
+    }
+
+    private function processValue(string $name, mixed $value): string {
+        if ($this->choicesService->isKeySupported($name)) {
+            return $this->translator->trans(
+                $this->choicesService->getProviderByKey($name)->getKeyByValue($value)
+            );
+        }
+
+        if ($value instanceof DateTime) {
+            return $value->format('Y-m-d');
+        }
+
+        return (string) $value;
     }
 }

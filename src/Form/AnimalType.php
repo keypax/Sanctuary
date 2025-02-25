@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Animal;
-use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
+use App\Service\Animal\Choice\ChoicesServiceInterface;
+use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use App\Service\Animal\Provider\Species\SpeciesProviderInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -18,6 +20,8 @@ class AnimalType extends AbstractType
     public function __construct(
         private ParameterBagInterface $params,
         private SpeciesProviderInterface $speciesProvider,
+        private ChoicesServiceInterface $choicesService,
+        private LoggerInterface $logger
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -39,11 +43,7 @@ class AnimalType extends AbstractType
                 'required' => false,
             ])
             ->add('gender', ChoiceType::class, [
-                'choices' => [
-                    'gender.unknown' => 0,
-                    'gender.male' => 1,
-                    'gender.female' => 2,
-                ],
+                'choices' => $this->getChoices('gender'),
                 'choice_translation_domain' => 'messages',
                 'required' => true,
             ])
@@ -52,30 +52,7 @@ class AnimalType extends AbstractType
             ])
             ->add('approximate_age', ChoiceType::class, [
                 'label' => 'approximate_age.label',
-                'choices' => [
-                    'approximate_age.less_than_week' => 0,
-                    'approximate_age.1_2_weeks' => 7,
-                    'approximate_age.2_4_weeks' => 14,
-                    'approximate_age.1_month' => 30,
-                    'approximate_age.2_months' => 60,
-                    'approximate_age.3_months' => 90,
-                    'approximate_age.4_months' => 120,
-                    'approximate_age.5_months' => 150,
-                    'approximate_age.6_months' => 180,
-                    'approximate_age.7_months' => 210,
-                    'approximate_age.8_months' => 240,
-                    'approximate_age.9_months' => 270,
-                    'approximate_age.10_months' => 300,
-                    'approximate_age.11_months' => 330,
-                    'approximate_age.1_year' => 365,
-                    'approximate_age.1_2_years' => 365,
-                    'approximate_age.2_3_years' => 730,
-                    'approximate_age.3_4_years' => 1095,
-                    'approximate_age.4_5_years' => 1460,
-                    'approximate_age.5_7_years' => 1825,
-                    'approximate_age.7_10_years' => 2555,
-                    'approximate_age.senior' => 3650,
-                ],
+                'choices' => $this->getChoices('approximate_age'),
                 'choice_translation_domain' => 'messages',
                 'required' => false,
             ])
@@ -84,13 +61,7 @@ class AnimalType extends AbstractType
             ->add('distinctive_marks')
             ->add('size', ChoiceType::class, [
                 'label' => 'size.label',
-                'choices' => [
-                    'animal.size.very_small' => 0,
-                    'animal.size.small' => 1,
-                    'animal.size.medium' => 2,
-                    'animal.size.large' => 3,
-                    'animal.size.very_large' => 4,
-                ],
+                'choices' => $this->getChoices('size'),
                 'choice_translation_domain' => 'messages',
                 'required' => true,
             ])
@@ -99,7 +70,7 @@ class AnimalType extends AbstractType
             ])
             ->add('adoption_status', ChoiceType::class, [
                 'label' => 'adoption_status.label',
-                'choices' => $this->params->get('adoption_status'),
+                'choices' => $this->getChoices('adoption_status'),
                 'choice_translation_domain' => 'messages',
                 'required' => false,
             ])
@@ -135,5 +106,15 @@ class AnimalType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Animal::class,
         ]);
+    }
+
+    private function getChoices(string $key): array
+    {
+        try {
+            return $this->choicesService->getProviderByKey($key)->getChoices();
+        } catch (ChoicesProviderException $e) {
+            $this->logger->error($e->getMessage());
+            return [];
+        }
     }
 }

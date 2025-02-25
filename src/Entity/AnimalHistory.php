@@ -1,11 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\AnimalHistoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalHistoryRepository::class)]
+#[ORM\Table(
+    name: 'animal_history',
+    indexes: [
+        new ORM\Index(name: 'animal_history_animal_id_idx', columns: ['animal_id', 'id']),
+    ]
+)]
 class AnimalHistory
 {
     #[ORM\Id]
@@ -16,6 +24,9 @@ class AnimalHistory
     #[ORM\ManyToOne(inversedBy: 'animalHistory')]
     #[ORM\JoinColumn(name: 'animal_id', referencedColumnName: 'id', nullable: false)]
     private ?Animal $animal = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private \DateTimeImmutable $datetime;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $before = null;
@@ -38,6 +49,16 @@ class AnimalHistory
         $this->animal = $animal;
 
         return $this;
+    }
+
+    public function getDatetime(): \DateTimeImmutable
+    {
+        return $this->datetime;
+    }
+
+    public function setDatetime(\DateTimeImmutable $datetime): void
+    {
+        $this->datetime = $datetime;
     }
 
     public function getBefore(): ?string

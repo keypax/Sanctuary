@@ -37,6 +37,7 @@
         {{ 'animal_history.no_last_changes'|trans }}
     {% endfor %}
 
+    <br />
     <a href="{{ path('animal_history_show', {'animalId': animal.getId()}) }}">{{ 'animal_history.show_all'|trans }}</a>
 {% endblock %}
 

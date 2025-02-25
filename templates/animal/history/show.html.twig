@@ -12,6 +12,8 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>{{ 'animal_history.date_label'|trans }}</th>
+            <th>{{ 'animal_history.user_label'|trans }}</th>
             <th>{{ 'animal_history.changes_label'|trans }}</th>
         </tr>
         </thead>
@@ -19,11 +21,13 @@
         {% for animalHistory in animalHistories %}
             <tr>
                 <td>{{ animalHistory.getId() }}</td>
+                <td>{{ animalHistory.getDatetime()|date("Y-m-d H:i:s") }}</td>
+                <td>Jan Kowalski</td>
                 <td>{{ animalHistory.getBefore()|diff(animalHistory.getAfter()) }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">{{ 'animal.list.empty'|trans }}</td>
+                <td colspan="4">{{ 'animal_history.no_last_changes'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
