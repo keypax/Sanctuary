@@ -93,6 +93,8 @@ adoption_status:
     unavailable: Unavailable
     deceased: Deceased
 
+animal_name_empty: Animal name is empty
+
 animal_internal_id: Animal internal id
 animal_name: Animal name
 species: Species

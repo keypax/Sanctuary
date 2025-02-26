@@ -4,7 +4,7 @@
 {% block title %}{{ 'animal_history.label'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'animal_history.label'|trans }}</h1>
+    <h1>{{ 'animal_history.label'|trans }} ({{ animal.getAnimalInternalId() }}, {{ animal.getAnimalName() ?? 'animal_name_empty'|trans }})</h1>
 
     <a href="{{ path('animal_edit', {id: animal.getId()}) }}" class="button">{{ 'animal_history.edit_animal_button'|trans }}</a>
 
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ animalHistory.getId() }}</td>
                 <td>{{ animalHistory.getDatetime()|date("Y-m-d H:i:s") }}</td>
-                <td>{{ animalHistory.getUser()->getFullName()</td>
+                <td>{{ animalHistory.getUser().getFullName() }}</td>
                 <td>{{ animalHistory.getBefore()|diff(animalHistory.getAfter()) }}</td>
             </tr>
         {% else %}
