@@ -11,6 +11,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th>Zdjęcie</th>
             <th>ID</th>
             <th>Rasa</th>
             <th>Waga</th>
@@ -20,6 +21,14 @@
         <tbody>
         {% for animal in animals %}
             <tr>
+                <td>
+                    {% if animal.getAnimalPhoto()|length > 0 %}
+                        {% set firstPhoto = animal.animalPhoto|first %}
+                        <img src="{{ asset(firstPhoto.getFilenameSmall()) }}" alt="{{ animal.getAnimalName() }}" width="50">
+                    {% else %}
+                        {# <img src="{{ asset('uploads/placeholder.jpg') }}" alt="No photo" width="50"> #}
+                    {% endif %}
+                </td>
                 <td>{{ animal.getAnimalInternalId() }}</td>
                 <td>{{ animal.getSpecies() }}</td>
                 <td>{{ animal.getWeight() }}</td>
