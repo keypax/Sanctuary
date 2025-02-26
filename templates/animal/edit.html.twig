@@ -30,7 +30,7 @@
     {% for animalHistory in animal_histories %}
         <div style="display:block; float:left; width:100%">
             <div style="display:block; float:left; width:20%">2025-12-15</div>
-            <div style="display:block; float:left; width:30%">Jan Kowalski</div>
+            <div style="display:block; float:left; width:30%">{{ animalHistory.getUser().getFullName() }}</div>
             <div style="display:block; float:left; width:50%">{{ animalHistory.getBefore()|diff(animalHistory.getAfter()) }}</div>
         </div>
     {% else %}

@@ -7,7 +7,6 @@ use App\Service\Animal\Choice\ChoicesServiceInterface;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use App\Service\Animal\Provider\Species\SpeciesProviderInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -18,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AnimalType extends AbstractType
 {
     public function __construct(
-        private ParameterBagInterface $params,
         private SpeciesProviderInterface $speciesProvider,
         private ChoicesServiceInterface $choicesService,
         private LoggerInterface $logger

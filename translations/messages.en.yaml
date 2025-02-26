@@ -93,6 +93,30 @@ adoption_status:
     unavailable: Unavailable
     deceased: Deceased
 
+login:
+    title: Login
+    please_login: Please login
+    email: Email
+    password: Password
+    logout: Logout
+    remember_me: Remember me
+    you_are_logged_as: "You are logged in as %username%"
+    button: Login
+
+register:
+    title: Register
+    please_register: Register
+    button: Register
+    password: Password
+    label:
+        email: Email
+        agree_terms: I agree to the terms and conditions
+        full_name: Full name
+        password: Password
+
+
+animal_name_empty: Animal name is empty
+
 animal_internal_id: Animal internal id
 animal_name: Animal name
 species: Species
