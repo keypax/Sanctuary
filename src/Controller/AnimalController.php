@@ -7,6 +7,7 @@ use App\Form\AnimalType;
 use App\Repository\AnimalHistoryRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
+use DateTimeImmutable;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,11 +21,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AnimalController extends AbstractController
 {
     function __construct(
-        private AnimalRepositoryInterface $animalRepository,
-        private EntityManagerInterface $entityManager,
-        private TranslatorInterface $translator
+        private readonly AnimalRepositoryInterface $animalRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TranslatorInterface $translator
     ) {}
 
+    /** @noinspection PhpRedundantCatchClauseInspection */
     #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
@@ -32,7 +34,7 @@ class AnimalController extends AbstractController
     ): Response {
         $animal = new Animal();
         $animal->setAnimalInternalId($nextAnimalIdProvider->proposeNextId());
-        $animal->setAdmissionDate(new \DateTimeImmutable('now'));
+        $animal->setAdmissionDate(new DateTimeImmutable('now'));
 
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
@@ -61,6 +63,7 @@ class AnimalController extends AbstractController
         ]);
     }
 
+    /** @noinspection PhpRedundantCatchClauseInspection */
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,

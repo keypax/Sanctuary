@@ -11,9 +11,9 @@ use Imagine\Image\ImageInterface;
 class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
 {
     public function __construct(
-        private bool $changeExtension,
-        private string $targetExtension,
-        private Imagine $imagine
+        private readonly bool $changeExtension,
+        private readonly string $targetExtension,
+        private readonly Imagine $imagine
     ) {}
 
     public function generateThumbnails(string $originalFilepath, string $targetDirectory, string $targetFilename, ThumbnailSize $thumbnailSize): string

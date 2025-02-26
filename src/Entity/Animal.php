@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -33,7 +34,7 @@ class Animal
     private ?int $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $birth_date = null;
+    private ?DateTimeInterface $birth_date = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $approximate_age = null;
@@ -51,13 +52,13 @@ class Animal
     private ?int $size = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $admission_date = null;
+    private ?DateTimeInterface $admission_date = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $adoption_status = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $adoption_date = null;
+    private ?DateTimeInterface $adoption_date = null;
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $chip_number = null;
@@ -145,12 +146,12 @@ class Animal
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): ?DateTimeInterface
     {
         return $this->birth_date;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birth_date): static
+    public function setBirthDate(?DateTimeInterface $birth_date): static
     {
         $this->birth_date = $birth_date;
 
@@ -217,12 +218,12 @@ class Animal
         return $this;
     }
 
-    public function getAdmissionDate(): ?\DateTimeInterface
+    public function getAdmissionDate(): ?DateTimeInterface
     {
         return $this->admission_date;
     }
 
-    public function setAdmissionDate(\DateTimeInterface $admission_date): static
+    public function setAdmissionDate(DateTimeInterface $admission_date): static
     {
         $this->admission_date = $admission_date;
 
@@ -241,12 +242,12 @@ class Animal
         return $this;
     }
 
-    public function getAdoptionDate(): ?\DateTimeInterface
+    public function getAdoptionDate(): ?DateTimeInterface
     {
         return $this->adoption_date;
     }
 
-    public function setAdoptionDate(?\DateTimeInterface $adoption_date): static
+    public function setAdoptionDate(?DateTimeInterface $adoption_date): static
     {
         $this->adoption_date = $adoption_date;
 

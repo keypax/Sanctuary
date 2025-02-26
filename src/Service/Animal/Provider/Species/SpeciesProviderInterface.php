@@ -7,7 +7,7 @@ use App\Entity\AnimalSpecies;
 interface SpeciesProviderInterface
 {
     /**
-     * @return AnimalSpecies[]
+     * @return string[]
      */
     public function getSpecies(): array;
 }

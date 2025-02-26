@@ -10,9 +10,9 @@ use Psr\Log\LoggerInterface;
 class BreedsProvider implements BreedsProviderInterface
 {
     function __construct(
-        private AnimalSpeciesRepositoryInterface $animalSpeciesRepository,
-        private AnimalBreedRepositoryInterface $animalBreedRepository,
-        private LoggerInterface $logger
+        private readonly AnimalSpeciesRepositoryInterface $animalSpeciesRepository,
+        private readonly AnimalBreedRepositoryInterface $animalBreedRepository,
+        private readonly LoggerInterface $logger
     ) {}
 
     public function getBreeds(string $speciesName): array

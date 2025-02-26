@@ -15,18 +15,18 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class Uploader implements UploaderInterface
+readonly class Uploader implements UploaderInterface
 {
     public function __construct(
-        private FileUploaderInterface $fileUploader,
-        private SluggerInterface $slugger,
-        private ThumbnailGeneratorInterface $thumbnailGenerator,
-        private EntityManagerInterface $entityManager,
-        private LoggerInterface $logger,
-        private string $basePathServer,
-        private string $basePathWeb,
-        private bool $changeExtension,
-        private string $targetExtension
+        private readonly FileUploaderInterface $fileUploader,
+        private readonly SluggerInterface $slugger,
+        private readonly ThumbnailGeneratorInterface $thumbnailGenerator,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LoggerInterface $logger,
+        private readonly string $basePathServer,
+        private readonly string $basePathWeb,
+        private readonly bool $changeExtension,
+        private readonly string $targetExtension
     ) {}
 
     public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto
@@ -37,7 +37,12 @@ class Uploader implements UploaderInterface
         $targetServerDirectory = $this->getTargetServerDirectory($year, $month, $animal);
         $targetWebDirectory = $this->getTargetWebDirectory($year, $month, $animal);
 
-        $this->fileUploader->createDirectory($targetServerDirectory);
+        try {
+            $this->fileUploader->createDirectory($targetServerDirectory);
+        } catch (\Exception $e) {
+            $this->logger->error('Error creating directory: ' . $e->getMessage());
+            throw $e;
+        }
 
         $newFilename = $this->getNewFilename($photo);
         $originalPath = $targetServerDirectory . '/' . $newFilename;

@@ -6,6 +6,7 @@ use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\Animal\Photo\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,9 +17,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AnimalPhotoController extends AbstractController
 {
     public function __construct(
-        private AnimalPhotoService $animalPhotoService,
-        private EntityManagerInterface $entityManager,
-        private TranslatorInterface $translator
+        private readonly AnimalPhotoService $animalPhotoService,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TranslatorInterface $translator
     ) {}
 
     #[Route('/add/{animalId}', name: 'add', methods: ['GET', 'POST'])]
@@ -46,7 +47,7 @@ class AnimalPhotoController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', $this->translator->trans('animal.photos.upload.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $this->translator->trans('animal.photos.upload.error'));
         }
 
@@ -72,7 +73,7 @@ class AnimalPhotoController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', $this->translator->trans('animal.photos.delete.success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', $this->translator->trans('animal.photos.delete.error'));
         }
 

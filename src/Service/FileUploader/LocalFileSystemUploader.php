@@ -2,6 +2,7 @@
 
 namespace App\Service\FileUploader;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -11,9 +12,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LocalFileSystemUploader implements FileUploaderInterface
 {
     public function __construct(
-        private Filesystem $filesystem,
-        private TranslatorInterface $translator,
-        private LoggerInterface $logger
+        private readonly Filesystem $filesystem,
+        private readonly TranslatorInterface $translator,
+        private readonly LoggerInterface $logger
     ) {}
 
     /**
@@ -21,13 +22,8 @@ class LocalFileSystemUploader implements FileUploaderInterface
      */
     public function upload(UploadedFile $file, string $targetDirectory, string $newFilename): string
     {
-        try {
-            $file->move($targetDirectory, $newFilename);
-            return $targetDirectory . '/' . $newFilename;
-
-        } catch (FileException $e) {
-            throw $e;
-        }
+        $file->move($targetDirectory, $newFilename);
+        return $targetDirectory . '/' . $newFilename;
     }
 
     /**
@@ -37,9 +33,9 @@ class LocalFileSystemUploader implements FileUploaderInterface
     {
         try {
             $this->filesystem->mkdir($targetDirectory, 0755);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error($e->getMessage());
-            throw new \Exception($this->translator->trans('error_creating_directory'));
+            throw new Exception($this->translator->trans('error_creating_directory'));
         }
     }
 }

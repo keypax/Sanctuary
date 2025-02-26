@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class AnimalPhotoService implements AnimalPhotoServiceInterface
 {
     function __construct(
-        private UploaderInterface $uploader,
-        private DeleterInterface $deleter
+        private readonly UploaderInterface $uploader,
+        private readonly DeleterInterface $deleter
     ) {
 
     }

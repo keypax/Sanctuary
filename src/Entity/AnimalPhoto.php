@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AnimalPhotoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 
 #[ORM\Entity(repositoryClass: AnimalPhotoRepository::class)]
 class AnimalPhoto
@@ -142,7 +143,7 @@ class AnimalPhoto
     {
         $setter = 'setFilename' . $thumbnailSize;
         if (!method_exists($this, $setter)) {
-            throw new \LogicException('Method ' . $setter . ' does not exist in AnimalPhoto entity');
+            throw new LogicException('Method ' . $setter . ' does not exist in AnimalPhoto entity');
         }
 
         return $setter;
