@@ -9,7 +9,6 @@ use App\Repository\AnimalRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,9 +100,9 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(): Response
     {
-        $animals = $entityManager->getRepository(Animal::class)->findAll();
+        $animals = $this->animalRepository->findAll();
 
         return $this->render('animal/index.html.twig', [
             'animals' => $animals,
