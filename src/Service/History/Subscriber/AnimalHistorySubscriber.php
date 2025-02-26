@@ -15,6 +15,7 @@ use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Animal::class)]
@@ -24,6 +25,7 @@ class AnimalHistorySubscriber
 {
     function __construct(
         private ChoicesServiceInterface $choicesService,
+        private Security $security,
         private TranslatorInterface $translator
     ) {
 
@@ -51,6 +53,7 @@ class AnimalHistorySubscriber
 
             $animalHistory = new AnimalHistory();
             $animalHistory->setAnimal($animal);
+            $animalHistory->setUser($this->security->getUser());
             $animalHistory->setDatetime(new \DateTimeImmutable());
 
             $beforeVal = $this->processValue($name, $value[0]);

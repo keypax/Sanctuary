@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
     name: 'animal_history',
     indexes: [
         new ORM\Index(name: 'animal_history_animal_id_idx', columns: ['animal_id', 'id']),
+        new ORM\Index(name: 'animal_history_user_id_idx', columns: ['user_id', 'id']),
     ]
 )]
 class AnimalHistory
@@ -24,6 +25,10 @@ class AnimalHistory
     #[ORM\ManyToOne(inversedBy: 'animalHistory')]
     #[ORM\JoinColumn(name: 'animal_id', referencedColumnName: 'id', nullable: false)]
     private ?Animal $animal = null;
+
+    #[ORM\ManyToOne(inversedBy: 'animalHistory')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    private ?User $user = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $datetime;
@@ -49,6 +54,16 @@ class AnimalHistory
         $this->animal = $animal;
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 
     public function getDatetime(): \DateTimeImmutable

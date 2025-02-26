@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -22,6 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $fullName = null;
+
     /**
      * @var list<string> The user roles
      */
@@ -33,6 +38,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, AnimalHistory>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalHistory::class, mappedBy: 'user', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $animalHistory;
+
+    public function __construct()
+    {
+        $this->animalHistory = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,6 +65,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(?string $fullName): void
+    {
+        $this->fullName = $fullName;
     }
 
     /**
@@ -107,5 +133,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, AnimalHistory>
+     */
+    public function getAnimalHistory(): Collection
+    {
+        return $this->animalHistory;
+    }
+
+    public function addAnimalHistory(AnimalHistory $animalHistory): static
+    {
+        if (!$this->animalHistory->contains($animalHistory)) {
+            $this->animalHistory->add($animalHistory);
+            $animalHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalHistory(AnimalHistory $animalHistory): static
+    {
+        if ($this->animalHistory->removeElement($animalHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($animalHistory->getUser() === $this) {
+                $animalHistory->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

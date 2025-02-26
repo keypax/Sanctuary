@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ animalHistory.getId() }}</td>
                 <td>{{ animalHistory.getDatetime()|date("Y-m-d H:i:s") }}</td>
-                <td>Jan Kowalski</td>
+                <td>{{ animalHistory.getUser()->getFullName()</td>
                 <td>{{ animalHistory.getBefore()|diff(animalHistory.getAfter()) }}</td>
             </tr>
         {% else %}
