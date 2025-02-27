@@ -6,7 +6,7 @@ namespace App\Service\Animal\Choice\Provider;
 
 abstract class ChoicesProviderAbstract implements ChoicesProviderInterface
 {
-    protected array $choices;
+    protected array $choices = [];
 
     public function __construct() {
         $this->choices = $this->getChoices();

@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpUnused */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -69,9 +71,7 @@ class Animal
     #[ORM\OneToMany(targetEntity: AnimalPhoto::class, mappedBy: 'animal', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $animalPhoto;
 
-    /**
-     * @var Collection<int, AnimalHistory>
-     */
+    /** @var Collection<int, AnimalHistory> */
     #[ORM\OneToMany(targetEntity: AnimalHistory::class, mappedBy: 'animal', cascade: ['persist'], orphanRemoval: true)]
     private Collection $animalHistory;
 

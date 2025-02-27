@@ -28,7 +28,7 @@ class DiffAppExtension extends AbstractExtension
     {
         try {
             return $this->differ->render($before, $after);
-        } catch (GranularityCountException $e) {
+        } catch (GranularityCountException) {
             return $after;
         }
     }

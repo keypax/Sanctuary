@@ -2,14 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Animal;
-use App\Form\AnimalType;
 use App\Repository\AnimalHistoryRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
-use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +15,6 @@ class AnimalHistoryController extends AbstractController
     #[Route('/show/{animalId}', name: 'show', methods: ['GET'])]
     public function new(
         string $animalId,
-        Request $request,
         AnimalRepositoryInterface $animalRepository,
         AnimalHistoryRepositoryInterface $animalHistoryRepository,
     ): Response {

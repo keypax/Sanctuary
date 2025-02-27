@@ -8,6 +8,7 @@ use App\Service\Animal\Photo\AnimalPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ class AnimalPhotoController extends AbstractController
         Request $request,
         AnimalRepositoryInterface $animalRepository,
         string $animalId
-    )
+    ): RedirectResponse
     {
         $animal = $animalRepository->getById($animalId);
         if (!$animal)
@@ -47,7 +48,7 @@ class AnimalPhotoController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', $this->translator->trans('animal.photos.upload.success'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->addFlash('error', $this->translator->trans('animal.photos.upload.error'));
         }
 
@@ -73,7 +74,7 @@ class AnimalPhotoController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', $this->translator->trans('animal.photos.delete.success'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->addFlash('error', $this->translator->trans('animal.photos.delete.error'));
         }
 

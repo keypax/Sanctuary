@@ -7,7 +7,6 @@ namespace App\Service\History\Subscriber;
 use App\Entity\Animal;
 use App\Entity\AnimalHistory;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
-use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;

@@ -35,7 +35,7 @@ readonly class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         int $maxSize,
         ImageInterface $originalImage,
         string $thumbnailTargetFilename,
-    )
+    ): void
     {
         if ($originalWidth > $originalHeight) {
             $thumbnailWidth = $maxSize;
