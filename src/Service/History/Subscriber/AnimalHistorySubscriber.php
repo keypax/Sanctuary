@@ -22,12 +22,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Animal::class)]
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: Animal::class)]
 #[AsEntityListener(event: Events::preRemove, method: 'preRemove', entity: Animal::class)]
-class AnimalHistorySubscriber
+readonly class AnimalHistorySubscriber
 {
     function __construct(
-        private readonly ChoicesServiceInterface $choicesService,
-        private readonly Security $security,
-        private readonly TranslatorInterface $translator
+        private ChoicesServiceInterface $choicesService,
+        private Security $security,
+        private TranslatorInterface $translator
     ) {
 
     }

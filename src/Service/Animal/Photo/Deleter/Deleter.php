@@ -10,13 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
 
-class Deleter implements DeleterInterface
+readonly class Deleter implements DeleterInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly string $basePathServer,
-        private readonly string $basePathWeb
+        private LoggerInterface $logger,
+        private EntityManagerInterface $entityManager,
+        private string $basePathServer,
+        private string $basePathWeb
     ) { }
 
     public function deleteAllAnimalPhotos(Animal $animal): void

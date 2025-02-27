@@ -6,9 +6,9 @@ use App\Entity\AnimalIdByYear;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGenerationStrategyInterface
+readonly class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGenerationStrategyInterface
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager) {}
+    public function __construct(private EntityManagerInterface $entityManager) {}
 
     /**
      * @return string The next animal id in the format {id}/{year}. Example: 1/2025, 53/2024

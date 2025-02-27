@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class LocalFileSystemUploader implements FileUploaderInterface
+readonly class LocalFileSystemUploader implements FileUploaderInterface
 {
     public function __construct(
-        private readonly Filesystem $filesystem,
-        private readonly TranslatorInterface $translator,
-        private readonly LoggerInterface $logger
+        private Filesystem $filesystem,
+        private TranslatorInterface $translator,
+        private LoggerInterface $logger
     ) {}
 
     /**

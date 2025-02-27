@@ -8,12 +8,12 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 
-class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
+readonly class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
 {
     public function __construct(
-        private readonly bool $changeExtension,
-        private readonly string $targetExtension,
-        private readonly Imagine $imagine
+        private bool $changeExtension,
+        private string $targetExtension,
+        private Imagine $imagine
     ) {}
 
     public function generateThumbnails(string $originalFilepath, string $targetDirectory, string $targetFilename, ThumbnailSize $thumbnailSize): string

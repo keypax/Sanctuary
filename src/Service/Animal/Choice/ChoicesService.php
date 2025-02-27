@@ -10,7 +10,7 @@ readonly class ChoicesService implements ChoicesServiceInterface
     /**
      * @param ChoicesProviderInterface[] $choicesProviders
      */
-    public function __construct(private readonly array $choicesProviders) {}
+    public function __construct(private array $choicesProviders) {}
 
     public function getProviderByKey(string $key): ChoicesProviderInterface
     {

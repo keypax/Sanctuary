@@ -10,6 +10,7 @@ use App\Service\Animal\Photo\Thumbnail\ThumbnailGeneratorInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailSize;
 use App\Service\FileUploader\FileUploaderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,15 +19,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 readonly class Uploader implements UploaderInterface
 {
     public function __construct(
-        private readonly FileUploaderInterface $fileUploader,
-        private readonly SluggerInterface $slugger,
-        private readonly ThumbnailGeneratorInterface $thumbnailGenerator,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly LoggerInterface $logger,
-        private readonly string $basePathServer,
-        private readonly string $basePathWeb,
-        private readonly bool $changeExtension,
-        private readonly string $targetExtension
+        private FileUploaderInterface $fileUploader,
+        private SluggerInterface $slugger,
+        private ThumbnailGeneratorInterface $thumbnailGenerator,
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger,
+        private string $basePathServer,
+        private string $basePathWeb,
+        private bool $changeExtension,
+        private string $targetExtension
     ) {}
 
     public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto
@@ -39,7 +40,7 @@ readonly class Uploader implements UploaderInterface
 
         try {
             $this->fileUploader->createDirectory($targetServerDirectory);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('Error creating directory: ' . $e->getMessage());
             throw $e;
         }

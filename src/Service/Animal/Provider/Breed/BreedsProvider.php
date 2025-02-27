@@ -7,12 +7,12 @@ use App\Repository\AnimalSpeciesRepositoryInterface;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
-class BreedsProvider implements BreedsProviderInterface
+readonly class BreedsProvider implements BreedsProviderInterface
 {
     function __construct(
-        private readonly AnimalSpeciesRepositoryInterface $animalSpeciesRepository,
-        private readonly AnimalBreedRepositoryInterface $animalBreedRepository,
-        private readonly LoggerInterface $logger
+        private AnimalSpeciesRepositoryInterface $animalSpeciesRepository,
+        private AnimalBreedRepositoryInterface $animalBreedRepository,
+        private LoggerInterface $logger
     ) {}
 
     public function getBreeds(string $speciesName): array

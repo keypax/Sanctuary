@@ -10,11 +10,11 @@ use App\Service\Animal\Photo\Deleter\DeleterInterface;
 use App\Service\Animal\Photo\Uploader\UploaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AnimalPhotoService implements AnimalPhotoServiceInterface
+readonly class AnimalPhotoService implements AnimalPhotoServiceInterface
 {
     function __construct(
-        private readonly UploaderInterface $uploader,
-        private readonly DeleterInterface $deleter
+        private UploaderInterface $uploader,
+        private DeleterInterface $deleter
     ) {
 
     }
