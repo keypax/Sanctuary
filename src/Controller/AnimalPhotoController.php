@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Repository\AnimalRepositoryInterface;
 use App\Service\Animal\Photo\AnimalPhotoService;
+use App\Service\Animal\Photo\AnimalPhotoServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,8 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AnimalPhotoController extends AbstractController
 {
     public function __construct(
-        private readonly AnimalPhotoService $animalPhotoService,
-        private readonly EntityManagerInterface $entityManager,
+        private readonly AnimalPhotoServiceInterface $animalPhotoService,
+        private readonly AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private readonly TranslatorInterface $translator
     ) {}
 
@@ -44,8 +45,7 @@ class AnimalPhotoController extends AbstractController
 
         try {
             $photo = $this->animalPhotoService->uploadAnimalPhoto($uploadedFile, $animal);
-            $this->entityManager->persist($photo);
-            $this->entityManager->flush();
+            $this->animalPhotoRepository->save($photo);
 
             $this->addFlash('success', $this->translator->trans('animal.photos.upload.success'));
         } catch (Exception) {
@@ -70,8 +70,7 @@ class AnimalPhotoController extends AbstractController
         $animalId = $photo->getAnimal()->getId();
         try {
             $this->animalPhotoService->deleteAnimalPhotos($photo);
-            $this->entityManager->remove($photo);
-            $this->entityManager->flush();
+            $this->animalPhotoRepository->remove($photo);
 
             $this->addFlash('success', $this->translator->trans('animal.photos.delete.success'));
         } catch (Exception) {

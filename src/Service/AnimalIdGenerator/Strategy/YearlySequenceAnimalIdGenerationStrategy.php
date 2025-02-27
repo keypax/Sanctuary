@@ -3,12 +3,15 @@
 namespace App\Service\AnimalIdGenerator\Strategy;
 
 use App\Entity\AnimalIdByYear;
+use App\Repository\AnimalIdByYearRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGenerationStrategyInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager) {}
+    public function __construct(
+        private AnimalIdByYearRepositoryInterface $animalIdByYearRepository,
+    ) {}
 
     /**
      * @return string The next animal id in the format {id}/{year}. Example: 1/2025, 53/2024
@@ -18,11 +21,10 @@ readonly class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGener
         $animalIdByYear = $this->getAnimalIdByYear();
         if ($animalIdByYear == null) {
             $animalIdByYear = new AnimalIdByYear();
-            $animalIdByYear->setYear(date("Y"));
+            $animalIdByYear->setYear((int) date("Y"));
             $animalIdByYear->setLastId(1);
 
-            $this->entityManager->persist($animalIdByYear);
-            $this->entityManager->flush();
+            $this->animalIdByYearRepository->save($animalIdByYear);
         }
 
         return $animalIdByYear->getLastId() . "/" . $animalIdByYear->getYear();
@@ -33,12 +35,11 @@ readonly class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGener
         $animalIdByYear = $this->getAnimalIdByYear();
         $animalIdByYear->setLastId($animalIdByYear->getLastId() + 1);
 
-        $this->entityManager->persist($animalIdByYear);
-        $this->entityManager->flush();
+        $this->animalIdByYearRepository->save($animalIdByYear);
     }
 
     private function getAnimalIdByYear(): ?AnimalIdByYear
     {
-        return $this->entityManager->getRepository(AnimalIdByYear::class)->findOneBy(["year" => date("Y")]);
+        return $this->animalIdByYearRepository->findOneByYear((int) date("Y"));
     }
 }

@@ -6,6 +6,7 @@ namespace App\Service\Animal\Photo\Uploader;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
+use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailGeneratorInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailSize;
 use App\Service\FileUploader\FileUploaderInterface;
@@ -22,7 +23,7 @@ readonly class Uploader implements UploaderInterface
         private FileUploaderInterface $fileUploader,
         private SluggerInterface $slugger,
         private ThumbnailGeneratorInterface $thumbnailGenerator,
-        private EntityManagerInterface $entityManager,
+        private AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private LoggerInterface $logger,
         private string $basePathServer,
         private string $basePathWeb,
@@ -70,7 +71,7 @@ readonly class Uploader implements UploaderInterface
             $animalPhoto->setHeight($height);
             $animalPhoto->setSize($fileSize);
 
-            $this->saveToRepository($animalPhoto);
+            $this->animalPhotoRepository->save($animalPhoto);
 
             return $animalPhoto;
 
@@ -89,12 +90,6 @@ readonly class Uploader implements UploaderInterface
     private function getTargetWebDirectory(string $year, string $month, Animal $animal): string
     {
         return $this->basePathWeb . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
-    }
-
-    private function saveToRepository(AnimalPhoto $animalPhoto): void
-    {
-        $this->entityManager->persist($animalPhoto);
-        $this->entityManager->flush();
     }
 
     /**

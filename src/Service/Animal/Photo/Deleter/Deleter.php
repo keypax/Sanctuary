@@ -6,7 +6,7 @@ namespace App\Service\Animal\Photo\Deleter;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AnimalPhotoRepositoryInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
 
@@ -14,7 +14,7 @@ readonly class Deleter implements DeleterInterface
 {
     public function __construct(
         private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager,
+        private AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private string $basePathServer,
         private string $basePathWeb
     ) { }
@@ -46,8 +46,7 @@ readonly class Deleter implements DeleterInterface
             $this->logger->error('Error deleting photo: ' . $e->getMessage());
         }
 
-        $this->entityManager->remove($photo);
-        $this->entityManager->flush();
+        $this->animalPhotoRepository->remove($photo);
 
         $this->logger->info('Photo entity removed: ' . $photo->getId());
     }

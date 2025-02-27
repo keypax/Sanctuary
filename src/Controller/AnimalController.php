@@ -22,7 +22,6 @@ class AnimalController extends AbstractController
 {
     function __construct(
         private readonly AnimalRepositoryInterface $animalRepository,
-        private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator
     ) {}
 
@@ -41,8 +40,7 @@ class AnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->entityManager->persist($animal);
-                $this->entityManager->flush();
+                $this->animalRepository->save($animal);
 
                 $nextAnimalIdProvider->incrementId();
 
@@ -79,8 +77,7 @@ class AnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->entityManager->persist($animal);
-                $this->entityManager->flush();
+                $this->animalRepository->save($animal);
 
                 $nextAnimalIdProvider->incrementId();
 

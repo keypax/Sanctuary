@@ -12,4 +12,6 @@ interface AnimalRepositoryInterface
      * @return Animal[]
      */
     public function findAll() : array;
+
+    public function save(Animal $animal) : void;
 }
