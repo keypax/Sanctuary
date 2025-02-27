@@ -1,10 +1,11 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 declare(strict_types=1);
 
 namespace App\Entity;
 
 use App\Repository\AnimalHistoryRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalHistoryRepository::class)]
@@ -31,7 +32,7 @@ class AnimalHistory
     private ?User $user = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $datetime;
+    private DateTimeImmutable $datetime;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $before = null;
@@ -66,12 +67,12 @@ class AnimalHistory
         $this->user = $user;
     }
 
-    public function getDatetime(): \DateTimeImmutable
+    public function getDatetime(): DateTimeImmutable
     {
         return $this->datetime;
     }
 
-    public function setDatetime(\DateTimeImmutable $datetime): void
+    public function setDatetime(DateTimeImmutable $datetime): void
     {
         $this->datetime = $datetime;
     }

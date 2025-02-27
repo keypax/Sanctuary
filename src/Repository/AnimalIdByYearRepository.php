@@ -4,40 +4,30 @@ namespace App\Repository;
 
 use App\Entity\AnimalIdByYear;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<AnimalIdByYear>
  */
-class AnimalIdByYearRepository extends ServiceEntityRepository
+class AnimalIdByYearRepository extends ServiceEntityRepository implements AnimalIdByYearRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private readonly EntityManagerInterface $entityManager
+    )
     {
         parent::__construct($registry, AnimalIdByYear::class);
     }
 
-    //    /**
-    //     * @return AnimalIdByYear[] Returns an array of AnimalIdByYear objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(AnimalIdByYear $animalIdByYear): void
+    {
+        $this->entityManager->persist($animalIdByYear);
+        $this->entityManager->flush();
+    }
 
-    //    public function findOneBySomeField($value): ?AnimalIdByYear
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneByYear(int $year): ?AnimalIdByYear
+    {
+        return $this->findOneBy(["year" => $year]);
+    }
 }

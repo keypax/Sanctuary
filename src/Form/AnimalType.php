@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AnimalType extends AbstractType
 {
     public function __construct(
-        private SpeciesProviderInterface $speciesProvider,
-        private ChoicesServiceInterface $choicesService,
-        private LoggerInterface $logger
+        private readonly SpeciesProviderInterface $speciesProvider,
+        private readonly ChoicesServiceInterface $choicesService,
+        private readonly LoggerInterface $logger
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

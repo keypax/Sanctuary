@@ -8,7 +8,7 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 
-class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
+readonly class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
 {
     public function __construct(
         private bool $changeExtension,
@@ -35,7 +35,7 @@ class ImagineThumbnailGenerator implements ThumbnailGeneratorInterface
         int $maxSize,
         ImageInterface $originalImage,
         string $thumbnailTargetFilename,
-    )
+    ): void
     {
         if ($originalWidth > $originalHeight) {
             $thumbnailWidth = $maxSize;

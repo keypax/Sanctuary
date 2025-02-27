@@ -7,8 +7,8 @@ namespace App\Service\History\Subscriber;
 use App\Entity\Animal;
 use App\Entity\AnimalHistory;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
-use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
@@ -21,7 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Animal::class)]
 #[AsEntityListener(event: Events::preUpdate, method: 'preUpdate', entity: Animal::class)]
 #[AsEntityListener(event: Events::preRemove, method: 'preRemove', entity: Animal::class)]
-class AnimalHistorySubscriber
+readonly class AnimalHistorySubscriber
 {
     function __construct(
         private ChoicesServiceInterface $choicesService,
@@ -54,7 +54,7 @@ class AnimalHistorySubscriber
             $animalHistory = new AnimalHistory();
             $animalHistory->setAnimal($animal);
             $animalHistory->setUser($this->security->getUser());
-            $animalHistory->setDatetime(new \DateTimeImmutable());
+            $animalHistory->setDatetime(new DateTimeImmutable());
 
             $beforeVal = $this->processValue($name, $value[0]);
             $animalHistory->setBefore(sprintf('%s: %s', $translatedName, $beforeVal));
@@ -68,9 +68,10 @@ class AnimalHistorySubscriber
 
     private function processValue(string $name, mixed $value): string {
         if ($this->choicesService->isKeySupported($name)) {
-            return $this->translator->trans(
-                $this->choicesService->getProviderByKey($name)->getKeyByValue($value)
-            );
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $key = $this->choicesService->getProviderByKey($name)->getKeyByValue($value);
+
+            return $this->translator->trans($key);
         }
 
         if ($value instanceof DateTime) {

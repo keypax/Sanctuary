@@ -6,14 +6,15 @@ namespace App\Service\Animal\Photo\Deleter;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AnimalPhotoRepositoryInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 
-class Deleter implements DeleterInterface
+readonly class Deleter implements DeleterInterface
 {
     public function __construct(
         private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager,
+        private AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private string $basePathServer,
         private string $basePathWeb
     ) { }
@@ -41,12 +42,11 @@ class Deleter implements DeleterInterface
             } else {
                 $this->logger->warning('Photo not found: ' . $serverFilePath);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('Error deleting photo: ' . $e->getMessage());
         }
 
-        $this->entityManager->remove($photo);
-        $this->entityManager->flush();
+        $this->animalPhotoRepository->remove($photo);
 
         $this->logger->info('Photo entity removed: ' . $photo->getId());
     }

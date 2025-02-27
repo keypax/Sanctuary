@@ -2,6 +2,7 @@
 
 namespace App\Service\FileUploader;
 
+use Exception;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -22,7 +23,7 @@ interface FileUploaderInterface
      * Creates a directory if it does not exist.
      *
      * @param string $targetDirectory
-     * @throws \Exception
+     * @throws Exception
      */
     public function createDirectory(string $targetDirectory): void;
 }

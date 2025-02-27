@@ -155,15 +155,20 @@
       <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
       <path value="$PROJECT_DIR$/vendor/d4h/finediff" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-symfony" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/extension-installer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
   <component name="PhpStan">
     <PhpStan_settings>
-      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="cc1e03bb-734f-4d0a-bd20-8c2725197dd7" timeout="60000" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="cc1e03bb-734f-4d0a-bd20-8c2725197dd7" tool_path="C:\SymfonyProjects\Sanctuary\vendor\bin\phpstan" timeout="60000" />
+      <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
+    <option name="config" value="C:\SymfonyProjects\Sanctuary\phpstan.dist.neon" />
     <option name="transferred" value="true" />
   </component>
   <component name="PhpUnit">

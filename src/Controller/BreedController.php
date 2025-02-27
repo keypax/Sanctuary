@@ -1,10 +1,9 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 namespace App\Controller;
 
 use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;

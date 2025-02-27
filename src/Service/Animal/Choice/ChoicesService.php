@@ -5,7 +5,7 @@ namespace App\Service\Animal\Choice;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use App\Service\Animal\Choice\Provider\ChoicesProviderInterface;
 
-class ChoicesService implements ChoicesServiceInterface
+readonly class ChoicesService implements ChoicesServiceInterface
 {
     /**
      * @param ChoicesProviderInterface[] $choicesProviders

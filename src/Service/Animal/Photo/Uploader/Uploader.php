@@ -6,22 +6,24 @@ namespace App\Service\Animal\Photo\Uploader;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
+use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailGeneratorInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailSize;
 use App\Service\FileUploader\FileUploaderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class Uploader implements UploaderInterface
+readonly class Uploader implements UploaderInterface
 {
     public function __construct(
         private FileUploaderInterface $fileUploader,
         private SluggerInterface $slugger,
         private ThumbnailGeneratorInterface $thumbnailGenerator,
-        private EntityManagerInterface $entityManager,
+        private AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private LoggerInterface $logger,
         private string $basePathServer,
         private string $basePathWeb,
@@ -37,7 +39,12 @@ class Uploader implements UploaderInterface
         $targetServerDirectory = $this->getTargetServerDirectory($year, $month, $animal);
         $targetWebDirectory = $this->getTargetWebDirectory($year, $month, $animal);
 
-        $this->fileUploader->createDirectory($targetServerDirectory);
+        try {
+            $this->fileUploader->createDirectory($targetServerDirectory);
+        } catch (Exception $e) {
+            $this->logger->error('Error creating directory: ' . $e->getMessage());
+            throw $e;
+        }
 
         $newFilename = $this->getNewFilename($photo);
         $originalPath = $targetServerDirectory . '/' . $newFilename;
@@ -64,7 +71,7 @@ class Uploader implements UploaderInterface
             $animalPhoto->setHeight($height);
             $animalPhoto->setSize($fileSize);
 
-            $this->saveToRepository($animalPhoto);
+            $this->animalPhotoRepository->save($animalPhoto);
 
             return $animalPhoto;
 
@@ -83,12 +90,6 @@ class Uploader implements UploaderInterface
     private function getTargetWebDirectory(string $year, string $month, Animal $animal): string
     {
         return $this->basePathWeb . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
-    }
-
-    private function saveToRepository(AnimalPhoto $animalPhoto): void
-    {
-        $this->entityManager->persist($animalPhoto);
-        $this->entityManager->flush();
     }
 
     /**

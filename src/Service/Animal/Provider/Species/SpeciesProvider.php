@@ -4,10 +4,10 @@ namespace App\Service\Animal\Provider\Species;
 
 use App\Repository\AnimalSpeciesRepositoryInterface;
 
-class SpeciesProvider implements SpeciesProviderInterface
+readonly class SpeciesProvider implements SpeciesProviderInterface
 {
     public function __construct(
-        private readonly AnimalSpeciesRepositoryInterface $animalSpeciesRepository
+        private AnimalSpeciesRepositoryInterface $animalSpeciesRepository
     ) {}
 
     public function getSpecies(): array
