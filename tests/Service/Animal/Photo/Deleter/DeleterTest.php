@@ -60,7 +60,7 @@ final class DeleterTest extends TestCase
     public function testDeleteAnimalPhoto(): void {
         $fileName = $this->createTemporaryFile();
         $photo = $this->prepareAnimalPhotoMock(1, $fileName);
-        $this->repository->method("remove")->willReturn(null);
+        $this->repository->expects($this->once())->method("remove");
         $this->deleter->deleteAnimalPhoto($photo);
 
         $this->assertFileDoesNotExist($this->serverFilePath);
@@ -70,7 +70,7 @@ final class DeleterTest extends TestCase
         $fileName = $this->createTemporaryFile();
         $photo = $this->prepareAnimalPhotoMock(1, $fileName . 'blablabla');
         $this->expectException(DeleterException::class);
-        $this->repository->method("remove")->willReturn(null);
+        $this->repository->expects($this->never())->method("remove");
         $this->deleter->deleteAnimalPhoto($photo);
 
         $this->assertFileDoesNotExist($this->serverFilePath);

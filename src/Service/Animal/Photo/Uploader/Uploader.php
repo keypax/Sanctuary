@@ -9,6 +9,7 @@ use App\Entity\AnimalPhoto;
 use App\Repository\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailGeneratorInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailSize;
+use App\Service\Animal\Photo\Uploader\PathGenerator\PathGenerator;
 use App\Service\FileUploader\FileUploaderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -20,24 +21,20 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 readonly class Uploader implements UploaderInterface
 {
     public function __construct(
+        private PathGenerator $pathGenerator,
         private FileUploaderInterface $fileUploader,
         private SluggerInterface $slugger,
         private ThumbnailGeneratorInterface $thumbnailGenerator,
         private AnimalPhotoRepositoryInterface $animalPhotoRepository,
         private LoggerInterface $logger,
-        private string $basePathServer,
-        private string $basePathWeb,
         private bool $changeExtension,
         private string $targetExtension
     ) {}
 
     public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto
     {
-        $year = date('Y');
-        $month = date('m');
-
-        $targetServerDirectory = $this->getTargetServerDirectory($year, $month, $animal);
-        $targetWebDirectory = $this->getTargetWebDirectory($year, $month, $animal);
+        $targetServerDirectory = $this->pathGenerator->getServerDirectory($animal->getAnimalInternalId());
+        $targetWebDirectory = $this->pathGenerator->getWebDirectory($animal->getAnimalInternalId());
 
         try {
             $this->fileUploader->createDirectory($targetServerDirectory);
@@ -80,16 +77,6 @@ readonly class Uploader implements UploaderInterface
             $this->logger->error('Error uploading photo: ' . $e->getMessage());
             throw $e;
         }
-    }
-
-    private function getTargetServerDirectory(string $year, string $month, Animal $animal): string
-    {
-        return $this->basePathServer . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
-    }
-
-    private function getTargetWebDirectory(string $year, string $month, Animal $animal): string
-    {
-        return $this->basePathWeb . $year . '/' . $month . '/' . $this->slugger->slug($animal->getAnimalInternalId());
     }
 
     /**
