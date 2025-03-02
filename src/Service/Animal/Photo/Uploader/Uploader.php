@@ -33,8 +33,11 @@ readonly class Uploader implements UploaderInterface
 
     public function uploadAnimalPhoto(UploadedFile $photo, Animal $animal): AnimalPhoto
     {
-        $targetServerDirectory = $this->pathGenerator->getServerDirectory($animal->getAnimalInternalId());
-        $targetWebDirectory = $this->pathGenerator->getWebDirectory($animal->getAnimalInternalId());
+        $year = (int) date('Y');
+        $month = (int) date('m');
+
+        $targetServerDirectory = $this->pathGenerator->getServerDirectory($animal->getAnimalInternalId(), $year, $month);
+        $targetWebDirectory = $this->pathGenerator->getWebDirectory($animal->getAnimalInternalId(), $year, $month);
 
         try {
             $this->fileUploader->createDirectory($targetServerDirectory);
