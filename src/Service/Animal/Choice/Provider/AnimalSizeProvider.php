@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Animal\Choice\Provider;
 
 class AnimalSizeProvider extends ChoicesProviderAbstract

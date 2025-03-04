@@ -1,20 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Animal\Choice\Provider;
 
 use App\Repository\EnclosureRepositoryInterface;
 
-readonly class EnclosureProvider implements ChoicesProviderInterface
+class EnclosureProvider extends ChoicesProviderAbstract
 {
     public function __construct(
-        private EnclosureRepositoryInterface $enclosureRepository
-    ) {}
+        private readonly EnclosureRepositoryInterface $enclosureRepository
+    ) {
+        parent::__construct();
+    }
+
     public function getKey(): string
     {
         return 'enclosure';
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         $enclosures = $this->enclosureRepository->findAll();
         $choices = [];
@@ -23,10 +28,5 @@ readonly class EnclosureProvider implements ChoicesProviderInterface
         }
 
         return $choices;
-    }
-
-    public function getKeyByValue(mixed $value): string
-    {
-        // TODO: Implement getKeyByValue() method.
     }
 }
