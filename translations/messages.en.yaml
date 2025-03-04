@@ -8,6 +8,7 @@ animal:
     form:
         group:
             required_info: Required information
+            other_info: Other information
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification
@@ -113,6 +114,9 @@ register:
         agree_terms: I agree to the terms and conditions
         full_name: Full name
         password: Password
+
+enclosure: Enclosure
+enclosure.label: Enclosure
 
 
 animal_name_empty: Animal name is empty

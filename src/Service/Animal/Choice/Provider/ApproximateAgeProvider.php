@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Animal\Choice\Provider;
 
 class ApproximateAgeProvider extends ChoicesProviderAbstract
@@ -9,7 +11,7 @@ class ApproximateAgeProvider extends ChoicesProviderAbstract
         return "approximate_age";
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'approximate_age.less_than_week' => 0,

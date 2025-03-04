@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Animal\Choice\Provider;
 
 class AnimalSizeProvider extends ChoicesProviderAbstract
@@ -10,7 +12,7 @@ class AnimalSizeProvider extends ChoicesProviderAbstract
         return 'size';
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'animal.size.very_small' => 0,
