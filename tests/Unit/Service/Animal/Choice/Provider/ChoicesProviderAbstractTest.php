@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service\Animal\Choice\Provider;
+namespace App\Tests\Unit\Service\Animal\Choice\Provider;
 
-use PHPUnit\Framework\TestCase;
 use App\Service\Animal\Choice\Provider\ChoicesProviderAbstract;
+use PHPUnit\Framework\TestCase;
 
 class ChoicesProviderAbstractTest extends TestCase
 {

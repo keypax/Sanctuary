@@ -39,12 +39,7 @@ readonly class Uploader implements UploaderInterface
         $targetServerDirectory = $this->pathGenerator->getServerDirectory($animal->getAnimalInternalId(), $year, $month);
         $targetWebDirectory = $this->pathGenerator->getWebDirectory($animal->getAnimalInternalId(), $year, $month);
 
-        try {
-            $this->fileUploader->createDirectory($targetServerDirectory);
-        } catch (Exception $e) {
-            $this->logger->error('Error creating directory: ' . $e->getMessage());
-            throw $e;
-        }
+        $this->createDirectory($targetServerDirectory);
 
         $newFilename = $this->getNewFilename($photo);
         $originalPath = $targetServerDirectory . '/' . $newFilename;
@@ -108,5 +103,20 @@ readonly class Uploader implements UploaderInterface
             pathinfo($newFilename, PATHINFO_FILENAME),
             $thumbnailSize
         );
+    }
+
+    /**
+     * @param string $targetServerDirectory
+     * @return void
+     * @throws Exception
+     */
+    private function createDirectory(string $targetServerDirectory): void
+    {
+        try {
+            $this->fileUploader->createDirectory($targetServerDirectory);
+        } catch (Exception $e) {
+            $this->logger->error('Error creating directory: ' . $e->getMessage());
+            throw $e;
+        }
     }
 }

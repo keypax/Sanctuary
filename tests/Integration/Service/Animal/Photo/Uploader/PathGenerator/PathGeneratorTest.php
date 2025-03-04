@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Service\Animal\Photo\Uploader\PathGenerator;
+namespace App\Tests\Integration\Service\Animal\Photo\Uploader\PathGenerator;
 
 use App\Service\Animal\Photo\Uploader\PathGenerator\PathGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -25,7 +25,10 @@ final class PathGeneratorTest extends KernelTestCase
         $this->month = 2;
     }
 
-    public function testGetServerDirectory(): void
+    /**
+     * @dataProvider provider
+     */
+    public function testGetServerDirectory(string $animalInternalId, string $expected): void
     {
         $pathGenerator = new PathGenerator(
             $this->slugger,
@@ -35,17 +38,20 @@ final class PathGeneratorTest extends KernelTestCase
 
         $expected = sprintf('/server/dir/%s/%s/5-2025', $this->year, $this->month);
 
-        $path = $pathGenerator->getServerDirectory('5-2025', $this->year, $this->month);
+        $path = $pathGenerator->getServerDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
 
-        $path = $pathGenerator->getServerDirectory('5/2025', $this->year, $this->month);
+        $path = $pathGenerator->getServerDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
 
-        $path = $pathGenerator->getServerDirectory('5_2025', $this->year, $this->month);
+        $path = $pathGenerator->getServerDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
     }
 
-    public function testGetWebDirectory(): void
+    /**
+     * @dataProvider provider
+     */
+    public function testGetWebDirectory(string $animalInternalId, string $expected): void
     {
         $pathGenerator = new PathGenerator(
             $this->slugger,
@@ -55,13 +61,22 @@ final class PathGeneratorTest extends KernelTestCase
 
         $expected = sprintf('/web/dir/%s/%s/5-2025', $this->year, $this->month);
 
-        $path = $pathGenerator->getWebDirectory('5-2025', $this->year, $this->month);
+        $path = $pathGenerator->getWebDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
 
-        $path = $pathGenerator->getWebDirectory('5/2025', $this->year, $this->month);
+        $path = $pathGenerator->getWebDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
 
-        $path = $pathGenerator->getWebDirectory('5_2025', $this->year, $this->month);
+        $path = $pathGenerator->getWebDirectory($animalInternalId, $this->year, $this->month);
         $this->assertSame($expected, $path);
+    }
+
+    public function provider()
+    {
+        return [
+            ['5-2025', '5-2025'],
+            ['5/2025', '5-2025'],
+            ['5_2025', '5-2025'],
+        ];
     }
 }

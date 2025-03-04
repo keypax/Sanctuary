@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Service\Animal\Photo\Deleter;
+namespace App\Tests\Integration\Service\Animal\Photo\Deleter;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
