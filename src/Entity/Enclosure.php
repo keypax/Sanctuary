@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\EnclosureRepository;
+use App\Service\History\HistoryTrackedInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EnclosureRepository::class)]
 #[ORM\UniqueConstraint(name: 'unique_enclosure_name', columns: ['enclosure_name'])]
-class Enclosure
+class Enclosure implements HistoryTrackedInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -75,5 +76,10 @@ class Enclosure
         }
 
         return $this;
+    }
+
+    public function getHistoryContext(): string
+    {
+        return $this->getEnclosureName();
     }
 }

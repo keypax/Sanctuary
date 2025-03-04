@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use App\Entity\Enclosure;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use App\Service\Animal\Provider\Species\SpeciesProviderInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -86,7 +88,13 @@ class AnimalType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('enclosure')
+            ->add('enclosure', EntityType::class, [
+                'class' => Enclosure::class,
+                'choice_label' => 'enclosure_name',
+                'label' => 'enclosure.label',
+                'choice_translation_domain' => 'messages',
+                'required' => false,
+            ])
             /*->add('animal_photos', CollectionType::class, [
                 'entry_type' => AnimalPhotoType::class,
                 'label' => 'animal.photos.title',

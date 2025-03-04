@@ -6,6 +6,7 @@ namespace App\Service\Animal\Choice\Provider;
 
 abstract class ChoicesProviderAbstract implements ChoicesProviderInterface
 {
+    /** @var array<string, int> */
     protected array $choices = [];
     /** @return array<string, int> */
     protected abstract function prepareChoices(): array;

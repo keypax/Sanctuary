@@ -115,6 +115,9 @@ register:
         full_name: Full name
         password: Password
 
+enclosure: Enclosure
+enclosure.label: Enclosure
+
 
 animal_name_empty: Animal name is empty
 

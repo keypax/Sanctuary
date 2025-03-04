@@ -75,7 +75,7 @@ class Animal
     #[ORM\OneToMany(targetEntity: AnimalHistory::class, mappedBy: 'animal', cascade: ['persist'], orphanRemoval: true)]
     private Collection $animalHistory;
 
-    #[ORM\OneToOne(inversedBy: 'animal')]
+    #[ORM\ManyToOne(inversedBy: 'animal')]
     private ?Enclosure $enclosure = null;
 
     public function __construct()
