@@ -23,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsEntityListener(event: Events::preRemove, method: 'preRemove', entity: Animal::class)]
 readonly class AnimalHistorySubscriber
 {
-    function __construct(
+    public function __construct(
         private ChoicesServiceInterface $choicesService,
         private Security $security,
         private TranslatorInterface $translator

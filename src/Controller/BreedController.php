@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/breed', name: 'breed_')]
 class BreedController extends AbstractController
 {
-    function __construct(
+    public function __construct(
         private readonly BreedsProviderInterface $breedsProvider,
     ) {}
 
