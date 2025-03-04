@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/animal', name: 'animal_')]
 class AnimalController extends AbstractController
 {
-    function __construct(
+    public function __construct(
         private readonly AnimalRepositoryInterface $animalRepository,
         private readonly TranslatorInterface $translator
     ) {}

@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 
 readonly class BreedsProvider implements BreedsProviderInterface
 {
-    function __construct(
+    public function __construct(
         private AnimalSpeciesRepositoryInterface $animalSpeciesRepository,
         private AnimalBreedRepositoryInterface $animalBreedRepository,
         private LoggerInterface $logger

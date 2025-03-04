@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 readonly class AnimalPhotoService implements AnimalPhotoServiceInterface
 {
-    function __construct(
+    public function __construct(
         private UploaderInterface $uploader,
         private DeleterInterface $deleter
     ) {

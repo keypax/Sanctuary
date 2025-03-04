@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepositoryInterface;
+use App\Service\User\UserServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +18,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,
-        UserPasswordHasherInterface $userPasswordHasher,
-        UserRepositoryInterface $userRepository
+        UserServiceInterface $userService,
     ): Response
     {
         $user = new User();
@@ -26,12 +26,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword */
-            $plainPassword = $form->get('plainPassword')->getData();
-
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
-            $userRepository->save($user);
+            $userService->createUser($user, $form->get('plainPassword')->getData());
 
             return $this->redirectToRoute('animal_index');
         }
