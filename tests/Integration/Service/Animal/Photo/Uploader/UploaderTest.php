@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Service\Animal\Photo\Uploader;
+namespace App\Tests\Unit\Service\Animal\Photo\Uploader;
 
 use PHPUnit\Framework\TestCase;
 

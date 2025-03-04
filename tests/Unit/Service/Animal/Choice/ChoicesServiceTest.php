@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Service\Animal\Choice;
+namespace App\Tests\Unit\Service\Animal\Choice;
 
 use App\Service\Animal\Choice\ChoicesService;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
