@@ -8,6 +8,7 @@ animal:
     form:
         group:
             required_info: Required information
+            other_info: Other information
             physical_attributes: Physical attributes
             info_for_adoption: Information for adoption
             identification: Identification

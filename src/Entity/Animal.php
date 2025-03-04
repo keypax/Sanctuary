@@ -75,6 +75,9 @@ class Animal
     #[ORM\OneToMany(targetEntity: AnimalHistory::class, mappedBy: 'animal', cascade: ['persist'], orphanRemoval: true)]
     private Collection $animalHistory;
 
+    #[ORM\OneToOne(inversedBy: 'animal')]
+    private ?Enclosure $enclosure = null;
+
     public function __construct()
     {
         $this->animalPhoto = new ArrayCollection();
@@ -334,6 +337,18 @@ class Animal
                 $animalHistory->setAnimal(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEnclosure(): ?Enclosure
+    {
+        return $this->enclosure;
+    }
+
+    public function setEnclosure(?Enclosure $enclosure): static
+    {
+        $this->enclosure = $enclosure;
 
         return $this;
     }

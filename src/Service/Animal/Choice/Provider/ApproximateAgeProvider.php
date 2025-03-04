@@ -9,7 +9,7 @@ class ApproximateAgeProvider extends ChoicesProviderAbstract
         return "approximate_age";
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'approximate_age.less_than_week' => 0,

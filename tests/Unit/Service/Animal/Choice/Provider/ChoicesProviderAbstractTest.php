@@ -17,7 +17,7 @@ class ChoicesProviderAbstractTest extends TestCase
                 return 'dummy';
             }
 
-            public function getChoices(): array
+            protected function prepareChoices(): array
             {
                 return [
                     'option.one' => 10,
@@ -39,7 +39,7 @@ class ChoicesProviderAbstractTest extends TestCase
             {
                 return 'dummy_provider';
             }
-            public function getChoices(): array
+            protected function prepareChoices(): array
             {
                 return [];
             }
@@ -55,7 +55,7 @@ class ChoicesProviderAbstractTest extends TestCase
             {
                 return 'dummy';
             }
-            public function getChoices(): array
+            protected function prepareChoices(): array
             {
                 return ['option.one' => 10];
             }

@@ -11,7 +11,7 @@
             {{ form_start(form) }}
 
             <fieldset>
-                <legend>Required information</legend>
+                <legend>{{ 'animal.form.group.required_info'|trans }}</legend>
                 <div class="form_group">
                     <div class="form_group_item">
                         <div>{{ form_row(form.animal_internal_id) }}</div>
@@ -26,6 +26,11 @@
                         </div>
                     </div>
                 </div>
+            </fieldset>
+
+            <fieldset class="resize_children">
+                <legend>{{ 'animal.form.group.other_info'|trans }}</legend>
+                {{ form_row(form.enclosure) }}
             </fieldset>
 
             <fieldset class="resize_children">

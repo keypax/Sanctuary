@@ -10,7 +10,7 @@ class AnimalSizeProvider extends ChoicesProviderAbstract
         return 'size';
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'animal.size.very_small' => 0,

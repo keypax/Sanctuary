@@ -86,6 +86,7 @@ class AnimalType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('enclosure')
             /*->add('animal_photos', CollectionType::class, [
                 'entry_type' => AnimalPhotoType::class,
                 'label' => 'animal.photos.title',

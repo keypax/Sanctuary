@@ -10,7 +10,7 @@ class AdoptionStatusProvider extends ChoicesProviderAbstract
         return "adoption_status";
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'adoption_status.available' => 0,

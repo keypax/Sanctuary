@@ -11,7 +11,7 @@ class GenderProvider extends ChoicesProviderAbstract
         return "gender";
     }
 
-    public function getChoices(): array
+    protected function prepareChoices(): array
     {
         return [
             'gender.unknown' => 0,
