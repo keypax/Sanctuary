@@ -67,7 +67,7 @@ class AnimalController extends AbstractController
         Request $request,
         AnimalIdGenerationStrategyInterface $nextAnimalIdProvider,
         AnimalHistoryRepositoryInterface $animalHistoryRepository,
-        string $id
+        int $id
     ): Response {
         $animal = $this->animalRepository->getById($id);
         $animalHistories = $animalHistoryRepository->findLatestForAnimal($animal, 10);

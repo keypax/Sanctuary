@@ -1,0 +1,76 @@
+{# templates/print/internal.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/print-internal.css') }}">
+{% endblock %}
+{% block title %}{{ 'animal.list.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="header">
+            <div class="header-left">
+                Pies
+            </div>
+            <div class="header-center">
+                Numer Zwierzęcia:
+                <h2>03/2025</h2>
+            </div>
+            <div class="header-right">
+                <div class="qr">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png">
+                </div>
+            </div>
+        </div>
+        <div class="details">
+            <div class="detail">
+                <span class="label">Data przyjęcia:</span>
+                <span class="value">2023-10-10</span>
+            </div>
+            <div class="detail">
+                <span class="label">Skąd:</span>
+                <span class="value">Schronisko</span>
+            </div>
+            <div class="detail">
+                <span class="label">Wiek:</span>
+                <span class="value">2 lata</span>
+            </div>
+            <div class="detail">
+                <span class="label">Płeć:</span>
+                <span class="value">Samiec</span>
+            </div>
+            <div class="detail">
+                <span class="label">Kolor:</span>
+                <span class="value">Czarny</span>
+            </div>
+            <div class="detail">
+                <span class="label">Czip:</span>
+                <span class="value">123456789</span>
+            </div>
+            <div class="detail">
+                <span class="label">Odrobaczony:</span>
+                <span class="value">Tak</span>
+            </div>
+            <div class="detail">
+                <span class="label">Odpchlony:</span>
+                <span class="value">Tak</span>
+            </div>
+            <div class="detail">
+                <span class="label">Zaszczepiony:</span>
+                <span class="value">Tak</span>
+            </div>
+            <div class="detail">
+                <span class="label">Kiedy surowica:</span>
+                <span class="value">2023-10-12</span>
+            </div>
+            <div class="detail">
+                <span class="label">Kastracja:</span>
+                <span class="value">Nie</span>
+            </div>
+            <div class="detail">
+                <span class="label">Data zabiegu:</span>
+                <span class="value">2023-10-15</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
