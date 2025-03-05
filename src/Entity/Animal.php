@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[ORM\UniqueConstraint(name: 'unique_animal_internal_id', columns: ['animal_internal_id'])]
+#[ORM\HasLifecycleCallbacks()]
 class Animal
 {
     #[ORM\Id]
@@ -77,6 +78,9 @@ class Animal
 
     #[ORM\ManyToOne(inversedBy: 'animal')]
     private ?Enclosure $enclosure = null;
+
+    #[ORM\Column(type: Types::DATETIMETZ_MUTABLE, nullable: false)]
+    private ?DateTimeInterface $updated_at = null;
 
     public function __construct()
     {
@@ -351,5 +355,17 @@ class Animal
         $this->enclosure = $enclosure;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateUpdatedAt(): void
+    {
+        $this->updated_at = new \DateTime();
     }
 }

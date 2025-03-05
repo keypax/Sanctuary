@@ -11,16 +11,17 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Zdjęcie</th>
-            <th>ID</th>
-            <th>Rasa</th>
-            <th>Waga</th>
-            <th>Akcje</th>
+            <th>{{ 'animal.list.id'|trans }}</th>
+            <th>{{ 'animal.list.photo'|trans }}</th>
+            <th>{{ 'animal.list.internal_id'|trans }}</th>
+            <th>{{ 'animal.list.species'|trans }}</th>
+            <th>{{ 'animal.list.actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for animal in animals %}
             <tr>
+                <td>{{ animal.getId() }}</td>
                 <td>
                     {% if animal.getAnimalPhoto()|length > 0 %}
                         {% set firstPhoto = animal.animalPhoto|first %}
@@ -31,9 +32,8 @@
                 </td>
                 <td>{{ animal.getAnimalInternalId() }}</td>
                 <td>{{ animal.getSpecies() }}</td>
-                <td>{{ animal.getWeight() }}</td>
                 <td>
-                    <a href="{{ path('animal_edit', {id: animal.getId()}) }}">{{ 'animal.list.button_edit'|trans}}</a>
+                    <a href="{{ path('animal_edit', {id: animal.getId()}) }}" class="button">{{ 'animal.list.button_edit'|trans}}</a>
                 </td>
             </tr>
         {% else %}
