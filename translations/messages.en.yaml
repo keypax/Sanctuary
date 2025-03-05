@@ -54,6 +54,7 @@ animal_history:
     edit_animal_button: Edit animal
 
 gender:
+    label: Gender
     unknown: Unknown
     male: Male
     female: Female
@@ -138,6 +139,19 @@ adoption_date: Adoption date
 chip_number: Chip number
 weight: Weight
 #weight_in_grams: Weight (in grams)
+deworming: Deworming
+vaccination: Vaccination
+flea_treatment: Flea treatment
+
+origin: Origin
+
+print_internal_card: Print internal card
+print_as_of_date: As of date
+
+last_dates_for: Last dates for
+next_serum_dose_date: Next serum dose date
+castrated: Castrated
+
 
 
 error_creating_directory: An error occurred while creating the directory

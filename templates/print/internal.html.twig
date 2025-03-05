@@ -1,0 +1,85 @@
+{# templates/print/internal.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/print-internal.css') }}">
+{% endblock %}
+{% block title %}{{ 'animal.list.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="first_header">
+            <div class="header-top">
+                <label class="current_time">{{ 'print_as_of_date'|trans }}: {{ "now"|date('Y-m-d H:i:s') }}</label>
+            </div>
+        </div>
+        <div class="second_header">
+            <div class="header-left">
+                <label class="species">{{ animal.getSpecies()|trans }}</label>
+            </div>
+            <div class="header-center">
+                {{ 'animal_internal_id'|trans }}
+                <h2>{{ animal.getAnimalInternalId() }}</h2>
+            </div>
+            <div class="header-right">
+                <div class="qr">
+                    <img src="{{ qr_code_data_uri(qrCodeTargetUrl ~ animal.getId()) }}" />
+                </div>
+            </div>
+        </div>
+        <div class="details">
+            <div class="detail">
+                <span class="label">{{ 'admission_date'|trans }}</span>
+                <span class="value">{{ animal.getAdmissionDate()|date('Y-m-d') }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'animal_name'|trans }}:</span>
+                <span class="value">{{ animal.getAnimalName()|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'origin'|trans }}</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'approximate_age.label'|trans }}:</span>
+                <span class="value">{{ animal.getApproximateAge()|choice_human_friendly_name('approximate_age')|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'gender.label'|trans }}:</span>
+                <span class="value">{{ animal.getGender()|choice_human_friendly_name('gender')|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'color'|trans }}:</span>
+                <span class="value">{{ animal.getColor()|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'chip_number'|trans }}:</span>
+                <span class="value">{{ animal.getChipNumber()|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'next_serum_dose_date'|trans }}</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'castrated'|trans }}</span>
+                <div class="choice_square"></div>
+            </div>
+        </div>
+
+        <div class="details">
+            <label>{{ 'last_dates_for'|trans }}</label>
+            <div class="detail">
+                <span class="label">{{ 'deworming'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'vaccination'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
+            </div>
+            <div class="detail">
+                <span class="label">{{ 'flea_treatment'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
