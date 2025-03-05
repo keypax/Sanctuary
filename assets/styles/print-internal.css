@@ -41,18 +41,30 @@ h2 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.header {
+.first_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.second_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.header > div {
+.second_header > div {
     flex: 1;
 }
 
-.header-left {
+.header-top > .current_time {
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.header-left > .species {
     text-align: left;
     font-size: 30px;
     font-weight: bold;
@@ -85,6 +97,11 @@ h2 {
     gap: 10px;
 }
 
+.details > label {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
 .detail {
     display: flex;
     align-items: center;
@@ -93,6 +110,15 @@ h2 {
 .detail .label {
     width: 220px;
     font-weight: bold;
+}
+
+.detail .choice_square {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    background-color: transparent;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .detail .value {

@@ -8,68 +8,77 @@
 
 {% block body %}
     <div class="card">
-        <div class="header">
+        <div class="first_header">
+            <div class="header-top">
+                <label class="current_time">{{ 'print_as_of_date'|trans }}: {{ "now"|date('Y-m-d H:i:s') }}</label>
+            </div>
+        </div>
+        <div class="second_header">
             <div class="header-left">
-                Pies
+                <label class="species">{{ animal.getSpecies()|trans }}</label>
             </div>
             <div class="header-center">
-                Numer Zwierzęcia:
-                <h2>03/2025</h2>
+                {{ 'animal_internal_id'|trans }}
+                <h2>{{ animal.getAnimalInternalId() }}</h2>
             </div>
             <div class="header-right">
                 <div class="qr">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png">
+                    <img src="{{ qr_code_data_uri(qrCodeTargetUrl ~ animal.getId()) }}" />
                 </div>
             </div>
         </div>
         <div class="details">
             <div class="detail">
-                <span class="label">Data przyjęcia:</span>
-                <span class="value">2023-10-10</span>
+                <span class="label">{{ 'admission_date'|trans }}</span>
+                <span class="value">{{ animal.getAdmissionDate()|date('Y-m-d') }}</span>
             </div>
             <div class="detail">
-                <span class="label">Skąd:</span>
-                <span class="value">Schronisko</span>
+                <span class="label">{{ 'animal_name'|trans }}:</span>
+                <span class="value">{{ animal.getAnimalName()|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Wiek:</span>
-                <span class="value">2 lata</span>
+                <span class="label">{{ 'origin'|trans }}</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Płeć:</span>
-                <span class="value">Samiec</span>
+                <span class="label">{{ 'approximate_age.label'|trans }}:</span>
+                <span class="value">{{ animal.getApproximateAge()|choice_human_friendly_name('approximate_age')|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Kolor:</span>
-                <span class="value">Czarny</span>
+                <span class="label">{{ 'gender.label'|trans }}:</span>
+                <span class="value">{{ animal.getGender()|choice_human_friendly_name('gender')|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Czip:</span>
-                <span class="value">123456789</span>
+                <span class="label">{{ 'color'|trans }}:</span>
+                <span class="value">{{ animal.getColor()|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Odrobaczony:</span>
-                <span class="value">Tak</span>
+                <span class="label">{{ 'chip_number'|trans }}:</span>
+                <span class="value">{{ animal.getChipNumber()|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Odpchlony:</span>
-                <span class="value">Tak</span>
+                <span class="label">{{ 'next_serum_dose_date'|trans }}</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Zaszczepiony:</span>
-                <span class="value">Tak</span>
+                <span class="label">{{ 'castrated'|trans }}</span>
+                <div class="choice_square"></div>
+            </div>
+        </div>
+
+        <div class="details">
+            <label>{{ 'last_dates_for'|trans }}</label>
+            <div class="detail">
+                <span class="label">{{ 'deworming'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Kiedy surowica:</span>
-                <span class="value">2023-10-12</span>
+                <span class="label">{{ 'vaccination'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
             </div>
             <div class="detail">
-                <span class="label">Kastracja:</span>
-                <span class="value">Nie</span>
-            </div>
-            <div class="detail">
-                <span class="label">Data zabiegu:</span>
-                <span class="value">2023-10-15</span>
+                <span class="label">{{ 'flea_treatment'|trans }}:</span>
+                <span class="value">{{ ''|empty_placeholder_for_print }}</span>
             </div>
         </div>
     </div>

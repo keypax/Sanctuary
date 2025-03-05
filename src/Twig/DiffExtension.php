@@ -9,7 +9,7 @@ use FineDiff\Exceptions\GranularityCountException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class DiffAppExtension extends AbstractExtension
+class DiffExtension extends AbstractExtension
 {
     public function __construct(
         private readonly Diff $differ

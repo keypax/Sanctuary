@@ -8,6 +8,7 @@ parameters:
     animal_photos_base_path_web: '/photos/animals/'
     animal_photos_change_extension: true
     animal_photos_target_extension: 'jpg'
+    qr_code_target_url: 'http://localhost:8000/animal/edit/'
 
 services:
     # default configuration for services in *this* file
@@ -59,9 +60,13 @@ services:
     FineDiff\Diff:
         $granularity: '@FineDiff\Granularity\Word'
 
-    App\Twig\DiffAppExtension:
+    App\Twig\DiffExtension:
         $differ: '@FineDiff\Diff'
 
     App\Service\Animal\Choice\ChoicesService:
         arguments:
             $choicesProviders: !tagged animal.choice.provider
+
+    App\Controller\PrintController:
+        arguments:
+            $qrCodeTargetUrl: '%qr_code_target_url%'
