@@ -36,6 +36,11 @@ animal:
         button_edit: Edit
         button_photos: Photos
         button_add_new: Add new animal
+        photo: Photo
+        id: ID
+        internal_id: Internal ID
+        species: Species
+        actions: Actions
     size:
         very_small : Very small
         small: Small
