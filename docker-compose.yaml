@@ -1,0 +1,43 @@
+services:
+  php:
+    build:
+      context: ./
+    volumes:
+      - .:/app:cached
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+    working_dir: /app
+    container_name: sanctuary_app
+
+  nginx:
+    image: nginx:1.15.8-alpine
+    ports:
+      - 127.0.0.1:${NGINX_PORT}:80
+    volumes:
+      - .:/app:cached
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro,cached
+    container_name: sanctuary_nginx
+
+  ###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  database_data:
+  ###< doctrine/doctrine-bundle ###
