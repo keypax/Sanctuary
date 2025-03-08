@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
             'Rabbit' => [],
             'Guinea Pig' => [],
             'Rat' => [],
-            'Mouse => []',
+            'Mouse' => [],
             'Rodent (other)' => [],
             'Parrot' => [],
             'Pigeon' => [],
@@ -89,7 +89,7 @@ class AppFixtures extends Fixture
         foreach ($species as $speciesName => $breeds) {
             $species = new AnimalSpecies();
             $species->setSpeciesName($speciesName);
-
+            
             foreach ($breeds as $breedName) {
                 $breed = new AnimalBreed();
                 $breed->setBreedName($breedName);
