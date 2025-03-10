@@ -11,7 +11,14 @@ RUN apk add --no-cache --update \
     git \
     unzip \
     linux-headers \
-  && docker-php-ext-install intl pdo_pgsql zip opcache
+    libpng-dev \
+    freetype-dev \
+    libjpeg-turbo-dev
+
+RUN docker-php-ext-configure gd \
+      --with-freetype \
+      --with-jpeg && \
+    docker-php-ext-install intl pdo_pgsql zip opcache gd
 
 RUN pecl install xdebug \
   && docker-php-ext-enable xdebug
