@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EnclosureRepository;
+use App\Repository\Enclosure\EnclosureRepository;
 use App\Service\History\HistoryTrackedInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

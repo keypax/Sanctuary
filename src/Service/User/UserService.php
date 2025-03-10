@@ -3,7 +3,7 @@
 namespace App\Service\User;
 
 use App\Entity\User;
-use App\Repository\UserRepositoryInterface;
+use App\Repository\User\UserRepositoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 readonly class UserService implements UserServiceInterface

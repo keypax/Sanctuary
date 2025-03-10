@@ -2,8 +2,8 @@
 
 namespace App\Service\Animal\Provider\Breed;
 
-use App\Repository\AnimalBreedRepositoryInterface;
-use App\Repository\AnimalSpeciesRepositoryInterface;
+use App\Repository\AnimalBreed\AnimalBreedRepositoryInterface;
+use App\Repository\AnimalSpecies\AnimalSpeciesRepositoryInterface;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 

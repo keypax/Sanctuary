@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AnimalHistoryRepository;
+use App\Repository\AnimalHistory\AnimalHistoryRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 

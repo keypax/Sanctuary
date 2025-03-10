@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Service\Animal\Photo\Deleter;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
-use App\Repository\AnimalPhotoRepositoryInterface;
+use App\Repository\AnimalPhoto\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\Deleter\Deleter;
 use App\Service\Animal\Photo\Deleter\Exception\DeleterException;
 use Doctrine\Common\Collections\ArrayCollection;

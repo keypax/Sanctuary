@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\AnimalPhotoRepositoryInterface;
-use App\Repository\AnimalRepositoryInterface;
-use App\Service\Animal\Photo\AnimalPhotoService;
+use App\Repository\Animal\AnimalRepositoryInterface;
+use App\Repository\AnimalPhoto\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\AnimalPhotoServiceInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

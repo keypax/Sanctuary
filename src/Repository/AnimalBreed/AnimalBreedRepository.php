@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpUnused */
 
-namespace App\Repository;
+namespace App\Repository\AnimalBreed;
 
 use App\Entity\AnimalBreed;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

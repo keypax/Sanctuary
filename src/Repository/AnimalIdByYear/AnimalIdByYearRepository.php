@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\AnimalIdByYear;
 
 use App\Entity\AnimalIdByYear;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
