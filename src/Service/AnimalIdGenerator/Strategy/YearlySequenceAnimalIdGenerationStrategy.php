@@ -3,9 +3,8 @@
 namespace App\Service\AnimalIdGenerator\Strategy;
 
 use App\Entity\AnimalIdByYear;
-use App\Repository\AnimalIdByYearRepositoryInterface;
+use App\Repository\AnimalIdByYear\AnimalIdByYearRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 readonly class YearlySequenceAnimalIdGenerationStrategy implements AnimalIdGenerationStrategyInterface
 {

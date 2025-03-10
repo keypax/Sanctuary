@@ -6,12 +6,11 @@ namespace App\Service\Animal\Photo\Uploader;
 
 use App\Entity\Animal;
 use App\Entity\AnimalPhoto;
-use App\Repository\AnimalPhotoRepositoryInterface;
+use App\Repository\AnimalPhoto\AnimalPhotoRepositoryInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailGeneratorInterface;
 use App\Service\Animal\Photo\Thumbnail\ThumbnailSize;
 use App\Service\Animal\Photo\Uploader\PathGenerator\PathGenerator;
 use App\Service\FileUploader\FileUploaderInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;

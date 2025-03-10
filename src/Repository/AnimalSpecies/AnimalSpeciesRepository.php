@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Repository\AnimalSpecies;
 
 use App\Entity\AnimalSpecies;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

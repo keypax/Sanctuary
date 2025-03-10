@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Animal\Choice\Provider;
 
-use App\Repository\EnclosureRepositoryInterface;
+use App\Repository\Enclosure\EnclosureRepositoryInterface;
 
 class EnclosureProvider extends ChoicesProviderAbstract
 {

@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Form\AnimalType;
-use App\Repository\AnimalHistoryRepositoryInterface;
-use App\Repository\AnimalRepositoryInterface;
+use App\Repository\Animal\AnimalRepositoryInterface;
+use App\Repository\AnimalHistory\AnimalHistoryRepositoryInterface;
 use App\Service\AnimalIdGenerator\AnimalIdGenerationStrategyInterface;
 use DateTimeImmutable;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;

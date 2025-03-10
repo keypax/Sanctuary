@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\AnimalRepositoryInterface;
+use App\Repository\Animal\AnimalRepositoryInterface;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,7 +2,7 @@
 
 namespace App\Service\Animal\Provider\Species;
 
-use App\Repository\AnimalSpeciesRepositoryInterface;
+use App\Repository\AnimalSpecies\AnimalSpeciesRepositoryInterface;
 
 readonly class SpeciesProvider implements SpeciesProviderInterface
 {
