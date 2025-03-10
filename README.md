@@ -41,7 +41,7 @@ Once the setup is complete, visit: [http://localhost:8080/register](http://local
 | User registration and login                                                                                                   | Done        |
 | Printing animal data cards                                                                                                    | Done        |
 | Animal history tracking                                                                                                       | Done        |
-| Creation of an API with access for external entities                                                                          | In Progress |
+| [Creation of an API for external entities](https://github.com/keypax/Sanctuary-API)                                                                          | In Progress |
 | New user type: Volunteer (requires approval or rejection of changes made by volunteers with restricted access)                  | Todo        |
 | Daily reports for staff                                                                                                         | Todo        |
 | Automatic printing of promotional posters                                                                                     | Todo        |
