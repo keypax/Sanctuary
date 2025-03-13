@@ -8,6 +8,8 @@ services:
       - ./docker/php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
     working_dir: /app
     container_name: sanctuary_app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - sanctuary_network
 
@@ -53,4 +55,4 @@ volumes:
 
 networks:
   sanctuary_network:
-    external: true
+    name: sanctuary_network
