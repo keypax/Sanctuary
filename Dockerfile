@@ -20,8 +20,8 @@ RUN docker-php-ext-configure gd \
       --with-jpeg && \
     docker-php-ext-install intl pdo_pgsql zip opcache gd
 
-RUN pecl install xdebug \
-  && docker-php-ext-enable xdebug
+RUN pecl install xdebug
+COPY docker/php/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
