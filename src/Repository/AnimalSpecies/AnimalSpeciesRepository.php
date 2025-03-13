@@ -22,9 +22,4 @@ class AnimalSpeciesRepository extends ServiceEntityRepository implements AnimalS
     {
         return $this->findBy([]);
     }
-
-    public function findOneBySpeciesName(string $speciesName): ?AnimalSpecies
-    {
-        return $this->findOneBy(['speciesName' => $speciesName]);
-    }
 }

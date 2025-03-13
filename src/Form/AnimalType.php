@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use App\Entity\AnimalBreed;
 use App\Entity\AnimalSpecies;
 use App\Entity\Enclosure;
+use App\Repository\AnimalBreed\AnimalBreedRepositoryInterface;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
 use Psr\Log\LoggerInterface;
@@ -19,12 +20,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AnimalType extends AbstractType
 {
     public function __construct(
+        private AnimalBreedRepositoryInterface $animalBreedRepository,
         private readonly ChoicesServiceInterface $choicesService,
         private readonly LoggerInterface $logger
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $availableBreeds = [];
+        if ($options['data'] !== null && $options['data']->getSpecies() !== null) {
+            $availableBreeds = $this->animalBreedRepository->findBySpeciesId($options['data']->getSpecies()->getId());
+        }
+
         $builder
             ->add('animal_internal_id')
             ->add('animal_name')
@@ -39,6 +46,7 @@ class AnimalType extends AbstractType
                 'class' => AnimalBreed::class,
                 'choice_label' => 'breed_name',
                 'label' => 'breed',
+                'choices' => $availableBreeds,
                 'choice_translation_domain' => 'messages',
                 'required' => false,
             ])
