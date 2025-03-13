@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\AnimalBreed\AnimalBreedRepository;
+use App\Service\History\HistoryTrackedInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalBreedRepository::class)]
-class AnimalBreed
+class AnimalBreed implements HistoryTrackedInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -63,5 +64,10 @@ class AnimalBreed
     public function setAnimalSpecies(?AnimalSpecies $animalSpecies): void
     {
         $this->animalSpecies = $animalSpecies;
+    }
+
+    public function getHistoryContext(): string
+    {
+        return $this->getBreedName();
     }
 }

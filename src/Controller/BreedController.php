@@ -1,8 +1,9 @@
 <?php /** @noinspection PhpUnused */
+declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\Animal\Provider\Breed\BreedsProviderInterface;
+use App\Repository\AnimalBreed\AnimalBreedRepositoryInterface;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,22 +13,25 @@ use Symfony\Component\Routing\Attribute\Route;
 class BreedController extends AbstractController
 {
     public function __construct(
-        private readonly BreedsProviderInterface $breedsProvider,
+        private readonly AnimalBreedRepositoryInterface $animalBreedRepository,
     ) {}
 
     /**
-     * @param string $species - needs to be in services.yaml > parameters > breeds
+     * @param int $speciesId
      * @return JsonResponse
      */
-    #[Route('/list_by_species/{species}', name: 'breed_list', methods: ['GET'])]
-    public function getListBySpecies(string $species): JsonResponse
+    #[Route('/list_by_species/{speciesId}', name: 'breed_list', methods: ['GET'])]
+    public function getListBySpecies(int $speciesId): JsonResponse
     {
-        try {
-            $breeds = $this->breedsProvider->getBreeds($species);
-        }
-        catch (InvalidArgumentException) {
-            return $this->json([]);
-        }
+        $breeds = $this->animalBreedRepository->findBySpeciesId($speciesId);
+
+        //return only breedName and id
+        $breeds = array_map(function($breed) {
+            return [
+                'id' => $breed->getId(),
+                'breedName' => $breed->getBreedName()
+            ];
+        }, $breeds);
 
         return $this->json($breeds);
     }

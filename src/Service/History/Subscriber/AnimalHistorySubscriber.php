@@ -91,20 +91,24 @@ readonly class AnimalHistorySubscriber
                 return '';
             }
 
-            if ($value instanceof HistoryTrackedInterface) {
-                return $this->translator->trans($value->getHistoryContext());
-            }
-
             /** @noinspection PhpUnhandledExceptionInspection */
             $key = $this->choicesService->getProviderByKey($name)->getKeyByValue($value);
 
             return $this->translator->trans($key);
         }
 
+        if ($value instanceof HistoryTrackedInterface) {
+            return $this->translator->trans($value->getHistoryContext());
+        }
+
         if ($value instanceof DateTime) {
             return $value->format('Y-m-d');
         }
 
-        return (string) $value;
+        if (is_string($value) || is_scalar($value)) {
+            return (string) $value;
+        } else {
+            return "";
+        }
     }
 }

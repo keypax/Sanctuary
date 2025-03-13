@@ -80,15 +80,18 @@
     <script>
         $(document).ready(function() {
             function updateBreeds(species) {
+                var datalist = $('#animal_breed');
+                datalist.empty();
                 $.ajax({
                     url: '/breed/list_by_species/' + species,
                     dataType: 'json',
                     success: function(data) {
-                        var datalist = $('#breed-list');
-                        datalist.empty();
                         if(data.length > 0) {
                             $.each(data, function(index, breed) {
-                                datalist.append($('<option>', { value: breed }));
+                                datalist.append($('<option>', {
+                                    value: breed.id,
+                                    text: breed.breedName
+                                }));
                             });
                         }
                     },
@@ -98,10 +101,6 @@
                 });
             }
             var speciesSelect = $('#animal_species');
-            var initialSpecies = speciesSelect.val();
-            if (initialSpecies) {
-                updateBreeds(initialSpecies);
-            }
             speciesSelect.change(function() {
                 var selectedSpecies = $(this).val();
                 if (selectedSpecies) {

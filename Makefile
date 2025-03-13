@@ -21,5 +21,11 @@ create-db:
 	docker-compose exec database psql -U postgres -d sanctuary -c "CREATE PUBLICATION sanctuary_publication_api FOR TABLE animal, animal_breed, animal_photo, animal_species, enclosure;"
 	$(MAKE) cache-clear
 
+create-migration:
+	docker-compose exec php php bin/console make:migration
+
+migrate:
+	docker-compose exec php php bin/console doctrine:migrations:migrate
+
 cache-clear:
 	docker-compose exec php php bin/console cache:clear

@@ -4,6 +4,7 @@ namespace App\Repository\AnimalSpecies;
 
 
 use App\Entity\AnimalSpecies;
+use App\Repository\AnimalSpecies\Exception\AnimalSpeciesNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -15,10 +16,4 @@ interface AnimalSpeciesRepositoryInterface
      * @return AnimalSpecies[]
      */
     public function findAll(): array;
-
-    /**
-     * @param string $speciesName
-     * @return AnimalSpecies|null
-     */
-    public function findOneBySpeciesName(string $speciesName): ?AnimalSpecies;
 }

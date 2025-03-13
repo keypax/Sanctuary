@@ -157,9 +157,8 @@ last_dates_for: Last dates for
 next_serum_dose_date: Next serum dose date
 castrated: Castrated
 
-
-
 error_creating_directory: An error occurred while creating the directory
+not_set: Not set
 
 'Other': 'Other'
 'Cat': 'Cat'

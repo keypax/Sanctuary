@@ -31,7 +31,13 @@
                     {% endif %}
                 </td>
                 <td>{{ animal.getAnimalInternalId() }}</td>
-                <td>{{ animal.getSpecies() }}</td>
+                <td>
+                    {% if animal.getSpecies() is not null %}
+                        {{ animal.getSpecies().getSpeciesName()|trans }}
+                    {% else %}
+                        {{ 'not_set'|trans }}
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('animal_edit', {id: animal.getId()}) }}" class="button">{{ 'animal.list.button_edit'|trans}}</a>
                 </td>

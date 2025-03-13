@@ -3,43 +3,51 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use App\Entity\AnimalBreed;
+use App\Entity\AnimalSpecies;
 use App\Entity\Enclosure;
+use App\Repository\AnimalBreed\AnimalBreedRepositoryInterface;
 use App\Service\Animal\Choice\ChoicesServiceInterface;
 use App\Service\Animal\Choice\Exception\ChoicesProviderException;
-use App\Service\Animal\Provider\Species\SpeciesProviderInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AnimalType extends AbstractType
 {
     public function __construct(
-        private readonly SpeciesProviderInterface $speciesProvider,
+        private AnimalBreedRepositoryInterface $animalBreedRepository,
         private readonly ChoicesServiceInterface $choicesService,
         private readonly LoggerInterface $logger
     ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $species = $this->speciesProvider->getSpecies();
+        $availableBreeds = [];
+        if ($options['data'] !== null && $options['data']->getSpecies() !== null) {
+            $availableBreeds = $this->animalBreedRepository->findBySpeciesId($options['data']->getSpecies()->getId());
+        }
 
         $builder
             ->add('animal_internal_id')
             ->add('animal_name')
-            ->add('species', ChoiceType::class, [
-                'choices' => array_combine($species, $species),
-                'choice_translation_domain' => 'messages'
+            ->add('species', EntityType::class, [
+                'class' => AnimalSpecies::class,
+                'choice_label' => 'species_name',
+                'label' => 'species',
+                'choice_translation_domain' => 'messages',
+                'required' => false,
             ])
-            ->add('breed', TextType::class, [
-                'attr' => [
-                    'list' => 'breed-list',
-                    'autocomplete' => 'off'
-                ],
+            ->add('breed', EntityType::class, [
+                'class' => AnimalBreed::class,
+                'choice_label' => 'breed_name',
+                'label' => 'breed',
+                'choices' => $availableBreeds,
+                'choice_translation_domain' => 'messages',
                 'required' => false,
             ])
             ->add('gender', ChoiceType::class, [
