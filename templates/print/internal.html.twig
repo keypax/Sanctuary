@@ -15,7 +15,13 @@
         </div>
         <div class="second_header">
             <div class="header-left">
-                <label class="species">{{ animal.getSpecies()|trans }}</label>
+                <label class="species">
+                {% if animal.getSpecies() is not null %}
+                    {{ animal.getSpecies().getSpeciesName()|trans }}
+                {% else %}
+                    {{ 'not_set'|trans }}
+                {% endif %}
+                </label>
             </div>
             <div class="header-center">
                 {{ 'animal_internal_id'|trans }}

@@ -27,11 +27,11 @@ class Animal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $animal_name = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $species = null;
+    #[ORM\ManyToOne]
+    private ?AnimalSpecies $species = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $breed = null;
+    #[ORM\ManyToOne]
+    private ?AnimalBreed $breed = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: false, options: ['default' => 0])]
     private ?int $gender = null;
@@ -117,24 +117,24 @@ class Animal
         return $this;
     }
 
-    public function getSpecies(): ?string
+    public function getSpecies(): ?AnimalSpecies
     {
         return $this->species;
     }
 
-    public function setSpecies(string $species): static
+    public function setSpecies(?AnimalSpecies $species): static
     {
         $this->species = $species;
 
         return $this;
     }
 
-    public function getBreed(): ?string
+    public function getBreed(): ?AnimalBreed
     {
         return $this->breed;
     }
 
-    public function setBreed(?string $breed): static
+    public function setBreed(?AnimalBreed $breed): static
     {
         $this->breed = $breed;
 
